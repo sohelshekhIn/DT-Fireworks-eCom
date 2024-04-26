@@ -50,13 +50,13 @@ const ContactPage = () => {
 
                   <div className="grow">
                     <p className="text-sm text-gray-600 dark:text-neutral-400">
-                      Nadiad Office / Warehous
+                      Nadiad Office
                     </p>
                     <address className="mt-1 text-black not-italic dark:text-white">
-                      Opp.Nadiad People's Bank, <br /> Near Rukmani Tower, Daban
-                      Bhagol,
+                      Opp. Nadiad People's Bank, <br /> Near Rukmani Tower,
+                      Daban Bhagol,
                       <br />
-                      Nadiad, Gujarat 387001, India
+                      Nadiad, Gujarat 387001
                     </address>
                   </div>
                 </div>
@@ -81,13 +81,14 @@ const ContactPage = () => {
 
                   <div className="grow">
                     <p className="text-sm text-gray-600 dark:text-neutral-400">
-                      Second Warehouse
+                      Nadiad Warehouse
                     </p>
                     <address className="mt-1 text-black not-italic dark:text-white">
-                      Opp.Nadiad People's Bank, <br /> Near Rukmani Tower, Daban
-                      Bhagol,
+                      Opp. Poonima Decoraions,
                       <br />
-                      Nadiad, Gujarat 387001, India
+                      Near Puskar Apartment, Chhatriwala Society
+                      <br />
+                      Vachhewad, Nadiad, Gujarat 387001
                     </address>
                   </div>
                 </div>
@@ -112,13 +113,12 @@ const ContactPage = () => {
 
                   <div className="grow">
                     <p className="text-sm text-gray-600 dark:text-neutral-400">
-                      Third Warehouse Office
+                      Bamroli Warehouse
                     </p>
                     <address className="mt-1 text-black not-italic dark:text-white">
-                      Opp.Nadiad People's Bank, <br /> Near Rukmani Tower, Daban
-                      Bhagol,
+                      765/1 SHREE PURA, <br /> Bamroli - Vaso Nadiad Rd,
                       <br />
-                      Nadiad, Gujarat 387001, India
+                      Bamroli, Gujarat 387230
                     </address>
                   </div>
                 </div>
@@ -186,9 +186,9 @@ const ContactPage = () => {
                   <p>
                     <a
                       className="inline-block font-medium text-black under-design hover:before:bg-black focus:outline-none focus:before:bg-black dark:text-white dark:hover:before:bg-white dark:focus:before:bg-white"
-                      href="mailto:example@site.so"
+                      href="tel:+919898558536"
                     >
-                      +91 123 456 7890
+                      +91 98985 58536
                     </a>
                   </p>
                 </div>
