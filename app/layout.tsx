@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body className={poppins.className + " relative"}>
         <Navbar />
         <section className="w-full ">
           <main className="max-w-7xl w-full flex flex-wrap px-4 md:px-8 mx-auto">
