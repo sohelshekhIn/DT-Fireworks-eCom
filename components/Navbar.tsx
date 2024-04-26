@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <header className="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full py-7">
+    <header className="sticky top-0 bg-white dark:bg-black flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full py-7 mb-5">
       <nav
         className="relative max-w-7xl w-full flex flex-wrap md:grid md:grid-cols-12 basis-full items-center px-4 md:px-8 mx-auto"
         aria-label="Global"
@@ -18,18 +18,20 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-x-2 ms-auto py-1 md:ps-6 md:order-3 md:col-span-3">
-          <button
+          <Link
+            href={"/cart"}
             type="button"
             className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 text-black hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:hover:bg-white/10 dark:text-white dark:hover:text-white"
           >
             Cart
-          </button>
-          <button
+          </Link>
+          <Link
+            href={"/signin"}
             type="button"
-            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-primary text-secondary hover:bg-primaryDark transition disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-lime-500"
+            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-primary text-secondary hover:bg-primaryDark transition disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:primaryDark"
           >
             Sign In
-          </button>
+          </Link>
 
           <div className="md:hidden">
             <button
@@ -76,7 +78,7 @@ const Navbar = () => {
 
         <div
           id="navbar-collapse-with-animation"
-          className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block md:w-auto md:basis-auto md:order-2 md:col-span-6"
+          className="hs-collapse hidden overflow-hidden border-b lg:border-none pb-5 lg:pb-0 transition-all duration-300 basis-full grow md:block md:w-auto md:basis-auto md:order-2 md:col-span-6"
         >
           <div className="flex flex-col gap-y-4 gap-x-0 mt-5 md:flex-row md:justify-center md:items-center md:gap-y-0 md:gap-x-7 md:mt-0">
             <div>
