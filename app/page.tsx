@@ -3,6 +3,7 @@ import FeaturedProducts from "@/components/Home/FeaturedProducts";
 import ShopByOccasion from "@/components/Home/ShopByOccasion";
 import HeroSlider from "@/components/Home/HeroSlider";
 import HeroSection from "@/components/Home/HeroSection";
+import EffectsIntroSection from "@/components/Home/EfffectsIntroSection";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <FeaturedProducts />
       <BannerSection />
       <ShopByOccasion />
+      <EffectsIntroSection />
     </div>
   );
 }
