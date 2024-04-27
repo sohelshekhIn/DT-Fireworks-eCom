@@ -23,7 +23,7 @@ const ShopByOccasion = () => {
 
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-secondaryDark">
                 Diwali
               </h3>
             </div>
@@ -41,7 +41,7 @@ const ShopByOccasion = () => {
           </div>
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-secondaryDark">
                 Birthdays
               </h3>
             </div>
@@ -61,7 +61,7 @@ const ShopByOccasion = () => {
 
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-secondaryDark">
                 Wedding
               </h3>
             </div>
@@ -80,7 +80,7 @@ const ShopByOccasion = () => {
 
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-secondaryDark">
                 Cricket Match
               </h3>
             </div>
@@ -98,7 +98,7 @@ const ShopByOccasion = () => {
           </div>
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-secondaryDark">
                 Birthdays
               </h3>
             </div>
