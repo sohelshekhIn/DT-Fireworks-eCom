@@ -9,7 +9,7 @@ const HeroSection = () => {
         <div className="mt-10 lg:mt-0">
           <h1 className=" font-bold flex flex-col text-base sm:text-lg md:text-xl lg:text-2xl text-gray-800 dark:text-white">
             Experience the
-            <span className=" text-3xl sm:text-4xl md:text-5xl lg:text-6xl hover:text-primary  dark:text-secondaryDark">
+            <span className=" text-3xl sm:text-4xl md:text-5xl lg:text-6xl hover:text-primary ">
               Magic of Fireworks
             </span>
           </h1>
