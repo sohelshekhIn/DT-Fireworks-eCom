@@ -7,7 +7,7 @@ const CookiesConsentPopup = () => {
   if (isCookieAccepted) return null;
   return (
     <div
-      // id="cookies-simple-with-dismiss-button"
+      // id="cookies-simpleWith-dismiss-button"
       id="cookies-popup"
       className="fixed bottom-0 start-1/2 transform -translate-x-1/2 z-[60] sm:max-w-4xl w-full mx-auto p-6"
     >
@@ -32,7 +32,7 @@ const CookiesConsentPopup = () => {
               document?.getElementById("cookies-popup")?.remove();
             }}
             className="p-2 inline-flex items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-white/10 dark:hover:bg-white/20 dark:text-white dark:hover:text-white"
-            // data-hs-remove-element="#cookies-simple-with-dismiss-button"
+            // data-hs-remove-element="#cookies-simpleWith-dismiss-button"
           >
             <span className="sr-only">Dismiss</span>
             <svg
@@ -43,9 +43,9 @@ const CookiesConsentPopup = () => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path d="M18 6 6 18"></path>
               <path d="m6 6 12 12"></path>
