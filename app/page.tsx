@@ -4,6 +4,8 @@ import ShopByOccasion from "@/components/Home/ShopByOccasion";
 import HeroSlider from "@/components/Home/HeroSlider";
 import HeroSection from "@/components/Home/HeroSection";
 import EffectsIntroSection from "@/components/Home/EfffectsIntroSection";
+import EffectsImagesSection from "@/components/Home/EffectsImagesSection";
+import Testimonials from "@/components/Home/Testimonials";
 
 export default function Home() {
   return (
@@ -15,6 +17,8 @@ export default function Home() {
       <BannerSection />
       <ShopByOccasion />
       <EffectsIntroSection />
+      <EffectsImagesSection />
+      <Testimonials />
     </div>
   );
 }
