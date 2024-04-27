@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const ShopByOccasion = () => {
   return (
-    <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+    <section className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
       <div className="max-w-2xl text-center mx-auto mb-10 lg:mb-14">
         <h2 className="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
           Shop by Occasion
@@ -23,7 +23,7 @@ const ShopByOccasion = () => {
 
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-lg sm:text-3xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
                 Diwali
               </h3>
             </div>
@@ -41,7 +41,7 @@ const ShopByOccasion = () => {
           </div>
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-lg sm:text-3xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
                 Birthdays
               </h3>
             </div>
@@ -61,7 +61,7 @@ const ShopByOccasion = () => {
 
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-lg sm:text-3xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
                 Wedding
               </h3>
             </div>
@@ -80,7 +80,7 @@ const ShopByOccasion = () => {
 
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-lg sm:text-3xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
                 Cricket Match
               </h3>
             </div>
@@ -98,14 +98,14 @@ const ShopByOccasion = () => {
           </div>
           <div className="absolute bottom-0 inset-x-0 z-10">
             <div className="flex flex-col h-full p-4 sm:p-6">
-              <h3 className="text-lg sm:text-3xl font-semibold text-white group-hover:text-white/80">
+              <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-white/80">
                 Birthdays
               </h3>
             </div>
           </div>
         </Link>
       </div>
-    </div>
+    </section>
   );
 };
 
