@@ -26,7 +26,7 @@ const IntroParagraph = () => {
         trusted provider, renowned for our:
       </p>
       <div className="mx-auto max-w-3xl grid grid-cols-12 gap-6 lg:gap-8">
-        <div className="col-span-6 sm:col-span-4 group text-center">
+        <div className="col-span-6 sm:col-span-4 group text-center dark:bg-secondaryDark rounded-xl dark:p-5">
           <Image
             className="mx-auto group-hover:scale-110 h-auto w-7 md:w-9 dark:text-neutral-200"
             width={40}
@@ -36,13 +36,13 @@ const IntroParagraph = () => {
           />
 
           <div className="mt-2 sm:mt-6">
-            <h3 className="text-lg group-hover:text-primaryDark font-semibold text-gray-800 dark:text-neutral-200">
+            <h3 className="text-lg group-hover:text-primaryDark font-semibold text-gray-800 ">
               Commitment to Safety
             </h3>
           </div>
         </div>
 
-        <div className="col-span-6 sm:col-span-4 group text-center">
+        <div className="col-span-6 sm:col-span-4 group text-center dark:bg-secondaryDark rounded-xl dark:p-5">
           <Image
             className="mx-auto h-auto group-hover:scale-110 w-7 md:w-9 text-gray-800 dark:text-neutral-200"
             width={40}
@@ -51,13 +51,13 @@ const IntroParagraph = () => {
             alt="A light bulb icon to describe creativity and expertise"
           />
           <div className="mt-2 sm:mt-6">
-            <h3 className="text-lg group-hover:text-primaryDark font-semibold text-gray-800 dark:text-neutral-200">
+            <h3 className="text-lg group-hover:text-primaryDark font-semibold text-gray-800 ">
               Creativity and Expertise
             </h3>
           </div>
         </div>
 
-        <div className="col-span-6 col-start-4 sm:col-span-4 group text-center">
+        <div className="col-span-6 col-start-4 sm:col-span-4 group text-center dark:bg-secondaryDark rounded-xl dark:p-5">
           <Image
             className="mx-auto group-hover:scale-110 h-auto w-7 md:w-9 text-gray-800 dark:text-neutral-200"
             width={40}
@@ -66,7 +66,7 @@ const IntroParagraph = () => {
             alt="A best seller icon to describe quality"
           />
           <div className="mt-2 sm:mt-6">
-            <h3 className="text-lg group-hover:text-primaryDark font-semibold text-gray-800 dark:text-neutral-200">
+            <h3 className="text-lg group-hover:text-primaryDark font-semibold text-gray-800">
               Dedication to Quality
             </h3>
           </div>
