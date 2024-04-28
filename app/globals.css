@@ -39,4 +39,12 @@ body {
   .under-design {
     @apply relative before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:min-w-full before:h-1 before:bg-secondaryDark;
   }
+
+  .slow-transition {
+    transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+  }
 }
