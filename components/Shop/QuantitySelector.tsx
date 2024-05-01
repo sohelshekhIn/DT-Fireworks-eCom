@@ -25,9 +25,9 @@ const QuantitySelector = () => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path d="M5 12h14"></path>
             </svg>
@@ -35,7 +35,7 @@ const QuantitySelector = () => {
           <input
             className="p-0 w-6 bg-transparent border-0 text-gray-800 text-center focus:ring-0 dark:text-white"
             type="text"
-            value="0"
+            readOnly
             data-hs-input-number-input="1"
           />
           <button
@@ -51,9 +51,9 @@ const QuantitySelector = () => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path d="M5 12h14"></path>
               <path d="M12 5v14"></path>
