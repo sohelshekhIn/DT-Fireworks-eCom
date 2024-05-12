@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const SignUpPage = () => {
   return (
-    <div className="max-w-[85vw] mx-auto py-10 md:py-16 lg:py-40">
+    <div className="max-w-[85vw] md:w-1/2 lg:w-5/12 mx-auto py-10 pb-28">
       <div className="mt-7 p-4 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-900 dark:border-neutral-700">
         <div className="p-4 sm:p-7">
           <div className="text-center">
@@ -12,7 +12,7 @@ const SignUpPage = () => {
               Sign up
             </h1>
             <p className="mt-2 text-sm text-gray-600 dark:text-neutral-400">
-              Already have an account?
+              Already have an account?{" "}
               <Link
                 className="text-primary decoration-2 hover:underline font-medium dark:text-primaryDark"
                 href="/signin"
