@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, AuthError } from "firebase/auth";
 import { auth } from "@/lib/firebase-config";
 
 const SignUpForm = () => {
@@ -32,10 +32,13 @@ const SignUpForm = () => {
       return;
     }
 
-    // check if password is at least 8 characters and contains a number
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    // check if password is at least 8 characters and contains a number and a special character
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?:.*[~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?])[A-Za-z\d\s~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?]{8,}$/;
     if (!passwordRegex.test(password)) {
-      setError("Password must be at least 8 characters and contain a number");
+      setError(
+        "Password must be minimum 8 characters, contain a number, and a special character"
+      );
       return;
     }
 
@@ -47,32 +50,47 @@ const SignUpForm = () => {
 
     setError(null);
 
-    // TODO:
-    // Check password regex
-    // Make new route for after sign up
-
-    createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        const user = userCredential.user;
-        const setCookie = new Promise(async () => {
-          fetch("/api/login", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${await user.getIdToken()}`,
-              credentials: "same-origin",
-            },
-          }).catch((error) => {
-            console.error("Error:", error);
-            setError("An error occurred. Please try again.");
-          });
-        });
-        const redirect = new Promise(() => {
+    const setCookieRequest = async (idToken: string) => {
+      // Send token to server to set cookie
+      fetch("/api/login", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          credentials: "same-origin",
+        },
+      })
+        .then(() => {
           router.push("/protected/client");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          setError("An error occurred. Please try again.");
         });
+    };
 
-        Promise.all([setCookie, redirect]);
-      }
-    );
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        const idToken = await user.getIdToken();
+        setCookieRequest(idToken);
+      })
+      .catch((error: AuthError) => {
+        // Handle Firebase Auth errors
+        console.error("Error:", error);
+        if (error.code === "auth/email-already-in-use") {
+          setError("Email already in use. Please sign in.");
+        } else if (error.code === "auth/weak-password") {
+          setError("Password is too weak. Please try again.");
+        } else if (error.code === "auth/invalid-email") {
+          setError("Invalid email. Please try again.");
+        } else if (error.code === "auth/too-many-requests") {
+          setError("Too many requests. Please try again later.");
+        } else if (error.code === "auth/network-request-failed") {
+          setError("Network request failed. Please try again.");
+        } else {
+          setError("An error occurred. Please try again.");
+        }
+      });
   };
 
   return (
@@ -91,13 +109,14 @@ const SignUpForm = () => {
               name="email"
               className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primaryDark focus:ring-primaryDark disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
               required
+              placeholder="Email address"
               aria-describedby="email-error"
             />
           </div>
         </div>
 
         <div className="space-y-5" data-hs-toggle-password-group="">
-          <div className="max-w-sm">
+          <div className="max-w-md">
             <label
               htmlFor="hs-toggle-password-multi-toggle-np"
               className="block text-sm mb-2 dark:text-white"
@@ -165,7 +184,7 @@ const SignUpForm = () => {
             </div>
           </div>
 
-          <div className="max-w-sm mb-5">
+          <div className="max-w-md mb-5">
             <label
               htmlFor="hs-toggle-password-multi-toggle"
               className="block text-sm mb-2 dark:text-white"

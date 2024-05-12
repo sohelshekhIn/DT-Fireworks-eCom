@@ -32,33 +32,51 @@ const SignInForm = () => {
     }
 
     // check if password is at least 8 characters and contains a number
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?:.*[~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?])[A-Za-z\d\s~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?]{8,}$/;
     if (!passwordRegex.test(password)) {
-      setError("Password must be at least 8 characters and contain a number");
+      setError(
+        "Password must be minimum 8 characters, contain a number, and a special character"
+      );
       return;
     }
     setError(null);
 
-    // console.time("SignIn");
-    // console.time("CallAPI");
-    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      const user = userCredential.user;
-      const setCookie = new Promise(async () => {
-        fetch("/api/login", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${await user.getIdToken()}`,
-            credentials: "same-origin",
-          },
+    const setSignInCookieRequest = (idToken: string) => {
+      fetch("/api/login", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          credentials: "same-origin",
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            router.push("/protected/client");
+          }
+        })
+        .catch((error) => {
+          setError(error.message);
         });
-      });
-      const redirect = new Promise(() => {
-        // console.timeEnd("SignIn");
-        router.push("/protected/client");
-      });
+    };
 
-      Promise.all([setCookie, redirect]);
-    });
+    signInWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+        const idToken = await user.getIdToken();
+        setSignInCookieRequest(idToken);
+      })
+      .catch((error) => {
+        if (error.code === "auth/user-not-found") {
+          setError("User not found");
+        } else if (error.code === "auth/wrong-password") {
+          setError("Wrong password");
+        } else if (error.code === "auth/too-many-requests") {
+          setError("Too many requests. Try again later");
+        } else {
+          setError(error.message);
+        }
+      });
   };
 
   return (
