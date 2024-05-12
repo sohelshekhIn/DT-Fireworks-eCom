@@ -33,7 +33,7 @@ const Navbar = () => {
           <Link
             href={"/signin"}
             type="button"
-            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-primary text-secondary hover:bg-primaryDark transition disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:primaryDark"
+            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-primary text-white hover:bg-primaryDark transition disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:primaryDark"
           >
             Sign In
           </Link>
