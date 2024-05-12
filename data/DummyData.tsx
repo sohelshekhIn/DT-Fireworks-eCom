@@ -18,4 +18,10 @@ const product: Product = {
   discount: 10,
 };
 
-export { product };
+const cartData = {
+  id: 1,
+  product: product,
+  quantity: 1,
+};
+
+export { product, cartData };
