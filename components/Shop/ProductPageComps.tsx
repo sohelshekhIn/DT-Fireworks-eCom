@@ -1,3 +1,4 @@
+import type { Product } from "@/types/product";
 import Image from "next/image";
 
 const ProductMediaCarousel = ({
@@ -125,6 +126,52 @@ const CategoryBagde = ({ categories }: { categories: string[] }) => {
   );
 };
 
+const DisplayPrice = ({
+  product,
+  size = "normal",
+}: {
+  product: Product;
+  size?: "small" | "normal";
+}) => {
+  const secondaryPriceFontSize = size === "small" ? "text-base" : "text-xl"; // for strike through price
+  const primaryPriceFontSize = size === "small" ? "text-xl" : "text-4xl"; // for sale price and normal price when not on sale
+  const salePriceDiscountFontSize = size === "small" ? "text-sm" : "text-base"; // for discount percentage
+
+  return (
+    <>
+      {product.onSale ? (
+        <div className="flex flex-col items-cente">
+          <p
+            className={`${secondaryPriceFontSize} font-semibold text-gray-500 dark:text-neutral-400 line-through`}
+          >
+            ₹{product.price}
+          </p>
+          <span className="flex items-baseline gap-2">
+            <p
+              className={`${primaryPriceFontSize} font-semibold text-primary dark:text-primaryDark`}
+            >
+              ₹{product.price * (1 - product.discount / 100)}
+            </p>
+            <p>
+              <span
+                className={`${salePriceDiscountFontSize} font-semibold text-primary/70 dark:text-primaryDark`}
+              >
+                {product.discount}% off
+              </span>
+            </p>
+          </span>
+        </div>
+      ) : (
+        <p
+          className={`${primaryPriceFontSize} font-semibold text-gray-800 dark:text-neutral-200`}
+        >
+          ₹{product.price}
+        </p>
+      )}
+    </>
+  );
+};
+
 const ThreeLineStrikesDesignElement = () => {
   return (
     <div className="hidden absolute -top-20 end-0 translate-x-20 md:block lg:translate-x-20">
@@ -162,5 +209,6 @@ export {
   ProductMediaCarousel,
   SingleProductImage,
   CategoryBagde,
+  DisplayPrice,
   ThreeLineStrikesDesignElement,
 };

@@ -1,6 +1,7 @@
 import type { Product } from "@/types/product";
 import Image from "next/image";
 import Link from "next/link";
+import { DisplayPrice } from "./ProductPageComps";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
@@ -23,9 +24,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           {product.description}{" "}
         </p>
         <div className="flex items-center justify-between mt-4">
-          <p className="text-lg font-semibold text-gray-800 dark:text-white">
-            ₹{product.price}
-          </p>
+          <DisplayPrice product={product} size="small" />
           <button className="px-3 py-2 text-sm font-semibold text-white bg-primary hover:bg-primaryDark rounded-md dark:bg-primaryDark">
             Add to Cart
           </button>

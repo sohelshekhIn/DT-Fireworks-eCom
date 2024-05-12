@@ -1,5 +1,6 @@
 import {
   CategoryBagde,
+  DisplayPrice,
   ProductMediaCarousel,
   SingleProductImage,
   ThreeLineStrikesDesignElement,
@@ -42,22 +43,8 @@ const ProductPage = ({
             </div>
             <div className="">
               <QuantitySelector />
-              {/* if product.discount is true slash the original price and show discounted price */}
               <div className="flex items-center justify-between mt-5">
-                {product.onSale ? (
-                  <div className="flex gap-5 items-center">
-                    <p className="text-lg font-semibold text-gray-500 dark:text-neutral-400 line-through">
-                      ₹{product.price}
-                    </p>
-                    <p className="text-3xl font-semibold text-primary dark:text-primaryDark">
-                      ₹{product.price * (1 - product.discount / 100)}
-                    </p>
-                  </div>
-                ) : (
-                  <p className="text-xl font-semibold text-gray-800 dark:text-neutral-200">
-                    ₹{product.price}
-                  </p>
-                )}
+                <DisplayPrice product={product} />
                 <button className="px-3 py-2 text-sm font-semibold text-white bg-primary hover:bg-primaryDark rounded-md dark:bg-primaryDark">
                   Add to Cart
                 </button>
