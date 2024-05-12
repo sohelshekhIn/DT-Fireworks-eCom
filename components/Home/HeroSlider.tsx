@@ -13,7 +13,6 @@ const HeroSlider = () => {
           <div className="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700 opacity-0">
             <div className="hs-carousel-slide">
               <div className="h-[40rem] flex flex-col md:h-[calc(100vh-106px)] px-8 lg:px-14">
-                {/* -- */}
                 <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
                   <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
                     <div>
@@ -280,7 +279,7 @@ const HeroSlider = () => {
               viewBox="0 0 16 16"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
               ></path>
             </svg>
