@@ -50,7 +50,7 @@ const SignUpForm = () => {
 
     setError(null);
 
-    const setCookieRequest = async (idToken: string) => {
+    const setSignUpCookieRequest = async (idToken: string) => {
       // Send token to server to set cookie
       fetch("/api/login", {
         method: "POST",
@@ -72,7 +72,7 @@ const SignUpForm = () => {
       .then(async (userCredential) => {
         const user = userCredential.user;
         const idToken = await user.getIdToken();
-        setCookieRequest(idToken);
+        setSignUpCookieRequest(idToken);
       })
       .catch((error: AuthError) => {
         // Handle Firebase Auth errors
