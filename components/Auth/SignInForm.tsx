@@ -1,7 +1,7 @@
 "use client";
 
 import { auth } from "@/lib/firebase-config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, AuthError } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -55,7 +55,7 @@ const SignInForm = () => {
             router.push("/protected/client");
           }
         })
-        .catch((error) => {
+        .catch((error: AuthError) => {
           setError(error.message);
         });
     };
@@ -124,7 +124,7 @@ const SignInForm = () => {
               Password
             </label>
             <a
-              className="text-sm text-primaryDark decoration-2 hover:underline font-medium"
+              className="text-sm text-primary dark:text-primaryDark decoration-2 hover:underline font-medium"
               href="/forgot-password"
             >
               Forgot password?
@@ -194,21 +194,6 @@ const SignInForm = () => {
           </p>
         </div>
 
-        <div className="flex items-center">
-          <div className="flex">
-            <input
-              id="remember-me"
-              name="remember-me"
-              type="checkbox"
-              className="shrink-0 mt-0.5 border-gray-200 rounded text-primary focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-primary dark:checked:border-primary dark:focus:ring-offset-gray-800"
-            />
-          </div>
-          <div className="ms-3">
-            <label htmlFor="remember-me" className="text-sm dark:text-white">
-              Remember me
-            </label>
-          </div>
-        </div>
         {error && (
           <p className="text-red-500 dark:text-red-600/80 py-2 underline font-medium">
             {error}
@@ -218,7 +203,7 @@ const SignInForm = () => {
         <button
           type="submit"
           onClick={handleSignIn}
-          className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary text-white hover:bg-primaryDark disabled:opacity-50 disabled:pointer-events-none"
+          className="w-full py-3 mt-5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary text-white hover:bg-primaryDark disabled:opacity-50 disabled:pointer-events-none"
         >
           Sign in
         </button>

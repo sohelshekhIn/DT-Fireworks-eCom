@@ -62,7 +62,7 @@ const SignUpForm = () => {
         .then(() => {
           router.push("/protected/client");
         })
-        .catch((error) => {
+        .catch((error: AuthError) => {
           console.error("Error:", error);
           setError("An error occurred. Please try again.");
         });
