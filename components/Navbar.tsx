@@ -9,7 +9,7 @@ const Navbar = () => {
       >
         <div className="md:col-span-3">
           <Link
-            className="flex-none rounded-xl text-primary hover:text-primaryDark text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+            className="flex-none rounded-xl text-primary hover:underline text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
             href="/"
             aria-label="DT Fireworks"
           >
