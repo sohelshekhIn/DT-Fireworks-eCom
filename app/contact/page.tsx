@@ -47,7 +47,7 @@ const ContactPage = () => {
                       Nadiad Office
                     </p>
                     <address className="mt-1 text-black not-italic dark:text-white">
-                      Opp. Nadiad People's Bank, <br /> Near Rukmani Tower,
+                      Opp. Nadiad People&apos;s Bank, <br /> Near Rukmani Tower,
                       Daban Bhagol,
                       <br />
                       Nadiad, Gujarat 387001

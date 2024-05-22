@@ -36,8 +36,8 @@ const Testimonials = () => {
                             />
                           </svg>
                           <span className="relative z-10 italic text-gray-800 dark:text-neutral-200">
-                            I just wanted to say that I'm very happy with my
-                            purchase of Preline so far. The documentation is
+                            I just wanted to say that I&apos;m very happy with
+                            my purchase of Preline so far. The documentation is
                             outstanding - clear and detailed.
                           </span>
                         </p>
@@ -77,8 +77,8 @@ const Testimonials = () => {
                             />
                           </svg>
                           <span className="relative z-10 italic text-gray-800 dark:text-neutral-200">
-                            I just wanted to say that I'm very happy with my
-                            purchase of Preline so far. The documentation is
+                            I just wanted to say that I&apos;m very happy with
+                            my purchase of Preline so far. The documentation is
                             outstanding - clear and detailed.
                           </span>
                         </p>
@@ -117,8 +117,8 @@ const Testimonials = () => {
                             />
                           </svg>
                           <span className="relative z-10 italic text-gray-800 dark:text-neutral-200">
-                            I just wanted to say that I'm very happy with my
-                            purchase of Preline so far. The documentation is
+                            I just wanted to say that I&apos;m very happy with
+                            my purchase of Preline so far. The documentation is
                             outstanding - clear and detailed.
                           </span>
                         </p>

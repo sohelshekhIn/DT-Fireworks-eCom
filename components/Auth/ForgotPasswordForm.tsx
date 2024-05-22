@@ -123,7 +123,7 @@ const SubmittedMessage: React.FC = () => {
         </h2>
 
         <p className="mt-2 text-sm text-center px-5 text-gray-800 dark:text-neutral-300">
-          We've sent you an email with a link to reset your password!
+          We&apos;ve sent you an email with a link to reset your password!
         </p>
       </div>
     </div>

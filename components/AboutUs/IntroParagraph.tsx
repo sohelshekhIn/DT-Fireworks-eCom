@@ -15,15 +15,15 @@ const IntroParagraph = () => {
         event.
       </p>
       <p>
-        Over the years, we've grown significantly, expanding our operations to
-        include warehouses in Gazipura, Nadiad and Vaso-Bamroli in addition to
-        our Nadiad Office. This allows us to serve a wider clientele and ensure
-        efficient delivery of fireworks and pyrotechnic materials.
+        Over the years, we&apos;ve grown significantly, expanding our operations
+        to include warehouses in Gazipura, Nadiad and Vaso-Bamroli in addition
+        to our Nadiad Office. This allows us to serve a wider clientele and
+        ensure efficient delivery of fireworks and pyrotechnic materials.
       </p>
       <p>
         Our journey began in 1999 with a simple dream: to share the joy and
-        wonder of fireworks with everyone. Over the years, we've grown into a
-        trusted provider, renowned for our:
+        wonder of fireworks with everyone. Over the years, we&apos;ve grown into
+        a trusted provider, renowned for our:
       </p>
       <div className="mx-auto max-w-3xl grid grid-cols-12 gap-6 lg:gap-8">
         <div className="col-span-6 sm:col-span-4 group text-center dark:bg-secondaryDark rounded-xl dark:p-5">

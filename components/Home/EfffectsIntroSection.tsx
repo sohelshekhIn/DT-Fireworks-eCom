@@ -40,7 +40,7 @@ const EffectsIntroSection = () => {
                 className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border-transparent bg-secondary border border-secondaryDark text-accent hover:text-text hover:bg-secondaryDark dark:bg-secondary/80 disabled:opacity-50 disabled:pointer-events-none"
                 href="/contact"
               >
-                Let's design your stage effect
+                Let&apos;s design your stage effect
                 <svg
                   className="flex-shrink-0 size-4"
                   xmlns="http://www.w3.org/2000/svg"
