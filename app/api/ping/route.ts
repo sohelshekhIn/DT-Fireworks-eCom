@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
 
 export function GET() {
-  return NextResponse.json({ ping: "pong" });
+  return NextResponse.json({ data: "pong" });
 }
