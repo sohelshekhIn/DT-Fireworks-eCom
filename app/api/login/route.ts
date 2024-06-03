@@ -2,41 +2,59 @@ import { auth } from "firebase-admin";
 import { customInitApp } from "@/lib/firebase-admin-config";
 import { cookies, headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { CustomError, handleApiError } from "@/utils/apiErrorHandler";
 
 // Init the Firebase SDK every time the server is called
 customInitApp();
 
-export async function POST(request: NextRequest, response: NextResponse) {
-  const authorization = headers().get("Authorization");
-  if (authorization?.startsWith("Bearer ")) {
-    const idToken = authorization.split("Bearer ")[1];
-    const decodedToken = await auth().verifyIdToken(idToken);
-
-    if (decodedToken) {
-      //Generate session cookie
-
-      const expiresIn = 60 * 60 * 24 * 30 * 1000; //30 days
-
-      const sessionCookie = await auth().createSessionCookie(idToken, {
-        expiresIn,
-      });
-      const options = {
-        name: "session",
-        value: sessionCookie,
-        maxAge: expiresIn,
-        httpOnly: true,
-        secure: true,
-      };
-
-      //Add the cookie to the browser
-      cookies().set(options);
+export async function POST() {
+  try {
+    const authorization = headers().get("Authorization");
+    if (!authorization) {
+      return new CustomError("Unauthorized", 401);
     }
-  }
+    if (authorization?.startsWith("Bearer ")) {
+      const idToken = authorization.split("Bearer ")[1];
+      const decodedToken = await auth().verifyIdToken(idToken);
 
-  return NextResponse.json({}, { status: 200 });
+      if (decodedToken) {
+        //Generate session cookie
+
+        const expiresIn = 60 * 60 * 24 * 30 * 1000; //30 days
+
+        const sessionCookie = await auth().createSessionCookie(idToken, {
+          expiresIn,
+        });
+        const options = {
+          name: "session",
+          value: sessionCookie,
+          maxAge: expiresIn,
+          httpOnly: true,
+          secure: true,
+        };
+
+        //Add the cookie to the browser
+        cookies().set(options);
+      }
+    } else {
+      return new CustomError("Unauthorized", 401);
+    }
+
+    return NextResponse.json(
+      {
+        data: {
+          message: "Logged In successfull",
+          isLogged: true,
+        },
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return handleApiError(error);
+  }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const session = cookies().get("session")?.value || "";
 
   //Validate if the cookie exist in the request
@@ -55,5 +73,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ isLogged: false }, { status: 401 });
   }
 
-  return NextResponse.json({ isLogged: true }, { status: 200 });
+  return NextResponse.json(
+    {
+      data: {
+        message: "Login successfull!",
+        isLogged: true,
+      },
+    },
+    { status: 200 }
+  );
 }
