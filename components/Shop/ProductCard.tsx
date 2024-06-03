@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { DisplayPrice } from "./ProductPageComps";
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({ product }: { product: any }) => {
   return (
     <Link
       href={`/shop/${product.slug}`}
