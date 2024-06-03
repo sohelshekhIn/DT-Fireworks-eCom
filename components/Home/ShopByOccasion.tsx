@@ -1,8 +1,8 @@
-import { NotFoundSapien } from "@/public/images";
 import { Occassion } from "@/types/category";
 import appUrl from "@/utils/apiCallHandler";
 import Image from "next/image";
 import Link from "next/link";
+import { OccassionFetchError } from "../Shop/ErrorComps";
 
 const ShopByOccasion = async () => {
   const getOccassionsFromCategories = async () => {
@@ -18,7 +18,7 @@ const ShopByOccasion = async () => {
   var occassions: Occassion[] = [];
   const data = await getOccassionsFromCategories();
   if (!data.data) {
-    return OccassionFetchError;
+    return <OccassionFetchError />;
   } else {
     occassions = data.data;
   }
@@ -60,26 +60,3 @@ const ShopByOccasion = async () => {
 };
 
 export default ShopByOccasion;
-
-const OccassionFetchError = () => {
-  return (
-    <section className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div className="max-w-2xl text-center mx-auto mb-10 lg:mb-14">
-        <Image
-          width={500}
-          height={500}
-          className="mx-auto"
-          src={NotFoundSapien}
-          alt="Occassion Not Found"
-        />
-        <h2 className="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
-          Occassions Not Found
-        </h2>
-        <p className="mt-1 text-gray-600 dark:text-neutral-400">
-          There was an error fetching occassions, refresh the page or try again
-          later.
-        </p>
-      </div>
-    </section>
-  );
-};
