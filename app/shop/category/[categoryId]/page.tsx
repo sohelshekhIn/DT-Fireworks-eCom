@@ -68,10 +68,10 @@ const CategoryNotFound = () => {
           alt="A male standing in nowhere describing the Category user was looking is not found & does not exists"
         />
         <h2 className="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
-          Category Not Found
+          Category/Occassion Not Found
         </h2>
         <p className="mt-1 text-gray-600 dark:text-neutral-400">
-          The category you are looking for is not available.
+          The category/occassion you are looking for is not available.
         </p>
         <Link
           href="/shop"
