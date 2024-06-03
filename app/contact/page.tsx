@@ -1,3 +1,5 @@
+import { Breadcrumb } from "@/components/Breadcrumb";
+
 const ContactPage = () => {
   return (
     <div className="max-w-7xl px-4 lg:px-8 py-12 lg:py-24 mx-auto">
@@ -6,7 +8,18 @@ const ContactPage = () => {
           Contacts
         </h2>
       </div>
-
+      <Breadcrumb
+        crumbs={[
+          {
+            name: "Home",
+            href: "/",
+          },
+          {
+            name: "Contact",
+            href: "/contact/",
+          },
+        ]}
+      />
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-center gap-6 md:gap-8 lg:gap-12">
         <div className="aspect-w-16 aspect-h-6 lg:aspect-h-16 overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800">
           <iframe

@@ -1,3 +1,4 @@
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { NotFoundSapien } from "@/public/images";
 import { Category } from "@/types/category";
 import appUrl from "@/utils/apiCallHandler";
@@ -37,7 +38,12 @@ const ShopPage = async () => {
             Buy from our extensive range of products & categories
           </p>
         </div>
-
+        <Breadcrumb
+          crumbs={[
+            { name: "Home", href: "/" },
+            { name: "Shop", href: "/shop" },
+          ]}
+        />
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
           {categories.map((category: Category) => (
             <Link

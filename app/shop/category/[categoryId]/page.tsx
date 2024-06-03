@@ -1,3 +1,4 @@
+import { Breadcrumb } from "@/components/Breadcrumb";
 import {
   CategoryNotFound,
   NoProductsFound,
@@ -66,6 +67,22 @@ const CategoryPage = async ({
         category && (
           <>
             <CategoryHeader category={category} />
+            <Breadcrumb
+              crumbs={[
+                {
+                  name: "Home",
+                  href: "/",
+                },
+                {
+                  name: "Shop",
+                  href: "/shop/",
+                },
+                {
+                  name: category.name,
+                  href: "/shop/category/" + category.id + "/page",
+                },
+              ]}
+            />
             <NoProductsFound />
           </>
         )
@@ -83,6 +100,22 @@ const CategoryPage = async ({
     "
       >
         <CategoryHeader category={category} />
+        <Breadcrumb
+          crumbs={[
+            {
+              name: "Home",
+              href: "/",
+            },
+            {
+              name: "Shop",
+              href: "/shop/",
+            },
+            {
+              name: category.name,
+              href: "/shop/category/" + category.id + "/page",
+            },
+          ]}
+        />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10 lg:mt-14">
           {products &&
             products.map((product) => (

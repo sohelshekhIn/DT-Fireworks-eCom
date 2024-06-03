@@ -1,3 +1,4 @@
+import { Breadcrumb } from "@/components/Breadcrumb";
 import {
   NoProductsFound,
   OccassionNotFound,
@@ -72,6 +73,22 @@ const OccasionPage = async ({
         occassion && (
           <>
             <OccassionHeader occassion={occassion} />
+            <Breadcrumb
+              crumbs={[
+                {
+                  name: "Home",
+                  href: "/",
+                },
+                {
+                  name: "Shop",
+                  href: "/shop/",
+                },
+                {
+                  name: occassion.name,
+                  href: "/shop/category/" + occassion.id + "/page",
+                },
+              ]}
+            />
             <NoProductsFound />
           </>
         )
@@ -89,13 +106,27 @@ const OccasionPage = async ({
     "
       >
         <OccassionHeader occassion={occassion} />
-        {
-          <div className="">
-            {products.map((product: Product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        }
+        <Breadcrumb
+          crumbs={[
+            {
+              name: "Home",
+              href: "/",
+            },
+            {
+              name: "Shop",
+              href: "/shop/",
+            },
+            {
+              name: occassion.name,
+              href: "/shop/category/" + occassion.id + "/page",
+            },
+          ]}
+        />
+        <div className="">
+          {products.map((product: Product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </section>
     )
   );
