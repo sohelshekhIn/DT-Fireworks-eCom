@@ -27,7 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body className={poppins.className + " relative"}>
+        <body className={poppins.className + " relative scroll-smooth"}>
+          <span id="top-of-page" />
           <Navbar />
           <section className="w-full ">
             <main className="max-w-7xl w-full flex flex-wrap px-2 md:px-8 mx-auto">
