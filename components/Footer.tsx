@@ -15,6 +15,12 @@ const Footer = () => {
           <p className="mt-3 text-xs sm:text-sm text-gray-600 dark:text-neutral-400">
             © 2024 Dhanjibhai & Trikamlal Fireworks.
           </p>
+          <Link
+            className="text-primary mt-10 text-sm font-bold "
+            href="#top-of-page"
+          >
+            Move to top of page
+          </Link>
         </div>
 
         <div>
