@@ -10,5 +10,12 @@ export async function POST(request: NextRequest) {
   };
 
   cookies().set(options);
-  return NextResponse.json({}, { status: 200 });
+  return NextResponse.json(
+    {
+      data: {
+        message: "Logged out successfully!",
+      },
+    },
+    { status: 200 }
+  );
 }
