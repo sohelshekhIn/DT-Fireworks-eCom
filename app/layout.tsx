@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import PrelineScript from "@/components/PrelineScript";
 import Footer from "@/components/Footer";
 import CookiesConsentPopup from "@/components/CookiesConsent";
+import { AuthProvider } from "@/context/AuthContext";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -25,17 +26,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className + " relative"}>
-        <Navbar />
-        <section className="w-full ">
-          <main className="max-w-7xl w-full flex flex-wrap px-2 md:px-8 mx-auto">
-            {children}
-          </main>
-        </section>
-        {/* <CookiesConsentPopup /> */}
-        <Footer />
-      </body>
-      <PrelineScript />
+      <AuthProvider>
+        <body className={poppins.className + " relative"}>
+          <Navbar />
+          <section className="w-full ">
+            <main className="max-w-7xl w-full flex flex-wrap px-2 md:px-8 mx-auto">
+              {children}
+            </main>
+          </section>
+          {/* <CookiesConsentPopup /> */}
+          <Footer />
+        </body>
+        <PrelineScript />
+      </AuthProvider>
     </html>
   );
 }
