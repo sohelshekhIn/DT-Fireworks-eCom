@@ -9,12 +9,10 @@ export const LogOutButton = () => {
   const router = useRouter();
   const handleLogout = () => {
     auth.signOut().then(() => {
-      console.log("Sign-out successful.");
       fetch("/api/logout", {
         method: "POST",
       }).then((response) => {
         if (response.status === 200) {
-          console.log("Cookie removed");
           router.push("/login");
         }
       });
@@ -40,7 +38,6 @@ export const SignInWithGoogleButton = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
         const idToken = await result.user.getIdToken();
-        console.log(idToken);
 
         fetch("/api/login", {
           method: "POST",
@@ -49,7 +46,6 @@ export const SignInWithGoogleButton = () => {
           },
         }).then((response) => {
           if (response.status === 200) {
-            console.log("Cookie set");
             router.push("/protected/client");
           }
         });
