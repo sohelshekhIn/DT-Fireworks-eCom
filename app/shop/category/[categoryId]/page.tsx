@@ -30,6 +30,10 @@ const CategoryPage = async ({
         },
       }
     );
+    const status = res.status;
+    if (status === 404) {
+      return { data: null };
+    }
     const data = await res.json();
     return data;
   };
@@ -116,7 +120,7 @@ const CategoryPage = async ({
             },
           ]}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10 lg:mt-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 lg:mt-14">
           {products &&
             products.map((product) => (
               <ProductCard key={product.id} product={product} />
