@@ -139,7 +139,7 @@ const DisplayPrice = ({
 
   return (
     <>
-      {product.onSale ? (
+      {product.discount.id ? (
         <div className="flex flex-col items-cente">
           <p
             className={`${secondaryPriceFontSize} font-semibold text-gray-500 dark:text-neutral-400 line-through`}
@@ -150,13 +150,13 @@ const DisplayPrice = ({
             <p
               className={`${primaryPriceFontSize} font-semibold text-primary dark:text-primaryDark`}
             >
-              ₹{product.price * (1 - product.discount / 100)}
+              ₹{product.price * (1 - product.discount.value / 100)}
             </p>
             <p>
               <span
                 className={`${salePriceDiscountFontSize} font-semibold text-primary/70 dark:text-primaryDark`}
               >
-                {product.discount}% off
+                {product.discount.value}% off
               </span>
             </p>
           </span>

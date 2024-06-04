@@ -3,16 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { DisplayPrice } from "./ProductPageComps";
 
-const ProductCard = ({ product }: { product: any }) => {
+const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Link
-      href={`/shop/${product.slug}`}
-      className="flex flex-col bg-white hover:shadow-md max-w-80 min-w-60 border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
+      href={`/shop/product/${product.id}`}
+      className="flex flex-col bg-white hover:shadow-md max-w-80 min-w-60 border shadow-sm rounded-md dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70"
     >
       <Image
         width={400}
         height={400}
-        className="w-full h-auto rounded-t-xl"
+        className="w-full h-auto rounded-t-md object-cover"
         src={product.images[0]}
         alt={`Image of ${product.name}`}
       />
@@ -21,7 +21,7 @@ const ProductCard = ({ product }: { product: any }) => {
           {product.name}
         </h3>
         <p className="mt-1 text-gray-500 dark:text-neutral-400">
-          {product.description}{" "}
+          {"No description available"}
         </p>
         <div className="flex items-center justify-between mt-4">
           <DisplayPrice product={product} size="small" />

@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
           querySnapshot.forEach(async (doc) => {
             products.push({
               id: doc.id,
+              description: doc.data().description,
               product_id: doc.data().product_id,
               name: doc.data().name,
               price: doc.data().price,
