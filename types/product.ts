@@ -4,7 +4,10 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  images: string[];
+  media: {
+    images: string[];
+    videos: string[];
+  };
   categories: string[];
   // rating: number;
   // stock: number;

@@ -4,8 +4,20 @@ import Image from "next/image";
 const ProductMediaCarousel = ({
   productMediaList,
 }: {
-  productMediaList: string[];
+  productMediaList: {
+    images: string[];
+    videos: string[];
+  };
 }) => {
+  var totalMediaLength: number = 0;
+  if (productMediaList.images) {
+    totalMediaLength += productMediaList.images.length;
+  }
+  if (productMediaList.videos) {
+    totalMediaLength += productMediaList.videos.length;
+  }
+  console.log("totalMediaLength", totalMediaLength);
+
   return (
     <div
       data-hs-carousel='{
@@ -15,19 +27,8 @@ const ProductMediaCarousel = ({
     >
       <div className="hs-carousel relative overflow-hidden min-h-[60vh] w-full bg-white rounded-lg">
         <div className="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700 opacity-0">
-          {productMediaList.map((media, index) =>
-            productMediaList.length - 1 === index ? (
-              <div key="yt-video-iframe" className="hs-carousel-slide">
-                <iframe
-                  className="w-full h-full"
-                  src={media}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            ) : (
+          {productMediaList.images &&
+            productMediaList.images.map((media, index) => (
               <div key={index} className="hs-carousel-slide">
                 <Image
                   width={700}
@@ -37,8 +38,23 @@ const ProductMediaCarousel = ({
                   alt="Image Description"
                 />
               </div>
-            )
-          )}
+            ))}
+          {productMediaList.videos &&
+            productMediaList.videos.map((media, index) => (
+              <div
+                key="yt-video-iframe"
+                className="hs-carousel-slide pb-6 bg-black"
+              >
+                <iframe
+                  className="w-full h-full"
+                  src={media}
+                  title="Youtube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ))}
         </div>
       </div>
 
@@ -88,12 +104,21 @@ const ProductMediaCarousel = ({
       </button>
 
       <div className="hs-carousel-pagination flex justify-center absolute bottom-3 start-0 end-0 space-x-2">
-        {productMediaList.map((_, index) => (
+        {/* {productMediaList.map((_, index) => (
           <span
             key={index}
             className="hs-carousel-active:bg-primaryDark/50 hs-carousel-active:border-primaryDark size-3 border border-gray-400 rounded-full cursor-pointer dark:border-neutral-600 dark:hs-carousel-active:bg-blue-500 dark:hs-carousel-active:border-blue-500"
           ></span>
-        ))}
+        ))} */}
+        {
+          // loop 5 times anad return hi 5 times
+          Array.from({ length: totalMediaLength }, (_, index) => (
+            <span
+              key={index}
+              className="hs-carousel-active:bg-primaryDark/50 hs-carousel-active:border-primaryDark size-3 border border-gray-400 rounded-full cursor-pointer dark:border-neutral-600 dark:hs-carousel-active:bg-blue-500 dark:hs-carousel-active:border-blue-500"
+            ></span>
+          ))
+        }
       </div>
     </div>
   );
@@ -114,14 +139,17 @@ const SingleProductImage = ({ image }: { image: string }) => {
 const CategoryBagde = ({ categories }: { categories: string[] }) => {
   return (
     <div className="flex flex-wrap gap-2">
-      {categories.map((category) => (
-        <span
-          key={category}
-          className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-secondary/50 text-gray-800 dark:bg-secondary/50 dark:text-white"
-        >
-          {category}
-        </span>
-      ))}
+      {categories.map((category) => {
+        if (category === "all-fireworks") return <></>;
+        return (
+          <span
+            key={category}
+            className="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-secondary/50 text-gray-800 dark:bg-secondary/50 dark:text-white"
+          >
+            {category}
+          </span>
+        );
+      })}
     </div>
   );
 };
@@ -135,7 +163,8 @@ const DisplayPrice = ({
 }) => {
   const secondaryPriceFontSize = size === "small" ? "text-base" : "text-xl"; // for strike through price
   const primaryPriceFontSize = size === "small" ? "text-xl" : "text-4xl"; // for sale price and normal price when not on sale
-  const salePriceDiscountFontSize = size === "small" ? "text-sm" : "text-base"; // for discount percentage
+  const salePriceDiscountFontSize =
+    size === "small" ? "text-base" : "text-base"; // for discount percentage
 
   return (
     <>
