@@ -12,16 +12,18 @@ const ProductCard = ({ product }: { product: Product }) => {
       <Image
         width={400}
         height={400}
-        className="w-full h-auto rounded-t-md object-cover"
-        src={product.images[0]}
+        className="w-full h-72 rounded-t-md object-cover"
+        src={product.media.images[0]}
         alt={`Image of ${product.name}`}
       />
-      <div className="p-4 md:p-5">
+      <div className="p-4 md:p-5 mt-5">
         <h3 className="text-lg font-bold text-gray-800 dark:text-white">
           {product.name}
         </h3>
-        <p className="mt-1 text-gray-500 dark:text-neutral-400">
-          {"No description available"}
+        <p className="mt-1 line-clamp-none md:line-clamp-2 text-gray-500 dark:text-neutral-400">
+          No description available Lorem ipsum dolor, sit amet consectetur
+          adipisicing elit. Voluptates odio nisi repellat corporis, eveniet
+          velit voluptatum sint error optio mollitia?
         </p>
         <div className="flex items-center justify-between mt-4">
           <DisplayPrice product={product} size="small" />

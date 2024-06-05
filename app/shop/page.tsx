@@ -38,12 +38,7 @@ const ShopPage = async () => {
             Buy from our extensive range of products & categories
           </p>
         </div>
-        <Breadcrumb
-          crumbs={[
-            { name: "Home", href: "/" },
-            { name: "Shop", href: "/shop" },
-          ]}
-        />
+        <Breadcrumb crumbs={[{ name: "Shop", href: "/shop" }]} />
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
           {categories.map((category: Category) => (
             <Link

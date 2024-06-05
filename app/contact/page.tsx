@@ -11,10 +11,6 @@ const ContactPage = () => {
       <Breadcrumb
         crumbs={[
           {
-            name: "Home",
-            href: "/",
-          },
-          {
             name: "Contact",
             href: "/contact/",
           },

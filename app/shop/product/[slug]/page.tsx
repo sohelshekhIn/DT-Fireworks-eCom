@@ -9,6 +9,7 @@ import QuantitySelector from "@/components/Shop/QuantitySelector";
 import { redirect } from "next/navigation";
 import appUrl from "@/utils/apiCallHandler";
 import { Product } from "@/types/product";
+import { Breadcrumb } from "@/components/Breadcrumb";
 const ProductPage = async ({
   params,
 }: {
@@ -48,14 +49,21 @@ const ProductPage = async ({
   return (
     product && (
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <Breadcrumb
+          crumbs={[
+            { name: "Shop", href: "/shop" },
+            { name: product.name, href: `/shop/product/${product.id}` },
+          ]}
+        />
         <div className="relative p-0 md:p-5">
           <div className="relative z-10 lg:grid lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-7">
               <div className="relative">
-                {product.images.length > 1 ? (
-                  <ProductMediaCarousel productMediaList={product.images} />
+                {product.media.images.length > 1 ||
+                product.media.videos.length > 1 ? (
+                  <ProductMediaCarousel productMediaList={product.media} />
                 ) : (
-                  <SingleProductImage image={product.images[0]} />
+                  <SingleProductImage image={product.media.images[0]} />
                 )}
 
                 <ThreeLineStrikesDesignElement />
@@ -84,7 +92,6 @@ const ProductPage = async ({
               </div>
             </div>
           </div>
-
           <div className="hidden absolute inset-0 md:grid grid-cols-12 size-full">
             <div className="col-span-full lg:col-span-7 lg:col-start-6 bg-gray-100 w-full h-full rounded-xl dark:bg-neutral-800"></div>
           </div>

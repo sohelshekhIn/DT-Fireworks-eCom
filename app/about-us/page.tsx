@@ -12,10 +12,6 @@ const AboutUsPage = () => {
       <Breadcrumb
         crumbs={[
           {
-            name: "Home",
-            href: "/",
-          },
-          {
             name: "About Us",
             href: "/about-us/",
           },

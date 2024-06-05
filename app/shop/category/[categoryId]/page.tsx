@@ -74,10 +74,6 @@ const CategoryPage = async ({
             <Breadcrumb
               crumbs={[
                 {
-                  name: "Home",
-                  href: "/",
-                },
-                {
                   name: "Shop",
                   href: "/shop/",
                 },
@@ -106,10 +102,6 @@ const CategoryPage = async ({
         <CategoryHeader category={category} />
         <Breadcrumb
           crumbs={[
-            {
-              name: "Home",
-              href: "/",
-            },
             {
               name: "Shop",
               href: "/shop/",

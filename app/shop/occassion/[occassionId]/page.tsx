@@ -76,10 +76,6 @@ const OccasionPage = async ({
             <Breadcrumb
               crumbs={[
                 {
-                  name: "Home",
-                  href: "/",
-                },
-                {
                   name: "Shop",
                   href: "/shop/",
                 },
@@ -108,10 +104,6 @@ const OccasionPage = async ({
         <OccassionHeader occassion={occassion} />
         <Breadcrumb
           crumbs={[
-            {
-              name: "Home",
-              href: "/",
-            },
             {
               name: "Shop",
               href: "/shop/",
