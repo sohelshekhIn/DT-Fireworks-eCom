@@ -21,9 +21,6 @@ export async function GET(req: NextRequest) {
       );
       await getDocs(productQuery)
         .then((querySnapshot) => {
-          console.log("Query Snapshot: ", querySnapshot.empty);
-          console.log("Query Snapshot: ", querySnapshot.size);
-
           querySnapshot.forEach(async (doc) => {
             products.push({
               id: doc.id,
@@ -31,7 +28,7 @@ export async function GET(req: NextRequest) {
               product_id: doc.data().product_id,
               name: doc.data().name,
               price: doc.data().price,
-              images: doc.data().images,
+              media: doc.data().media,
               categories: doc.data().categories,
               discount: doc.data().discount,
             });
