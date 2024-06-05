@@ -1,6 +1,29 @@
+import { Category } from "@/types/category";
+import appUrl from "@/utils/apiCallHandler";
 import Link from "next/link";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const getCategories = async () => {
+    const res = await fetch(appUrl("/api/categories/all"), {
+      next: {
+        tags: ["categories", "navbar"],
+      },
+    });
+
+    const status = res.status;
+    if (status === 404) {
+      return { data: null };
+    }
+    const data = await res.json();
+    return data;
+  };
+
+  var categories: Category[] | null = null;
+  const data = await getCategories();
+  if (data.data || data.data.length !== 0) {
+    categories = data.data;
+  }
+
   return (
     <header className="sticky top-0 bg-white dark:bg-black flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full py-7 mb-5">
       <nav
@@ -111,27 +134,23 @@ const Navbar = () => {
                 Categories
               </button>
 
-              <div className="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 sm:w-48 hidden z-10 bg-white sm:shadow-md rounded-lg p-2 dark:bg-neutral-800 sm:dark:border dark:border-neutral-700 dark:divide-neutral-700 before:absolute top-full sm:border before:-top-5 before:start-0 before:w-full before:h-5">
-                <Link
-                  className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-secondaryDark dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                  href="#"
-                >
-                  About
-                </Link>
-
-                <Link
-                  className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-secondaryDark dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                  href="#"
-                >
-                  Downloads
-                </Link>
-                <Link
-                  className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-secondaryDark dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
-                  href="# "
-                >
-                  Team Account
-                </Link>
-              </div>
+              {categories && categories.length > 0 ? (
+                categories.map((category) => (
+                  <div
+                    key={"navbar-sublink-category-" + category.id}
+                    className="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 sm:w-48 hidden z-10 bg-white sm:shadow-md rounded-lg p-2 dark:bg-neutral-800 sm:dark:border dark:border-neutral-700 dark:divide-neutral-700 before:absolute top-full sm:border before:-top-5 before:start-0 before:w-full before:h-5"
+                  >
+                    <Link
+                      className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-secondaryDark dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+                      href={`/shop/category/${category.id}`}
+                    >
+                      {category.name}
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <FallBackCategories />
+              )}
             </div>
             <div>
               <Link
@@ -157,3 +176,16 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const FallBackCategories = () => {
+  return (
+    <div className="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 sm:w-48 hidden z-10 bg-white sm:shadow-md rounded-lg p-2 dark:bg-neutral-800 sm:dark:border dark:border-neutral-700 dark:divide-neutral-700 before:absolute top-full sm:border before:-top-5 before:start-0 before:w-full before:h-5">
+      <Link
+        className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-secondaryDark dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
+        href="/shop/"
+      >
+        All Categories
+      </Link>
+    </div>
+  );
+};
