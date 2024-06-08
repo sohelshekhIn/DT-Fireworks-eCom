@@ -1,7 +1,9 @@
 "use client";
 
 import { auth } from "@/lib/firebase-config";
+import { getAuthErrorMessage } from "@/utils/authErrorHandler";
 import { signInWithEmailAndPassword, AuthError } from "firebase/auth";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -17,6 +19,7 @@ const SignInForm = () => {
       | React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+    setError(null);
 
     // check if email and password are empty
     if (!email || !password) {
@@ -32,8 +35,8 @@ const SignInForm = () => {
     }
 
     // check if password is at least 8 characters and contains a number
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?:.*[~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?])[A-Za-z\d\s~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?]{8,}$/;
+    const passwordRegex: RegExp =
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
     if (!passwordRegex.test(password)) {
       setError(
         "Password must be minimum 8 characters, contain a number, and a special character"
@@ -48,6 +51,9 @@ const SignInForm = () => {
         headers: {
           Authorization: `Bearer ${idToken}`,
           credentials: "same-origin",
+        },
+        next: {
+          revalidate: 0,
         },
       })
         .then((response) => {
@@ -67,15 +73,7 @@ const SignInForm = () => {
         setSignInCookieRequest(idToken);
       })
       .catch((error) => {
-        if (error.code === "auth/user-not-found") {
-          setError("User not found");
-        } else if (error.code === "auth/wrong-password") {
-          setError("Wrong password");
-        } else if (error.code === "auth/too-many-requests") {
-          setError("Too many requests. Try again later");
-        } else {
-          setError(error.message);
-        }
+        setError(getAuthErrorMessage(error.code, "email"));
       });
   };
 
@@ -91,6 +89,7 @@ const SignInForm = () => {
               type="email"
               id="email"
               name="email"
+              placeholder="Enter email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
@@ -110,9 +109,6 @@ const SignInForm = () => {
               </svg>
             </div>
           </div>
-          <p className="hidden text-xs text-red-600 mt-2" id="email-error">
-            Please include a valid email address so we can get back to you
-          </p>
         </div>
 
         <div>
@@ -123,12 +119,13 @@ const SignInForm = () => {
             >
               Password
             </label>
-            <a
-              className="text-sm text-primary dark:text-primaryDark decoration-2 hover:underline font-medium"
+            <Link
+              tabIndex={-1}
+              className="text-sm text-primary/70 dark:text-primaryDark decoration-2 hover:underline font-medium"
               href="/forgot-password"
             >
               Forgot password?
-            </a>
+            </Link>
           </div>
           <div className="relative">
             <input
@@ -195,7 +192,7 @@ const SignInForm = () => {
         </div>
 
         {error && (
-          <p className="text-red-500 dark:text-red-600/80 py-2 underline font-medium">
+          <p className="text-red-500 dark:text-red-600/80 py-2 font-medium">
             {error}
           </p>
         )}
