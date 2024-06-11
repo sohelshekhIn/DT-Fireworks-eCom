@@ -1,8 +1,11 @@
 "use client";
 
 import { useShopContext } from "@/context/ShopContext";
+import { CoupanCode } from "@/types/coupan";
 import { CartProduct, Product } from "@/types/product";
+import appUrl from "@/utils/apiCallHandler";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 import { toast } from "react-toastify";
 
@@ -143,7 +146,7 @@ const CoupanCodeComp = () => {
   const { setCoupanCode, cartTotal, coupanCode } = useShopContext();
   const coupanCodeInput = useRef<HTMLInputElement>(null);
 
-  const checkCoupanCode = () => {
+  const checkCoupanCode = async () => {
     const coupanCodeValue = coupanCodeInput.current?.value;
     if (cartTotal === 0) {
       toast.error("Cart is empty");
@@ -152,24 +155,33 @@ const CoupanCodeComp = () => {
     if (!coupanCodeValue) {
       toast.error("Please enter a coupan code");
     }
-    // check if coupan code is valid
-    // if valid, apply discount
-    const res = {
-      code: "SOHEL",
-      name: "Sohel",
-      discount: 10,
-      isPercentage: true,
-      minOrderValue: 1000,
-      maxDiscount: 100,
-    };
-    if (coupanCodeValue === res.code) {
-      if (cartTotal < res.minOrderValue) {
-        toast.error(
-          "Offer is valid for orders above " + res.minOrderValue + " only",
-        );
+
+    const res = await fetch(
+      appUrl("/api/coupan/one?coupanCode=" + coupanCodeValue),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        next: {
+          tags: ["coupans"],
+          revalidate: 60 * 60 * 10, // 10 hours
+        },
+      },
+    );
+
+    if (res.status !== 200) {
+      toast.error("Invalid coupan code");
+      return;
+    }
+    const { data }: { data: CoupanCode } = await res.json();
+
+    if (coupanCodeValue === data.code) {
+      if (cartTotal < data.minOrderValue) {
+        toast.error("Offer is valid for orders above " + 500 + " only");
         return;
       }
-      setCoupanCode(res);
+      setCoupanCode(data);
       toast.success("Coupan code applied successfully");
     } else {
       toast.error("Invalid coupan code");
@@ -211,7 +223,7 @@ const CoupanCodeComp = () => {
           <div className="mt-5 w-full">
             <button
               onClick={checkCoupanCode}
-              className="w-full rounded-md bg-secondaryDark py-3 text-white"
+              className="w-full rounded-md bg-secondaryDark py-3 text-white hover:bg-secondaryDark/80"
             >
               Apply Coupan
             </button>
@@ -279,9 +291,11 @@ const CartSummary = () => {
               order
             </p>
           </div>
-          <button className="mt-5 w-full rounded-md bg-primary py-3 text-white">
-            Proceed to Checkout
-          </button>
+          <Link href="/cart/checkout">
+            <button className="mt-5 w-full rounded-md bg-primary py-3 text-white hover:bg-primaryDark">
+              Proceed to Checkout
+            </button>
+          </Link>
         </>
       )}
     </div>
