@@ -104,12 +104,6 @@ const ProductMediaCarousel = ({
       </button>
 
       <div className="hs-carousel-pagination flex justify-center absolute bottom-3 start-0 end-0 space-x-2">
-        {/* {productMediaList.map((_, index) => (
-          <span
-            key={index}
-            className="hs-carousel-active:bg-primaryDark/50 hs-carousel-active:border-primaryDark size-3 border border-gray-400 rounded-full cursor-pointer dark:border-neutral-600 dark:hs-carousel-active:bg-blue-500 dark:hs-carousel-active:border-blue-500"
-          ></span>
-        ))} */}
         {
           // loop 5 times anad return hi 5 times
           Array.from({ length: totalMediaLength }, (_, index) => (
