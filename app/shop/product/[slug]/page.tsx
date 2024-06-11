@@ -5,11 +5,13 @@ import {
   SingleProductImage,
   ThreeLineStrikesDesignElement,
 } from "@/components/Shop/ProductPageComps";
-import QuantitySelector from "@/components/Shop/QuantitySelector";
+
 import { redirect } from "next/navigation";
 import appUrl from "@/utils/apiCallHandler";
 import { Product } from "@/types/product";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { QuantitySelectorGroup } from "@/components/Shop/QuantitySelectors";
+import { AddToCartBtn } from "@/components/Shop/CartComps";
 const ProductPage = async ({
   params,
 }: {
@@ -82,12 +84,10 @@ const ProductPage = async ({
                 </p>
               </div>
               <div className="">
-                <QuantitySelector />
+                <QuantitySelectorGroup />
                 <div className="flex items-center justify-between mt-5">
                   <DisplayPrice product={product} />
-                  <button className="px-3 py-2 text-sm font-semibold text-white bg-primary hover:bg-primaryDark rounded-md dark:bg-primaryDark">
-                    Add to Cart
-                  </button>
+                  <AddToCartBtn product={product} />
                 </div>
               </div>
             </div>
