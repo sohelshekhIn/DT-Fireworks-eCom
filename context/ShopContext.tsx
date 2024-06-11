@@ -149,7 +149,6 @@ export const ShopContextProvider = ({
     setCartCount(count);
     setCartSavings(savings);
     setQty(1);
-    console.log(cartItems);
   }, [cartItems]);
 
   useEffect(() => {

@@ -16,7 +16,6 @@ const ProductMediaCarousel = ({
   if (productMediaList.videos) {
     totalMediaLength += productMediaList.videos.length;
   }
-  console.log("totalMediaLength", totalMediaLength);
 
   return (
     <div

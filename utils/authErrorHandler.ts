@@ -86,4 +86,4 @@ export function getAuthErrorMessage(
 // Example usage:
 // const errorCode = "auth/invalid-credential";
 // const authType: AuthType = "email";
-// console.log(getAuthErrorMessage(errorCode, authType)); // Output: "The credential is invalid or has expired."
+// getAuthErrorMessage(errorCode, authType); // Output: "The credential is invalid or has expired."

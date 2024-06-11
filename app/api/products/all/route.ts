@@ -32,7 +32,6 @@ export async function GET(req: NextRequest) {
               categories: doc.data().categories,
               discount: doc.data().discount,
             });
-            console.log(products);
           });
         })
         .catch((error) => {

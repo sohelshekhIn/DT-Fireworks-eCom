@@ -180,7 +180,6 @@ const CoupanCodeComp = () => {
   const removeCoupanCode = () => {
     setCoupanCode(null);
   };
-  console.log(coupanCode);
 
   return (
     <div className="bg-white dark:bg-neutral-900 shadow-sm dark:shadow-neutral-700/70 rounded-md p-8 mb-5">
@@ -239,7 +238,6 @@ const CartSummary = () => {
     shippingCharge,
     gstAmount,
   } = useShopContext();
-  console.log(orderTotal);
 
   return (
     <div className="bg-white dark:bg-neutral-900 shadow-sm dark:shadow-neutral-700/70 rounded-md p-8">
