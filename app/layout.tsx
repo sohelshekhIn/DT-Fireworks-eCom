@@ -4,8 +4,10 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import PrelineScript from "@/components/PrelineScript";
 import Footer from "@/components/Footer";
-import CookiesConsentPopup from "@/components/CookiesConsent";
 import { AuthProvider } from "@/context/AuthContext";
+import { ShopContextProvider } from "@/context/ShopContext";
+import { Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -28,15 +30,29 @@ export default function RootLayout({
     <html lang="en">
       <AuthProvider>
         <body className={poppins.className + " relative scroll-smooth"}>
-          <span id="top-of-page" />
-          <Navbar />
-          <section className="w-full ">
-            <main className="max-w-7xl w-full flex flex-wrap px-2 md:px-8 mx-auto">
-              {children}
-            </main>
-          </section>
-          {/* <CookiesConsentPopup /> */}
-          <Footer />
+          <ShopContextProvider>
+            <span id="top-of-page" />
+            <Navbar />
+            <section className="w-full ">
+              <main className="max-w-7xl w-full flex flex-wrap px-2 md:px-8 mx-auto">
+                {children}
+              </main>
+            </section>
+            <Footer />
+            <ToastContainer
+              position="bottom-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              transition={Bounce}
+            />
+          </ShopContextProvider>
         </body>
         <PrelineScript />
       </AuthProvider>
