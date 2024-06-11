@@ -17,3 +17,8 @@ export interface Product {
     value: number; // percentage
   };
 }
+
+export interface CartProduct extends Product {
+  quantity: number;
+  total: number;
+}
