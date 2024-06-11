@@ -9,17 +9,18 @@ import {
 
 const CartPage = () => {
   return (
-    <div className="w-full mx-auto py-10 pb-36">
-      <div className="py-16">
-        <h1 className="font-bold text-xl md:text-3xl text-center">Your Cart</h1>
+    <div className="mx-auto w-full py-0 pb-36 lg:py-10">
+      <div className="py-5 lg:py-16">
+        <h1 className="text-center text-2xl font-bold md:text-3xl">
+          Your Cart
+        </h1>
         <Breadcrumb crumbs={[{ name: "Cart", href: "/cart" }]} />
       </div>
-      <div className="flex flex-col lg:flex-row w-full">
+      <div className="flex w-full flex-col pt-5 lg:flex-row">
         <div className="w-full lg:w-2/3">
           <CartProductCard />
         </div>
         <div className="w-full lg:w-1/3">
-          {/* coupan entering section */}
           <CoupanCodeComp />
           <CartSummary />
         </div>

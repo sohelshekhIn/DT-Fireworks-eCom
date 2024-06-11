@@ -11,7 +11,7 @@ const AddToCartBtn = ({ product }: { product: Product }) => {
   return (
     <button
       onClick={() => addProductToCart(product)}
-      className="px-3 py-2 text-sm font-semibold text-white bg-primary hover:bg-primaryDark rounded-md dark:bg-primaryDark"
+      className="rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white hover:bg-primaryDark dark:bg-primaryDark"
     >
       Add to Cart
     </button>
@@ -31,11 +31,11 @@ const CartQuantitySelector = ({
       <button
         type="button"
         disabled={quantity === 1}
-        className="size-10 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
+        className="inline-flex size-10 items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
         onClick={() => updateProductQty(id, "decrease")}
       >
         <svg
-          className="flex-shrink-0 size-3.5"
+          className="size-3.5 flex-shrink-0"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -50,7 +50,7 @@ const CartQuantitySelector = ({
         </svg>
       </button>
       <input
-        className="p-0 w-6 bg-transparent border-0 text-gray-800 text-center focus:ring-0 dark:text-white"
+        className="w-6 border-0 bg-transparent p-0 text-center text-gray-800 focus:ring-0 dark:text-white"
         type="text"
         readOnly
         value={quantity}
@@ -58,11 +58,11 @@ const CartQuantitySelector = ({
       <button
         disabled={quantity === 20}
         type="button"
-        className="size-10 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
+        className="inline-flex size-10 items-center justify-center gap-x-2 rounded-md border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
         onClick={() => updateProductQty(id, "increase")}
       >
         <svg
-          className="flex-shrink-0 size-3.5"
+          className="size-3.5 flex-shrink-0"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
@@ -84,51 +84,50 @@ const CartQuantitySelector = ({
 const CartProductCard = () => {
   const { cartItems, removeProductFromCart } = useShopContext();
   return (
-    <div
-      className="
-    gap-5"
-    >
+    <div className="gap-5">
       {cartItems.length === 0 ? (
-        <div className="flex justify-center items-center h-96">
+        <div className="flex h-96 items-center justify-center">
           <p className="text-lg text-gray-500">Your cart is empty</p>
         </div>
       ) : (
         cartItems.map((product) => {
           return (
-            <div className="p-8 border-b">
-              <div className="flex">
-                <div className="w-1/4">
+            <div className="border-b p-8">
+              <div className="flex flex-col lg:flex-row">
+                <div className="mb-5 w-full lg:mb-0 lg:w-1/4">
                   <Image
                     src={product.media.images[0]}
                     alt="product"
                     width={200}
                     height={200}
-                    className="h-32 aspect-square object-contain rounded-md"
+                    className="aspect-square h-32 w-full rounded-md object-contain"
                   />
                 </div>
-                <div className="w-3/4 flex px-4 justify-between">
+                <div className="flex w-full flex-col px-4 lg:w-3/4 lg:flex-row">
                   <div className="">
-                    <h2 className="font-bold text-lg">{product.name}</h2>
-                    <p className="text-sm text-gray-500 line-clamp-2">
+                    <h2 className="text-lg font-bold">{product.name}</h2>
+                    <p className="line-clamp-1 text-sm text-gray-500 lg:line-clamp-2">
                       {product.description}
                     </p>
                     <div className="mt-5">
                       <CartProductPrice id={product.id} />
                     </div>
                   </div>
-                  <div className="">
-                    <CartQuantitySelector
-                      id={product.id}
-                      quantity={product.quantity}
-                    />
-                  </div>
-                  <div className="p-2">
-                    <button
-                      onClick={() => removeProductFromCart(product.id)}
-                      className="underline"
-                    >
-                      Remove
-                    </button>
+                  <div className="mt-3 flex w-full flex-row-reverse justify-between lg:flex-row lg:justify-around">
+                    <div>
+                      <CartQuantitySelector
+                        id={product.id}
+                        quantity={product.quantity}
+                      />
+                    </div>
+                    <div className="p-2">
+                      <button
+                        onClick={() => removeProductFromCart(product.id)}
+                        className="underline"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -166,7 +165,7 @@ const CoupanCodeComp = () => {
     if (coupanCodeValue === res.code) {
       if (cartTotal < res.minOrderValue) {
         toast.error(
-          "Offer is valid for orders above " + res.minOrderValue + " only"
+          "Offer is valid for orders above " + res.minOrderValue + " only",
         );
         return;
       }
@@ -182,8 +181,8 @@ const CoupanCodeComp = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-neutral-900 shadow-sm dark:shadow-neutral-700/70 rounded-md p-8 mb-5">
-      <h2 className="font-bold text-xl mb-5">Coupan Code</h2>
+    <div className="mb-5 rounded-md bg-white p-8 shadow-sm dark:bg-neutral-900 dark:shadow-neutral-700/70">
+      <h2 className="mb-5 text-xl font-bold">Coupan Code</h2>
       {coupanCode ? (
         <>
           <div className="flex justify-between">
@@ -195,7 +194,7 @@ const CoupanCodeComp = () => {
           <div className="mt-5 w-full">
             <button
               onClick={removeCoupanCode}
-              className="w-full bg-secondaryDark text-center text-white py-3 rounded-md"
+              className="w-full rounded-md bg-secondaryDark py-3 text-center text-white"
             >
               Remove Coupan
             </button>
@@ -207,12 +206,12 @@ const CoupanCodeComp = () => {
             ref={coupanCodeInput}
             type="text"
             placeholder="Enter your coupan code"
-            className="w-full border border-gray-200 dark:border-neutral-700/70 rounded-md p-3"
+            className="w-full rounded-md border border-gray-200 p-3 dark:border-neutral-700/70"
           />
           <div className="mt-5 w-full">
             <button
               onClick={checkCoupanCode}
-              className="w-full bg-secondaryDark text-white py-3 rounded-md"
+              className="w-full rounded-md bg-secondaryDark py-3 text-white"
             >
               Apply Coupan
             </button>
@@ -240,8 +239,8 @@ const CartSummary = () => {
   } = useShopContext();
 
   return (
-    <div className="bg-white dark:bg-neutral-900 shadow-sm dark:shadow-neutral-700/70 rounded-md p-8">
-      <h2 className="font-bold text-xl mb-5">Order Summary</h2>
+    <div className="rounded-md bg-white p-8 shadow-sm dark:bg-neutral-900 dark:shadow-neutral-700/70">
+      <h2 className="mb-5 text-xl font-bold">Order Summary</h2>
       <div className="flex justify-between">
         <p className="text-gray-500">Subtotal</p>
         <p className="text-gray-800 dark:text-neutral-200">₹ {cartTotal}</p>
@@ -270,17 +269,17 @@ const CartSummary = () => {
             </p>
           </div>
           <div className="flex justify-between">
-            <p className="font-bold text-lg">Total</p>
-            <p className="font-bold text-lg">₹ {orderTotal}</p>
+            <p className="text-lg font-bold">Total</p>
+            <p className="text-lg font-bold">₹ {orderTotal}</p>
           </div>
           <div>
-            <p className="text-green-500 text-sm mt-3">
+            <p className="mt-3 text-sm text-green-500">
               You are saving{" "}
               <span className="font-semibold">₹ {cartSavings}</span> on this
               order
             </p>
           </div>
-          <button className="w-full mt-5 bg-primary text-white py-3 rounded-md">
+          <button className="mt-5 w-full rounded-md bg-primary py-3 text-white">
             Proceed to Checkout
           </button>
         </>
