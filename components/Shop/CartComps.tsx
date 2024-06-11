@@ -157,7 +157,7 @@ const CoupanCodeComp = () => {
     }
 
     const res = await fetch(
-      appUrl("/api/coupan/one?coupanCode=" + coupanCodeValue),
+      appUrl("/api/coupans/one?coupanCode=" + coupanCodeValue),
       {
         method: "GET",
         headers: {
