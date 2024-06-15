@@ -94,6 +94,11 @@ export const ShopContextProvider = ({
         },
       ]);
     }
+    if (cartItems.length != 0) {
+      saveData({
+        cartItems: cartItems,
+      });
+    }
     toast.success("Product added to cart");
   };
 
@@ -121,10 +126,16 @@ export const ShopContextProvider = ({
         return item;
       }),
     );
+    saveData({
+      cartItems: cartItems,
+    });
   };
 
   const removeProductFromCart = (id: CartProduct["id"]) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    saveData({
+      cartItems: cartItems,
+    });
   };
 
   useEffect(() => {
@@ -150,6 +161,12 @@ export const ShopContextProvider = ({
     setCartCount(count);
     setCartSavings(savings);
     setQty(1);
+    saveData({
+      cartItems: cartItems,
+      cartTotal: total,
+      cartCount: count,
+      cartSavings: savings,
+    });
   }, [cartItems]);
 
   useEffect(() => {
@@ -157,12 +174,20 @@ export const ShopContextProvider = ({
       // if coupan is removed
       setCartSavings((prev) => prev - coupanDiscount);
       setCoupanDiscount(0);
+      saveData({
+        cartSavings: 0,
+        coupanDiscount: null,
+      });
       return;
     }
     if (!coupanCode) return; // if no coupan code
     if (cartTotal < coupanCode.minOrderValue) {
       setCoupanCode(null);
       setCoupanDiscount(0);
+      saveData({
+        coupanCode: null,
+        coupanDiscount: 0,
+      });
       toast.error(
         `Coupan code is valid for orders above ₹${coupanCode.minOrderValue} only`,
       );
@@ -176,6 +201,9 @@ export const ShopContextProvider = ({
     }
 
     setCoupanDiscount(discountAmount);
+    saveData({
+      coupanDiscount: discountAmount,
+    });
   }, [cartItems, coupanCode]);
 
   useEffect(() => {
@@ -183,20 +211,26 @@ export const ShopContextProvider = ({
       return;
     }
     // round up to 2 decimal places
-    const gstAmount = Math.round(
+    const tmpgstAmount = Math.round(
       (cartTotal - coupanDiscount) * (gstRate / 100),
     );
     setOrderTotal(cartTotal - coupanDiscount + gstAmount + shippingCharge);
-    setGstAmount(gstAmount);
+    setGstAmount(tmpgstAmount);
+    saveData({
+      orderTotal: cartTotal - coupanDiscount + gstAmount + shippingCharge,
+      gstAmount: tmpgstAmount,
+    });
   }, [cartTotal, coupanDiscount]);
 
   useEffect(() => {
-    if (!coupanDiscount) {
+    // also handle case when coupan is removed
+    if (cartTotal === 0) {
       return;
     }
-    // saveData({
-    //   cartSavings: cartSavings + coupanDiscount,
-    // });
+
+    saveData({
+      cartSavings: cartSavings + coupanDiscount,
+    });
     setCartSavings((prev) => prev + coupanDiscount);
   }, [coupanDiscount]);
 
