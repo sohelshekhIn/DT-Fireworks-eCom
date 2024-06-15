@@ -36,7 +36,9 @@ export async function POST(req: NextRequest) {
 
     const cartRef = doc(db, "cart-sessions", cartSession[0]);
 
-    setDoc(cartRef, data.data);
+    setDoc(cartRef, data.data, {
+      merge: true,
+    });
 
     //   set the cart session token in the cookie
     let options: any = {
