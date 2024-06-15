@@ -2,9 +2,10 @@
 
 import { CoupanCode } from "@/types/coupan";
 import { CartProduct, Product } from "@/types/product";
-import { set } from "firebase/database";
+import { saveData } from "@/utils/saveCartData";
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+
 interface ShopContextType {
   qty: number;
   increaseQty: () => void;
@@ -13,7 +14,7 @@ interface ShopContextType {
   cartItems: CartProduct[];
   updateProductQty: (
     id: CartProduct["id"],
-    operation: "increase" | "decrease"
+    operation: "increase" | "decrease",
   ) => void;
   removeProductFromCart: (id: CartProduct["id"]) => void;
   coupanCode: CoupanCode | null;
@@ -80,8 +81,8 @@ export const ShopContextProvider = ({
                 quantity: item.quantity + qty,
                 total: item.total + getProductPrice(product) * qty,
               }
-            : item
-        )
+            : item,
+        ),
       );
     } else {
       setCartItems((prevItems) => [
@@ -98,7 +99,7 @@ export const ShopContextProvider = ({
 
   const updateProductQty = (
     id: CartProduct["id"],
-    operation: "increase" | "decrease"
+    operation: "increase" | "decrease",
   ) => {
     setCartItems((prevItems) =>
       prevItems.map((item) => {
@@ -118,7 +119,7 @@ export const ShopContextProvider = ({
           }
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -154,6 +155,7 @@ export const ShopContextProvider = ({
   useEffect(() => {
     if (!coupanCode && cartTotal != 0) {
       // if coupan is removed
+      setCartSavings((prev) => prev - coupanDiscount);
       setCoupanDiscount(0);
       return;
     }
@@ -162,7 +164,7 @@ export const ShopContextProvider = ({
       setCoupanCode(null);
       setCoupanDiscount(0);
       toast.error(
-        `Coupan code is valid for orders above ₹${coupanCode.minOrderValue} only`
+        `Coupan code is valid for orders above ₹${coupanCode.minOrderValue} only`,
       );
     }
     let discountAmount = coupanCode.discount;
@@ -182,7 +184,7 @@ export const ShopContextProvider = ({
     }
     // round up to 2 decimal places
     const gstAmount = Math.round(
-      (cartTotal - coupanDiscount) * (gstRate / 100)
+      (cartTotal - coupanDiscount) * (gstRate / 100),
     );
     setOrderTotal(cartTotal - coupanDiscount + gstAmount + shippingCharge);
     setGstAmount(gstAmount);
@@ -192,6 +194,9 @@ export const ShopContextProvider = ({
     if (!coupanDiscount) {
       return;
     }
+    // saveData({
+    //   cartSavings: cartSavings + coupanDiscount,
+    // });
     setCartSavings((prev) => prev + coupanDiscount);
   }, [coupanDiscount]);
 

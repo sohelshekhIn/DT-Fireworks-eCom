@@ -10,6 +10,7 @@ class CustomError extends Error {
   constructor(message: string, statusCode: number) {
     super(message);
     this.statusCode = statusCode;
+    Object.setPrototypeOf(this, new.target.prototype);
   }
 }
 
@@ -18,7 +19,7 @@ export const handleApiError = (error: ApiError) => {
   if (error instanceof CustomError) {
     return NextResponse.json(
       { error: error.message },
-      { status: error.statusCode }
+      { status: error.statusCode },
     );
   }
 

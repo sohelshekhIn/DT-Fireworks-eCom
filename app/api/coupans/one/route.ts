@@ -15,7 +15,6 @@ export async function GET(req: NextRequest) {
     var responseCode = 500;
     if (code) {
       const coupansRef = doc(db, "coupans", code);
-
       await getDoc(coupansRef)
         .then((doc) => {
           if (doc.exists()) {
@@ -23,11 +22,11 @@ export async function GET(req: NextRequest) {
             coupanCode.code = doc.id;
             responseCode = 200;
           } else {
-            throw new CustomError("Coupan not found.", 404);
+            throw new CustomError("SOHEL not found.", 404);
           }
         })
         .catch((error) => {
-          throw new CustomError(error.message, error.code);
+          throw new CustomError(error.message, error.statusCode);
         });
     } else {
       throw new CustomError("Invalid request: coupan code missing.", 400);
