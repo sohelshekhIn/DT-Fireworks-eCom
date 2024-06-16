@@ -1,9 +1,12 @@
 "use client";
 
 import { auth, provider } from "@/lib/firebase-config";
+import { getAuthErrorMessage } from "@/utils/authErrorHandler";
+import { error } from "console";
 import { signInWithPopup, AuthError } from "firebase/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const LogOutButton = ({
   redirectUrl = "/signin",
@@ -15,11 +18,16 @@ export const LogOutButton = ({
     auth.signOut().then(() => {
       fetch("/api/logout", {
         method: "POST",
-      }).then((response) => {
-        if (response.status === 200) {
-          router.push(redirectUrl);
-        }
-      });
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            toast.success("Logged out successfully");
+            router.push(redirectUrl);
+          }
+        })
+        .catch((error: any) => {
+          toast.error("Failed to logout");
+        });
     });
   };
   return (
@@ -36,7 +44,6 @@ export const SignInWithGoogleButton = () => {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect") || "/";
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
   const handleGoogleLoginWithPopup = () => {
     // google popup login
     signInWithPopup(auth, provider)
@@ -50,21 +57,13 @@ export const SignInWithGoogleButton = () => {
           },
         }).then((response) => {
           if (response.status === 200) {
+            toast.success("Logged in successfully");
             router.push(redirectUrl);
           }
         });
       })
       .catch((error: AuthError) => {
-        // Handle Errors here.
-        if (error.code === "auth/popup-closed-by-user") {
-          setError("Popup closed by user");
-        } else if (error.code === "auth/cancelled-popup-request") {
-          setError("Popup request cancelled");
-        } else if (error.code === "auth/popup-blocked") {
-          setError("Popup blocked");
-        } else {
-          setError(error.message);
-        }
+        toast.error(getAuthErrorMessage(error.code, "google"));
       });
   };
   return (
@@ -100,11 +99,6 @@ export const SignInWithGoogleButton = () => {
         </svg>
         Sign in with Google
       </button>
-      {error && (
-        <p className="mt-2 w-full text-center text-sm text-red-500 dark:text-red-400">
-          {error}
-        </p>
-      )}
     </div>
   );
 };

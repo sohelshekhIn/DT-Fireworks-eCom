@@ -2,8 +2,14 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createUserWithEmailAndPassword, AuthError } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  AuthError,
+  getAuth,
+} from "firebase/auth";
 import { auth } from "@/lib/firebase-config";
+import { getAuthErrorMessage } from "@/utils/authErrorHandler";
+import { toast } from "react-toastify";
 
 const SignUpForm = () => {
   const searchParams = useSearchParams();
@@ -12,7 +18,6 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleSignUp = (
@@ -24,14 +29,14 @@ const SignUpForm = () => {
 
     // check if email and password are empty
     if (!email || !password || !confirmPassword) {
-      setError("Email and password are required");
+      toast.error("Email and password are required");
       return;
     }
 
     // check if email is valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
       return;
     }
 
@@ -39,7 +44,7 @@ const SignUpForm = () => {
     const passwordRegex =
       /^(?=.*[A-Za-z])(?=.*\d)(?:.*[~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?])[A-Za-z\d\s~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?]{8,}$/;
     if (!passwordRegex.test(password)) {
-      setError(
+      toast.error(
         "Password must be minimum 8 characters, contain a number, and a special character",
       );
       return;
@@ -47,11 +52,9 @@ const SignUpForm = () => {
 
     // check if password and confirm password match
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
-
-    setError(null);
 
     const setSignUpCookieRequest = async (idToken: string) => {
       // Send token to server to set cookie
@@ -63,11 +66,11 @@ const SignUpForm = () => {
         },
       })
         .then(() => {
+          toast.success("Signed up successfully");
           router.push(redirectUrl);
         })
         .catch((error: AuthError) => {
-          console.error("Error:", error);
-          setError("An error occurred. Please try again.");
+          toast.error(getAuthErrorMessage(error.code, "email"));
         });
     };
 
@@ -78,21 +81,7 @@ const SignUpForm = () => {
         setSignUpCookieRequest(idToken);
       })
       .catch((error: AuthError) => {
-        // Handle Firebase Auth errors
-        console.error("Error:", error);
-        if (error.code === "auth/email-already-in-use") {
-          setError("Email already in use. Please sign in.");
-        } else if (error.code === "auth/weak-password") {
-          setError("Password is too weak. Please try again.");
-        } else if (error.code === "auth/invalid-email") {
-          setError("Invalid email. Please try again.");
-        } else if (error.code === "auth/too-many-requests") {
-          setError("Too many requests. Please try again later.");
-        } else if (error.code === "auth/network-request-failed") {
-          setError("Network request failed. Please try again.");
-        } else {
-          setError("An error occurred. Please try again.");
-        }
+        toast.error(getAuthErrorMessage(error.code, "email"));
       });
   };
 
@@ -255,7 +244,6 @@ const SignUpForm = () => {
             </div>
           </div>
         </div>
-        {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
         <div className="mt-5">
           <button
             onClick={handleSignUp}

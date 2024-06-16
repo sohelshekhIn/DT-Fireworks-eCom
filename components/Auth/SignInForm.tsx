@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword, AuthError } from "firebase/auth";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const SignInForm = () => {
   // get url params
@@ -14,7 +15,6 @@ const SignInForm = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleSignIn = (
@@ -23,18 +23,17 @@ const SignInForm = () => {
       | React.FormEvent<HTMLFormElement>,
   ) => {
     e.preventDefault();
-    setError(null);
 
     // check if email and password are empty
     if (!email || !password) {
-      setError("Email and password are required");
+      toast.error("Email and password are required");
       return;
     }
 
     // check if email is valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
       return;
     }
 
@@ -42,12 +41,11 @@ const SignInForm = () => {
     const passwordRegex: RegExp =
       /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
     if (!passwordRegex.test(password)) {
-      setError(
+      toast.error(
         "Password must be minimum 8 characters, contain a number, and a special character",
       );
       return;
     }
-    setError(null);
 
     const setSignInCookieRequest = (idToken: string) => {
       fetch("/api/login", {
@@ -61,12 +59,13 @@ const SignInForm = () => {
         },
       })
         .then((response) => {
+          toast.success("Signed in successfully");
           if (response.status === 200) {
             router.push(redirectUrl);
           }
         })
         .catch((error: AuthError) => {
-          setError(error.message);
+          toast.error(getAuthErrorMessage(error.code, "email"));
         });
     };
 
@@ -77,7 +76,7 @@ const SignInForm = () => {
         setSignInCookieRequest(idToken);
       })
       .catch((error) => {
-        setError(getAuthErrorMessage(error.code, "email"));
+        toast.error(getAuthErrorMessage(error.code, "email"));
       });
   };
 
@@ -194,12 +193,6 @@ const SignInForm = () => {
             8+ characters required
           </p>
         </div>
-
-        {error && (
-          <p className="py-2 font-medium text-red-500 dark:text-red-600/80">
-            {error}
-          </p>
-        )}
 
         <button
           type="submit"
