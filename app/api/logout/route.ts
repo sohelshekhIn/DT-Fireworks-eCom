@@ -16,6 +16,6 @@ export async function POST(request: NextRequest) {
         message: "Logged out successfully!",
       },
     },
-    { status: 200 }
+    { status: 200 },
   );
 }
