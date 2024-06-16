@@ -2,10 +2,14 @@
 
 import { auth, provider } from "@/lib/firebase-config";
 import { signInWithPopup, AuthError } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export const LogOutButton = () => {
+export const LogOutButton = ({
+  redirectUrl = "/signin",
+}: {
+  redirectUrl?: string;
+}) => {
   const router = useRouter();
   const handleLogout = () => {
     auth.signOut().then(() => {
@@ -13,16 +17,14 @@ export const LogOutButton = () => {
         method: "POST",
       }).then((response) => {
         if (response.status === 200) {
-          router.push("/login");
+          router.push(redirectUrl);
         }
       });
     });
   };
   return (
     <button
-      className="
-    py-2 px-4 bg-gray-700 text-white rounded-lg shadow-sm hover:bg-gray-800 m-5
-  "
+      className="m-5 rounded-xl bg-gray-700 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800"
       onClick={handleLogout}
     >
       Logout
@@ -31,6 +33,8 @@ export const LogOutButton = () => {
 };
 
 export const SignInWithGoogleButton = () => {
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || "/";
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const handleGoogleLoginWithPopup = () => {
@@ -46,7 +50,7 @@ export const SignInWithGoogleButton = () => {
           },
         }).then((response) => {
           if (response.status === 200) {
-            router.push("/protected/client");
+            router.push(redirectUrl);
           }
         });
       })
@@ -68,10 +72,10 @@ export const SignInWithGoogleButton = () => {
       <button
         onClick={handleGoogleLoginWithPopup}
         type="button"
-        className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
+        className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-800"
       >
         <svg
-          className="w-4 h-auto"
+          className="h-auto w-4"
           width="46"
           height="47"
           viewBox="0 0 46 47"
@@ -97,11 +101,7 @@ export const SignInWithGoogleButton = () => {
         Sign in with Google
       </button>
       {error && (
-        <p
-          className="
-      text-red-500 dark:text-red-400 text-sm mt-2 text-center w-full
-      "
-        >
+        <p className="mt-2 w-full text-center text-sm text-red-500 dark:text-red-400">
           {error}
         </p>
       )}
