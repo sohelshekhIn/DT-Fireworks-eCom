@@ -4,10 +4,14 @@ import { auth } from "@/lib/firebase-config";
 import { getAuthErrorMessage } from "@/utils/authErrorHandler";
 import { signInWithEmailAndPassword, AuthError } from "firebase/auth";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const SignInForm = () => {
+  // get url params
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || "/";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +20,7 @@ const SignInForm = () => {
   const handleSignIn = (
     e:
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
-      | React.FormEvent<HTMLFormElement>
+      | React.FormEvent<HTMLFormElement>,
   ) => {
     e.preventDefault();
     setError(null);
@@ -39,7 +43,7 @@ const SignInForm = () => {
       /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
     if (!passwordRegex.test(password)) {
       setError(
-        "Password must be minimum 8 characters, contain a number, and a special character"
+        "Password must be minimum 8 characters, contain a number, and a special character",
       );
       return;
     }
@@ -58,7 +62,7 @@ const SignInForm = () => {
       })
         .then((response) => {
           if (response.status === 200) {
-            router.push("/protected/client");
+            router.push(redirectUrl);
           }
         })
         .catch((error: AuthError) => {
@@ -81,7 +85,7 @@ const SignInForm = () => {
     <form>
       <div className="grid gap-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm mb-2 dark:text-white">
+          <label htmlFor="email" className="mb-2 block text-sm dark:text-white">
             Email address
           </label>
           <div className="relative">
@@ -92,11 +96,11 @@ const SignInForm = () => {
               placeholder="Enter email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
               required
               aria-describedby="email-error"
             />
-            <div className="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
+            <div className="pointer-events-none absolute inset-y-0 end-0 hidden pe-3">
               <svg
                 className="size-5 text-red-500"
                 width="16"
@@ -112,16 +116,16 @@ const SignInForm = () => {
         </div>
 
         <div>
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <label
               htmlFor="password"
-              className="block text-sm mb-2 dark:text-white"
+              className="mb-2 block text-sm dark:text-white"
             >
               Password
             </label>
             <Link
               tabIndex={-1}
-              className="text-sm text-primary/70 dark:text-primaryDark decoration-2 hover:underline font-medium"
+              className="text-sm font-medium text-primary/70 decoration-2 hover:underline dark:text-primaryDark"
               href="/forgot-password"
             >
               Forgot password?
@@ -131,7 +135,7 @@ const SignInForm = () => {
             <input
               id="hs-toggle-password"
               type="password"
-              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -141,10 +145,10 @@ const SignInForm = () => {
               data-hs-toggle-password='{
         "target": "#hs-toggle-password"
       }'
-              className="absolute top-0 end-0 p-3.5 rounded-e-md"
+              className="absolute end-0 top-0 rounded-e-md p-3.5"
             >
               <svg
-                className="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600"
+                className="size-3.5 flex-shrink-0 text-gray-400 dark:text-neutral-600"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -186,13 +190,13 @@ const SignInForm = () => {
               </svg>
             </button>
           </div>
-          <p className="hidden text-xs text-red-600 mt-2" id="password-error">
+          <p className="mt-2 hidden text-xs text-red-600" id="password-error">
             8+ characters required
           </p>
         </div>
 
         {error && (
-          <p className="text-red-500 dark:text-red-600/80 py-2 font-medium">
+          <p className="py-2 font-medium text-red-500 dark:text-red-600/80">
             {error}
           </p>
         )}
@@ -200,7 +204,7 @@ const SignInForm = () => {
         <button
           type="submit"
           onClick={handleSignIn}
-          className="w-full py-3 mt-5 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary text-white hover:bg-primaryDark disabled:opacity-50 disabled:pointer-events-none"
+          className="mt-5 inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-primary px-4 py-3 text-sm font-semibold text-white hover:bg-primaryDark disabled:pointer-events-none disabled:opacity-50"
         >
           Sign in
         </button>

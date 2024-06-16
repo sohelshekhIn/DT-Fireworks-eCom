@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createUserWithEmailAndPassword, AuthError } from "firebase/auth";
 import { auth } from "@/lib/firebase-config";
 
 const SignUpForm = () => {
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect") || "/";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,7 +18,7 @@ const SignUpForm = () => {
   const handleSignUp = (
     e:
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
-      | React.FormEvent<HTMLFormElement>
+      | React.FormEvent<HTMLFormElement>,
   ) => {
     e.preventDefault();
 
@@ -37,7 +40,7 @@ const SignUpForm = () => {
       /^(?=.*[A-Za-z])(?=.*\d)(?:.*[~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?])[A-Za-z\d\s~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?]{8,}$/;
     if (!passwordRegex.test(password)) {
       setError(
-        "Password must be minimum 8 characters, contain a number, and a special character"
+        "Password must be minimum 8 characters, contain a number, and a special character",
       );
       return;
     }
@@ -60,7 +63,7 @@ const SignUpForm = () => {
         },
       })
         .then(() => {
-          router.push("/protected/client");
+          router.push(redirectUrl);
         })
         .catch((error: AuthError) => {
           console.error("Error:", error);
@@ -97,7 +100,7 @@ const SignUpForm = () => {
     <form>
       <div className="grid gap-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm mb-2 dark:text-white">
+          <label htmlFor="email" className="mb-2 block text-sm dark:text-white">
             Email address
           </label>
           <div className="relative">
@@ -107,7 +110,7 @@ const SignUpForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               name="email"
-              className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primaryDark focus:ring-primaryDark disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+              className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-primaryDark focus:ring-primaryDark disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
               required
               placeholder="Email address"
               aria-describedby="email-error"
@@ -119,7 +122,7 @@ const SignUpForm = () => {
           <div className="max-w-md">
             <label
               htmlFor="hs-toggle-password-multi-toggle-np"
-              className="block text-sm mb-2 dark:text-white"
+              className="mb-2 block text-sm dark:text-white"
             >
               Enter password
             </label>
@@ -129,7 +132,7 @@ const SignUpForm = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primaryDark focus:ring-primaryDark disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-primaryDark focus:ring-primaryDark disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                 placeholder="Enter password"
               />
               <button
@@ -137,10 +140,10 @@ const SignUpForm = () => {
                 data-hs-toggle-password='{
           "target": ["#hs-toggle-password-multi-toggle", "#hs-toggle-password-multi-toggle-np"]
         }'
-                className="absolute top-0 end-0 p-3.5 rounded-e-md"
+                className="absolute end-0 top-0 rounded-e-md p-3.5"
               >
                 <svg
-                  className="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600"
+                  className="size-3.5 flex-shrink-0 text-gray-400 dark:text-neutral-600"
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
@@ -184,10 +187,10 @@ const SignUpForm = () => {
             </div>
           </div>
 
-          <div className="max-w-md mb-5">
+          <div className="mb-5 max-w-md">
             <label
               htmlFor="hs-toggle-password-multi-toggle"
-              className="block text-sm mb-2 dark:text-white"
+              className="mb-2 block text-sm dark:text-white"
             >
               Confirm password
             </label>
@@ -195,7 +198,7 @@ const SignUpForm = () => {
               <input
                 id="hs-toggle-password-multi-toggle"
                 type="password"
-                className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primaryDark focus:ring-primaryDark disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+                className="block w-full rounded-lg border-gray-200 px-4 py-3 text-sm focus:border-primaryDark focus:ring-primaryDark disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                 placeholder="Confirm password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -205,10 +208,10 @@ const SignUpForm = () => {
                 data-hs-toggle-password='{
           "target": ["#hs-toggle-password-multi-toggle", "#hs-toggle-password-multi-toggle-np"]
         }'
-                className="absolute top-0 end-0 p-3.5 rounded-e-md"
+                className="absolute end-0 top-0 rounded-e-md p-3.5"
               >
                 <svg
-                  className="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600"
+                  className="size-3.5 flex-shrink-0 text-gray-400 dark:text-neutral-600"
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
@@ -252,12 +255,12 @@ const SignUpForm = () => {
             </div>
           </div>
         </div>
-        {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+        {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
         <div className="mt-5">
           <button
             onClick={handleSignUp}
             type="submit"
-            className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+            className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-primary px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:pointer-events-none disabled:opacity-50"
           >
             Sign up
           </button>
