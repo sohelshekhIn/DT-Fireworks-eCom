@@ -240,6 +240,7 @@ const Footer = () => {
 
             <div className="text-xs text-right">
               <Link
+              target="_blank"
                 className="inline-block underline text-gray-500 hover:text-gray-800 dark:text-neutral-500 dark:hover:text-neutral-200"
                 href="https://sohel.tech?ref=dtfireworks.in"
               >
