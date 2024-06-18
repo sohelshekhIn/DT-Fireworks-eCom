@@ -4,12 +4,8 @@ import Link from "next/link";
 
 const OccassionNotFound = () => {
   return (
-    <div
-      className="
-        w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto
-    "
-    >
-      <div className="max-w-2xl min-h-dvh mx-auto text-center mb-10 lg:mb-14">
+    <div className="mx-auto w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <div className="mx-auto mb-10 min-h-dvh max-w-2xl text-center lg:mb-14">
         <Image
           width={500}
           height={500}
@@ -25,7 +21,7 @@ const OccassionNotFound = () => {
         </p>
         <Link
           href="/shop"
-          className="mt-10 text-primary dark:text-primaryDark font-semibold underline"
+          className="mt-10 font-semibold text-primary underline dark:text-primaryDark"
         >
           Go Back to Shop
         </Link>
@@ -35,12 +31,8 @@ const OccassionNotFound = () => {
 };
 const CategoryNotFound = () => {
   return (
-    <section
-      className="
-        w-[85vw] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto
-    "
-    >
-      <div className="max-w-2xl min-h-dvh mx-auto text-center mb-10 lg:mb-14">
+    <section className="mx-auto w-[85vw] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <div className="mx-auto mb-10 min-h-dvh max-w-2xl text-center lg:mb-14">
         <Image
           width={500}
           height={500}
@@ -56,7 +48,7 @@ const CategoryNotFound = () => {
         </p>
         <Link
           href="/shop"
-          className="mt-10 text-primary dark:text-primaryDark font-semibold underline"
+          className="mt-10 font-semibold text-primary underline dark:text-primaryDark"
         >
           Go Back to Shop
         </Link>
@@ -67,8 +59,8 @@ const CategoryNotFound = () => {
 
 const OccassionFetchError = () => {
   return (
-    <div className="w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div className="max-w-2xl text-center mx-auto mb-10 lg:mb-14">
+    <div className="mx-auto w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
         <Image
           width={500}
           height={500}
@@ -90,8 +82,8 @@ const OccassionFetchError = () => {
 
 const NoProductsFound = () => {
   return (
-    <div className="w-full flex justify-center items-center">
-      <div className="flex p-20 items-center">
+    <div className="flex w-full items-center justify-center">
+      <div className="flex flex-col items-center p-5 lg:flex-row lg:p-20">
         <Image
           width={300}
           height={300}
@@ -108,7 +100,7 @@ const NoProductsFound = () => {
           </p>
           <Link
             href="/shop"
-            className="mt-10 text-primary dark:text-primaryDark font-semibold underline"
+            className="mt-10 font-semibold text-primary underline dark:text-primaryDark"
           >
             Go Back to Shop
           </Link>
