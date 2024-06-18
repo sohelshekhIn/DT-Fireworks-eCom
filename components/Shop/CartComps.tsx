@@ -218,7 +218,7 @@ const CoupanCodeComp = () => {
             ref={coupanCodeInput}
             type="text"
             placeholder="Enter your coupan code"
-            className="w-full rounded-md border border-gray-200 p-3 dark:border-neutral-700/70"
+            className="w-full rounded-md border border-gray-200 p-3 dark:border-neutral-700/70 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500"
           />
           <div className="mt-5 w-full">
             <button
