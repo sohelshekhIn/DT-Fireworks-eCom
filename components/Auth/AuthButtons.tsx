@@ -1,11 +1,11 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import { auth, provider } from "@/lib/firebase-config";
 import { getAuthErrorMessage } from "@/utils/authErrorHandler";
-import { error } from "console";
 import { signInWithPopup, AuthError } from "firebase/auth";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { toast } from "react-toastify";
 
 export const LogOutButton = ({
@@ -32,11 +32,31 @@ export const LogOutButton = ({
   };
   return (
     <button
-      className="m-5 rounded-xl bg-gray-700 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800"
+      className="rounded-xl bg-gray-700 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800"
       onClick={handleLogout}
     >
       Logout
     </button>
+  );
+};
+
+export const NavbarAuthStateButton = () => {
+  const { user } = useAuth();
+
+  return (
+    <div className="flex items-center space-x-2">
+      {user ? (
+        <LogOutButton />
+      ) : (
+        <Link
+          href={"/signin"}
+          type="button"
+          className="focus:primaryDark inline-flex items-center gap-x-2 rounded-xl border border-transparent bg-primary px-3 py-2 text-sm font-medium text-white transition hover:bg-primaryDark focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+        >
+          Sign In
+        </Link>
+      )}
+    </div>
   );
 };
 

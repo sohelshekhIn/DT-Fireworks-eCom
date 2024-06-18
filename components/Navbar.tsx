@@ -1,12 +1,8 @@
 import { Category } from "@/types/category";
 import appUrl from "@/utils/apiCallHandler";
-import { checkUserAuthStatus } from "@/utils/checkUserAuthStatus";
 import Link from "next/link";
-import { cookies } from "next/headers";
-import { LogOutButton } from "./Auth/AuthButtons";
+import { NavbarAuthStateButton } from "./Auth/AuthButtons";
 const Navbar = async () => {
-  const session = cookies().get("session");
-  const isLoggedIn = await checkUserAuthStatus(session);
   const getCategories = async () => {
     const res = await fetch(appUrl("/api/categories/all"), {
       next: {
@@ -61,17 +57,8 @@ const Navbar = async () => {
               </span>
             </span>
           </Link>
-          {isLoggedIn ? (
-            <LogOutButton />
-          ) : (
-            <Link
-              href={"/signin"}
-              type="button"
-              className="focus:primaryDark inline-flex items-center gap-x-2 rounded-xl border border-transparent bg-primary px-3 py-2 text-sm font-medium text-white transition hover:bg-primaryDark focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-            >
-              Sign In
-            </Link>
-          )}
+
+          <NavbarAuthStateButton />
           <div className="md:hidden">
             <button
               type="button"
@@ -143,9 +130,22 @@ const Navbar = async () => {
                 className="group-hover:under-design flex w-full items-center font-normal text-black hover:text-black dark:text-white dark:hover:text-white"
               >
                 Categories
+                <svg
+                  className="ml-1 size-4 flex-shrink-0 text-black transition-transform group-hover:rotate-180 dark:text-white"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
               </button>
 
-              <div className="hs-dropdown-menu top-full z-10 hidden rounded-lg bg-white p-2 opacity-0 transition-[opacity,margin] duration-[0.1ms] before:absolute before:-top-5 before:start-0 before:h-5 before:w-full hs-dropdown-open:opacity-100 sm:w-48 sm:border sm:shadow-md sm:duration-[150ms] dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 sm:dark:border">
+              <div className="hs-dropdown-menu top-full z-10 hidden gap-3 rounded-lg bg-white p-2 opacity-0 transition-[opacity,margin] duration-[0.1ms] before:absolute before:-top-5 before:start-0 before:h-5 before:w-full hs-dropdown-open:opacity-100 sm:w-48 sm:border sm:shadow-md sm:duration-[150ms] dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 sm:dark:border">
                 {categories && categories.length > 0 ? (
                   categories.map((category) => (
                     <Link
