@@ -9,7 +9,10 @@ interface AuthContextValue {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
-const AuthContext = createContext<AuthContextValue | null>(null);
+const AuthContext = createContext<AuthContextValue>({
+  user: null,
+  setUser: () => null,
+});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
