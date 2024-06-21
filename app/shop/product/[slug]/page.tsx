@@ -11,7 +11,7 @@ import appUrl from "@/utils/apiCallHandler";
 import { Product } from "@/types/product";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { QuantitySelectorGroup } from "@/components/Shop/QuantitySelectors";
-import { AddToCartBtn } from "@/components/Shop/CartComps";
+import { AddToCartBtn } from "@/components/Cart/CartComps";
 const ProductPage = async ({
   params,
 }: {
@@ -30,7 +30,7 @@ const ProductPage = async ({
         next: {
           tags: ["product"],
         },
-      }
+      },
     );
     const status = res.status;
     if (status === 404) {
@@ -50,7 +50,7 @@ const ProductPage = async ({
 
   return (
     product && (
-      <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+      <div className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <Breadcrumb
           crumbs={[
             { name: "Shop", href: "/shop" },
@@ -71,10 +71,10 @@ const ProductPage = async ({
                 <ThreeLineStrikesDesignElement />
               </div>
             </div>
-            <div className="mt-10 p-5 space-y-16 lg:mt-0 lg:col-span-6 lg:col-start-8 lg:order-2">
+            <div className="mt-10 space-y-16 p-5 lg:order-2 lg:col-span-6 lg:col-start-8 lg:mt-0">
               <div className="space-y-5">
                 <CategoryBagde categories={product.categories} />
-                <h2 className="text-2xl text-gray-800 font-bold sm:text-3xl dark:text-neutral-200">
+                <h2 className="text-2xl font-bold text-gray-800 sm:text-3xl dark:text-neutral-200">
                   Fully customizable rules to match your unique needs
                 </h2>
                 <p className="mt-4 text-gray-600 dark:text-neutral-400">
@@ -85,15 +85,15 @@ const ProductPage = async ({
               </div>
               <div className="">
                 <QuantitySelectorGroup />
-                <div className="flex items-center justify-between mt-5">
+                <div className="mt-5 flex items-center justify-between">
                   <DisplayPrice product={product} />
                   <AddToCartBtn product={product} />
                 </div>
               </div>
             </div>
           </div>
-          <div className="hidden absolute inset-0 md:grid grid-cols-12 size-full">
-            <div className="col-span-full lg:col-span-7 lg:col-start-6 bg-gray-100 w-full h-full rounded-xl dark:bg-neutral-800"></div>
+          <div className="absolute inset-0 hidden size-full grid-cols-12 md:grid">
+            <div className="col-span-full h-full w-full rounded-xl bg-gray-100 lg:col-span-7 lg:col-start-6 dark:bg-neutral-800"></div>
           </div>
         </div>
       </div>

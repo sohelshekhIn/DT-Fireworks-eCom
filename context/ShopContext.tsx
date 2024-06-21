@@ -41,9 +41,18 @@ export const ShopContextProvider = ({
   const [orderTotal, setOrderTotal] = useState<number>(0); // total after coupan, tax, shipping etc
   const [qty, setQty] = useState<number>(1);
   const [coupanDiscount, setCoupanDiscount] = useState<number>(0);
-  const [gstAmount, setGstAmount] = useState<number>(0); // GST amount [18%
+  const [gstAmount, setGstAmount] = useState<number>(0); // GST amount
   const gstRate = 18; // 18% GST (HSN: 3604 - 10, SAC: 996-1-1)
   const shippingCharge = 50; // ₹50 shipping charge
+
+  // Checkout functions
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [addressLine1, setAddressLine1] = useState<string>("");
+  const [addressLine2, setAddressLine2] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [state, setState] = useState<string>("");
 
   const increaseQty = () => {
     setQty((prevQty) => {
