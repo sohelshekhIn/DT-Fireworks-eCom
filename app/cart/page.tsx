@@ -5,7 +5,7 @@ import {
   CartProductCard,
   CartSummary,
   CoupanCodeComp,
-} from "@/components/Shop/CartComps";
+} from "@/components/Cart/CartComps";
 
 const CartPage = () => {
   return (
