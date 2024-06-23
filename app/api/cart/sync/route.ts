@@ -3,7 +3,7 @@ import { CustomError, handleApiError } from "@/utils/apiErrorHandler";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { createHash } from "crypto";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase-config";
 customInitApp();
 
@@ -25,6 +25,39 @@ const getCartSessionSecret = () => {
   }
   return CART_SESSION_SECRET;
 };
+
+export async function GET(req: NextRequest) {
+  let cartSessionToken: string | null =
+    cookies().get("cart-session-token")?.value || null;
+  try {
+    const cartSession = getCartSessionRefId(cartSessionToken);
+
+    const cartRef = doc(db, "cart-sessions", cartSession[0]);
+
+    const cartSnapshot = await getDoc(cartRef);
+    if (cartSnapshot.exists()) {
+      return NextResponse.json(
+        {
+          data: cartSnapshot.data(),
+        },
+        {
+          status: 200,
+        },
+      );
+    } else {
+      return NextResponse.json(
+        {
+          data: {},
+        },
+        {
+          status: 404,
+        },
+      );
+    }
+  } catch (error: any) {
+    return handleApiError(error);
+  }
+}
 
 export async function POST(req: NextRequest) {
   let cartSessionToken: string | null =

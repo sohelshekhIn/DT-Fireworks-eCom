@@ -2,7 +2,8 @@
 
 import { CoupanCode } from "@/types/coupan";
 import { CartProduct, Product } from "@/types/product";
-import { saveData } from "@/utils/saveCartData";
+import { loadData, saveData } from "@/utils/syncCartData";
+
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -25,7 +26,44 @@ interface ShopContextType {
   orderTotal: number;
   shippingCharge: number;
   gstAmount: number;
+  name: string;
+  email: string;
+  phone: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  state: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  setPhone: React.Dispatch<React.SetStateAction<string>>;
+  setAddressLine1: React.Dispatch<React.SetStateAction<string>>;
+  setAddressLine2: React.Dispatch<React.SetStateAction<string>>;
+  setCity: React.Dispatch<React.SetStateAction<string>>;
+  setState: React.Dispatch<React.SetStateAction<string>>;
+  handleReview: () => boolean;
 }
+
+interface LoadedCartData {
+  cartItems?: CartProduct[];
+  cartTotal?: number;
+  cartCount?: number;
+  cartSavings?: number;
+  coupanDiscount?: number;
+  coupanCode?: CoupanCode | null;
+  orderTotal?: number;
+  gstAmount?: number;
+  name?: string;
+  email?: string;
+  phone?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  city?: string;
+  state?: string;
+}
+
+type LoadedCartDataFlags = {
+  [K in keyof LoadedCartData]: boolean;
+};
 
 const ShopContext = createContext<ShopContextType | null>(null);
 export const ShopContextProvider = ({
@@ -45,6 +83,42 @@ export const ShopContextProvider = ({
   const gstRate = 18; // 18% GST (HSN: 3604 - 10, SAC: 996-1-1)
   const shippingCharge = 50; // ₹50 shipping charge
 
+  const [dataLoadedFromServer, setLoadedFromServer] =
+    useState<LoadedCartDataFlags>({
+      cartItems: false,
+      cartTotal: false,
+      cartCount: false,
+      cartSavings: false,
+      coupanDiscount: false,
+      coupanCode: false,
+      orderTotal: false,
+      gstAmount: false,
+      name: false,
+      email: false,
+      phone: false,
+      addressLine1: false,
+      addressLine2: false,
+      city: false,
+      state: false,
+    });
+
+  // cartItems: false,
+  //     cartTotal: false,
+  //     cartCount: false,
+  //     cartSavings: false,
+  //     coupanCode: false,
+  //     coupanDiscount: false,
+  //     orderTotal: false,
+  //     gstAmount: false,
+
+  //     name: false,
+  //     email: false,
+  //     phone: false,
+  //     addressLine1: false,
+  //     addressLine2: false,
+  //     city: false,
+  //     state: false,
+
   // Checkout functions
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -53,6 +127,95 @@ export const ShopContextProvider = ({
   const [addressLine2, setAddressLine2] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("");
+
+  // loading cart data from server if cart session exists
+  const updateCartData = async () => {
+    const loadedData: {
+      data?: LoadedCartData;
+    } = await loadData();
+    if (!loadedData || !loadedData.data) {
+      return;
+    }
+    if (loadedData.data.cartItems) {
+      setCartItems(loadedData.data.cartItems);
+      setCartTotal(loadedData.data.cartTotal || 0);
+      setCartCount(loadedData.data.cartCount || 0);
+      setCartSavings(loadedData.data.cartSavings || 0);
+      setOrderTotal(loadedData.data.orderTotal || 0);
+      setGstAmount(loadedData.data.gstAmount || 0);
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        cartItems: true,
+        cartTotal: true,
+        cartCount: true,
+        cartSavings: true,
+        orderTotal: true,
+        gstAmount: true,
+      });
+    }
+    if (loadedData.data.coupanCode) {
+      setCoupanCode(loadedData.data.coupanCode);
+      setCoupanDiscount(loadedData.data.coupanDiscount || 0);
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        coupanCode: true,
+        coupanDiscount: true,
+      });
+    }
+    if (loadedData.data.name) {
+      setName(loadedData.data.name);
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        name: true,
+      });
+    }
+    if (loadedData.data.email) {
+      setEmail(loadedData.data.email);
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        email: true,
+      });
+    }
+    if (loadedData.data.phone) {
+      setPhone(loadedData.data.phone);
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        phone: true,
+      });
+    }
+    if (loadedData.data.addressLine1) {
+      setAddressLine1(loadedData.data.addressLine1);
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        addressLine1: true,
+      });
+    }
+    if (loadedData.data.addressLine2) {
+      setAddressLine2(loadedData.data.addressLine2);
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        addressLine2: true,
+      });
+    }
+    if (loadedData.data.city) {
+      setCity(loadedData.data.city);
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        city: true,
+      });
+    }
+    if (loadedData.data.state) {
+      setState(loadedData.data.state);
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        state: true,
+      });
+    }
+  };
+
+  useEffect(() => {
+    updateCartData();
+  }, []);
 
   const increaseQty = () => {
     setQty((prevQty) => {
@@ -151,6 +314,18 @@ export const ShopContextProvider = ({
     if (cartItems.length === 0) {
       return;
     }
+
+    // check if useEffect has been triggered by server data
+    if (dataLoadedFromServer.cartItems) {
+      // set dataLoadedFromServer to false for partial data
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        cartItems: false,
+        cartTotal: false,
+        cartCount: false,
+      });
+      return;
+    }
     const total = cartItems.reduce((acc, item) => acc + item.total, 0);
     const count = cartItems.reduce((acc, item) => acc + item.quantity, 0);
     const savings = cartItems.reduce((acc, item) => {
@@ -189,6 +364,17 @@ export const ShopContextProvider = ({
       });
       return;
     }
+
+    // check if useEffect has been triggered by server data
+    if (dataLoadedFromServer.coupanCode) {
+      // set dataLoadedFromServer to false for partial data
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        coupanCode: false,
+      });
+      return;
+    }
+
     if (!coupanCode) return; // if no coupan code
     if (cartTotal < coupanCode.minOrderValue) {
       setCoupanCode(null);
@@ -219,10 +405,28 @@ export const ShopContextProvider = ({
     if (cartTotal === 0) {
       return;
     }
+
+    // check if useEffect has been triggered by server data
+    if (dataLoadedFromServer.coupanDiscount) {
+      // set dataLoadedFromServer to false for partial data
+      setLoadedFromServer({
+        ...dataLoadedFromServer,
+        coupanDiscount: false,
+        cartSavings: false,
+        orderTotal: false,
+        gstAmount: false,
+      });
+      return;
+    }
+
     // round up to 2 decimal places
     const tmpgstAmount = Math.round(
       (cartTotal - coupanDiscount) * (gstRate / 100),
     );
+    saveData({
+      cartSavings: cartSavings + coupanDiscount,
+    });
+    setCartSavings((prev) => prev + coupanDiscount);
     setOrderTotal(cartTotal - coupanDiscount + gstAmount + shippingCharge);
     setGstAmount(tmpgstAmount);
     saveData({
@@ -231,17 +435,45 @@ export const ShopContextProvider = ({
     });
   }, [cartTotal, coupanDiscount]);
 
-  useEffect(() => {
-    // also handle case when coupan is removed
-    if (cartTotal === 0) {
-      return;
-    }
+  // useEffect(() => {
+  //   // also handle case when coupan is removed
+  //   if (cartTotal === 0) {
+  //     return;
+  //   }
+  //   saveData({
+  //     cartSavings: cartSavings + coupanDiscount,
+  //   });
+  //   setCartSavings((prev) => prev + coupanDiscount);
+  // }, [coupanDiscount]);
 
+  const handleReview = () => {
+    if (cartItems.length === 0) {
+      toast.error("Empty Cart: Add products to cart first");
+      return false;
+    }
+    if (name === "" || email === "" || phone === "") {
+      toast.error("Invalid Form: Contact details are required");
+      return false;
+    }
+    if (addressLine1 === "" || city === "" || state === "") {
+      toast.error("Invalid Form: Address details are required");
+      return false;
+    }
+    console.log("Hello");
+    // sync data to server
     saveData({
-      cartSavings: cartSavings + coupanDiscount,
+      name,
+      email,
+      phone,
+      addressLine1,
+      addressLine2,
+      city,
+      state,
     });
-    setCartSavings((prev) => prev + coupanDiscount);
-  }, [coupanDiscount]);
+    // if everything is fine
+    // redirect to review page
+    return true;
+  };
 
   return (
     <ShopContext.Provider
@@ -261,6 +493,21 @@ export const ShopContextProvider = ({
         orderTotal,
         gstAmount,
         shippingCharge,
+        name,
+        email,
+        phone,
+        addressLine1,
+        addressLine2,
+        city,
+        state,
+        setName,
+        setEmail,
+        setPhone,
+        setAddressLine1,
+        setAddressLine2,
+        setCity,
+        setState,
+        handleReview,
       }}
     >
       {children}

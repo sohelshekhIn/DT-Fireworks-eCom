@@ -95,7 +95,7 @@ const CartProductCard = () => {
       ) : (
         cartItems.map((product) => {
           return (
-            <div className="border-b p-8">
+            <div key={product.id} className="border-b p-8">
               <div className="flex flex-col lg:flex-row">
                 <div className="mb-5 w-full lg:mb-0 lg:w-1/4">
                   <Image
