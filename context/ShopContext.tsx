@@ -459,7 +459,6 @@ export const ShopContextProvider = ({
       toast.error("Invalid Form: Address details are required");
       return false;
     }
-    console.log("Hello");
     // sync data to server
     saveData({
       name,
@@ -470,8 +469,6 @@ export const ShopContextProvider = ({
       city,
       state,
     });
-    // if everything is fine
-    // redirect to review page
     return true;
   };
 
