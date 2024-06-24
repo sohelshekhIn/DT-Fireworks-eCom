@@ -2,71 +2,15 @@
 
 import { CoupanCode } from "@/types/coupan";
 import { CartProduct, Product } from "@/types/product";
+import {
+  LoadedCartData,
+  LoadedCartDataFlags,
+  ShopContextType,
+} from "@/types/shop";
 import { loadData, saveData } from "@/utils/syncCartData";
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
-interface ShopContextType {
-  qty: number;
-  increaseQty: () => void;
-  decreaseQty: () => void;
-  addProductToCart: (product: Product) => void;
-  cartItems: CartProduct[];
-  updateProductQty: (
-    id: CartProduct["id"],
-    operation: "increase" | "decrease",
-  ) => void;
-  removeProductFromCart: (id: CartProduct["id"]) => void;
-  coupanCode: CoupanCode | null;
-  setCoupanCode: React.Dispatch<React.SetStateAction<CoupanCode | null>>;
-  cartTotal: number;
-  coupanDiscount: number;
-  cartSavings: number;
-  orderTotal: number;
-  shippingCharge: number;
-  gstAmount: number;
-  name: string;
-  email: string;
-  phone: string;
-  addressLine1: string;
-  addressLine2: string;
-  city: string;
-  pincode: string;
-  state: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
-  setPhone: React.Dispatch<React.SetStateAction<string>>;
-  setAddressLine1: React.Dispatch<React.SetStateAction<string>>;
-  setAddressLine2: React.Dispatch<React.SetStateAction<string>>;
-  setCity: React.Dispatch<React.SetStateAction<string>>;
-  setPincode: React.Dispatch<React.SetStateAction<string>>;
-  setState: React.Dispatch<React.SetStateAction<string>>;
-  handleReview: () => boolean;
-}
-
-interface LoadedCartData {
-  cartItems?: CartProduct[];
-  cartTotal?: number;
-  cartCount?: number;
-  cartSavings?: number;
-  coupanDiscount?: number;
-  coupanCode?: CoupanCode | null;
-  orderTotal?: number;
-  gstAmount?: number;
-  name?: string;
-  email?: string;
-  phone?: string;
-  addressLine1?: string;
-  addressLine2?: string;
-  pincode?: string;
-  city?: string;
-  state?: string;
-}
-
-type LoadedCartDataFlags = {
-  [K in keyof LoadedCartData]: boolean;
-};
 
 const ShopContext = createContext<ShopContextType | null>(null);
 export const ShopContextProvider = ({
@@ -202,7 +146,7 @@ export const ShopContextProvider = ({
   };
 
   useEffect(() => {
-    updateCartData();
+    updateCartData(); // load cart data from server if cart session exists
   }, []);
 
   const increaseQty = () => {
