@@ -55,8 +55,10 @@ export const CheckoutContactForm = () => {
             type="tel"
             onChange={(e) => setPhone(e.target.value)}
             value={phone}
-            pattern="[0-9]{5}-[0-9]{5}" //
+            pattern="[0-9]{5}[0-9]{5}" //
             id="input-label"
+            maxLength={10}
+            minLength={10}
             className="block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:border-primary focus:ring-primary disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
             placeholder="Enter your phone number"
           />
@@ -74,18 +76,20 @@ export const CheckoutDeliveryForm = () => {
     state,
     setAddressLine1,
     setAddressLine2,
+    pincode,
+    setPincode,
     setCity,
     setState,
     handleReview,
   } = useShopContext();
 
-const router = useRouter()
+  const router = useRouter();
 
   const handleReviewOnClick = () => {
     const reviewStatus = handleReview();
     console.log(reviewStatus);
     if (reviewStatus) {
-      router.push("/cart/review")
+      router.push("/cart/review");
     }
   };
 
@@ -142,6 +146,24 @@ const router = useRouter()
             placeholder="City"
           />
         </div>
+        <div className="w-full md:max-w-lg lg:max-w-md">
+          <label
+            htmlFor="input-label"
+            className="mb-2 block text-sm font-medium dark:text-white"
+          >
+            Pincode
+          </label>
+          <input
+            type="text"
+            onChange={(e) => setPincode(e.target.value)}
+            value={pincode}
+            id="input-label"
+            className="block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:border-primary focus:ring-primary disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+            placeholder="Pincode"
+          />
+        </div>
+      </div>
+      <div className="flex flex-col gap-5 md:flex-row">
         <div className="w-full md:max-w-lg lg:max-w-md">
           <label
             htmlFor="input-label"
