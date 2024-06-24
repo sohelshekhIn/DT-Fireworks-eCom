@@ -1,3 +1,4 @@
+import { Breadcrumb } from "@/components/Breadcrumb";
 import {
   CheckoutContactForm,
   CheckoutDeliveryForm,
@@ -15,7 +16,7 @@ const CheckoutPage = async () => {
   }
 
   return (
-    <div className="mx-auto max-w-[85vw] py-10 pb-36 md:w-1/2 lg:w-10/12">
+    <div className="mx-auto w-full py-10 pb-36 md:w-1/2 md:max-w-[85vw] lg:w-10/12">
       <div className="mx-auto min-w-80 max-w-4xl bg-white p-4">
         <div className="p-4 sm:p-7">
           <div className="text-center">
@@ -24,6 +25,12 @@ const CheckoutPage = async () => {
             </h1>
           </div>
         </div>
+        <Breadcrumb
+          crumbs={[
+            { name: "Cart", href: "/cart" },
+            { name: "Checkout", href: "/cart/checkout" },
+          ]}
+        />
         <div className="mt-10">
           <div>
             <h1 className="text-lg font-semibold">Contact Details</h1>
