@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
             coupanCode.code = doc.id;
             responseCode = 200;
           } else {
-            throw new CustomError("SOHEL not found.", 404);
+            throw new CustomError("Coupan not found.", 404);
           }
         })
         .catch((error) => {
