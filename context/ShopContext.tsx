@@ -32,6 +32,7 @@ interface ShopContextType {
   addressLine1: string;
   addressLine2: string;
   city: string;
+  pincode: string;
   state: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
@@ -39,6 +40,7 @@ interface ShopContextType {
   setAddressLine1: React.Dispatch<React.SetStateAction<string>>;
   setAddressLine2: React.Dispatch<React.SetStateAction<string>>;
   setCity: React.Dispatch<React.SetStateAction<string>>;
+  setPincode: React.Dispatch<React.SetStateAction<string>>;
   setState: React.Dispatch<React.SetStateAction<string>>;
   handleReview: () => boolean;
 }
@@ -57,6 +59,7 @@ interface LoadedCartData {
   phone?: string;
   addressLine1?: string;
   addressLine2?: string;
+  pincode?: string;
   city?: string;
   state?: string;
 }
@@ -99,25 +102,9 @@ export const ShopContextProvider = ({
       addressLine1: false,
       addressLine2: false,
       city: false,
+      pincode: false,
       state: false,
     });
-
-  // cartItems: false,
-  //     cartTotal: false,
-  //     cartCount: false,
-  //     cartSavings: false,
-  //     coupanCode: false,
-  //     coupanDiscount: false,
-  //     orderTotal: false,
-  //     gstAmount: false,
-
-  //     name: false,
-  //     email: false,
-  //     phone: false,
-  //     addressLine1: false,
-  //     addressLine2: false,
-  //     city: false,
-  //     state: false,
 
   // Checkout functions
   const [name, setName] = useState<string>("");
@@ -127,6 +114,7 @@ export const ShopContextProvider = ({
   const [addressLine2, setAddressLine2] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("");
+  const [pincode, setPincode] = useState<string>("");
 
   // loading cart data from server if cart session exists
   const updateCartData = async () => {
@@ -455,7 +443,7 @@ export const ShopContextProvider = ({
       toast.error("Invalid Form: Contact details are required");
       return false;
     }
-    if (addressLine1 === "" || city === "" || state === "") {
+    if (addressLine1 === "" || city === "" || state === "" || pincode === "") {
       toast.error("Invalid Form: Address details are required");
       return false;
     }
@@ -467,6 +455,7 @@ export const ShopContextProvider = ({
       addressLine1,
       addressLine2,
       city,
+      pincode,
       state,
     });
     return true;
@@ -496,6 +485,7 @@ export const ShopContextProvider = ({
         addressLine1,
         addressLine2,
         city,
+        pincode,
         state,
         setName,
         setEmail,
@@ -504,6 +494,7 @@ export const ShopContextProvider = ({
         setAddressLine2,
         setCity,
         setState,
+        setPincode,
         handleReview,
       }}
     >
