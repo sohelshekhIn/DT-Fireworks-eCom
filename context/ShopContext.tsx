@@ -136,11 +136,13 @@ export const ShopContextProvider = ({
         city: true,
       });
     }
-    if (loadedData.data.state) {
+    if (loadedData.data.state && loadedData.data.pincode) {
       setState(loadedData.data.state);
+      setPincode(loadedData.data.pincode);
       setLoadedFromServer({
         ...dataLoadedFromServer,
         state: true,
+        pincode: true,
       });
     }
   };
@@ -339,17 +341,17 @@ export const ShopContextProvider = ({
     }
 
     // check if useEffect has been triggered by server data
-    if (dataLoadedFromServer.coupanDiscount) {
-      // set dataLoadedFromServer to false for partial data
-      setLoadedFromServer({
-        ...dataLoadedFromServer,
-        coupanDiscount: false,
-        cartSavings: false,
-        orderTotal: false,
-        gstAmount: false,
-      });
-      return;
-    }
+    // if (dataLoadedFromServer.coupanDiscount) {
+    //   // set dataLoadedFromServer to false for partial data
+    //   setLoadedFromServer({
+    //     ...dataLoadedFromServer,
+    //     coupanDiscount: false,
+    //     cartSavings: false,
+    //     orderTotal: false,
+    //     gstAmount: false,
+    //   });
+    //   return;
+    // }
 
     // round up to 2 decimal places
     const tmpgstAmount = Math.round(
