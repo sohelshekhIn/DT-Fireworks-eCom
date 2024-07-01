@@ -2,9 +2,9 @@ import { customInitApp } from "@/lib/firebase-admin-config";
 import { CustomError, handleApiError } from "@/utils/apiErrorHandler";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { createHash } from "crypto";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase-config";
+import { generateCartHash } from "@/utils/sessionHashHandler";
 customInitApp();
 
 const getCartSessionRefId = (cartSessionToken: string | null) => {
@@ -12,18 +12,8 @@ const getCartSessionRefId = (cartSessionToken: string | null) => {
     // create a new cart session token of 16 characters
     cartSessionToken = Math.random().toString(36).substring(2, 15);
   }
-  const cartSessionId = createHash("md5")
-    .update(cartSessionToken + getCartSessionSecret())
-    .digest("hex");
+  const cartSessionId = generateCartHash(cartSessionToken);
   return [cartSessionId, cartSessionToken];
-};
-
-const getCartSessionSecret = () => {
-  const CART_SESSION_SECRET = process.env.CART_SESSION_SECRET;
-  if (!CART_SESSION_SECRET) {
-    throw new CustomError("Something went wrong. Please try again later.", 500);
-  }
-  return CART_SESSION_SECRET;
 };
 
 export async function GET(req: NextRequest) {
