@@ -1,6 +1,7 @@
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ContactDetails, CheckoutDetails } from "@/components/Cart/ReviewComps";
 import Link from "next/link";
+import Script from "next/script";
 const CartReviewPage = () => {
   return (
     <div className="mx-auto w-full py-10 pb-36 md:w-1/2 md:max-w-[85vw] lg:w-10/12">
@@ -12,6 +13,11 @@ const CartReviewPage = () => {
             </h1>
           </div>
         </div>
+        {/* Load Razorpay Script */}
+        <Script
+          id="razorpay-checkout-js"
+          src="https://checkout.razorpay.com/v1/checkout.js"
+        />
         <Breadcrumb
           crumbs={[
             { name: "Cart", href: "/cart" },
