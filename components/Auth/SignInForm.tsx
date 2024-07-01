@@ -12,10 +12,10 @@ const SignInForm = () => {
   // get url params
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect") || "/";
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
 
   const handleSignIn = (
     e:
