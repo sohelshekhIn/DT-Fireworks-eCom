@@ -18,14 +18,17 @@ export const handleApiError = (error: ApiError) => {
   // Return { error } object with status code
   if (error instanceof CustomError) {
     return NextResponse.json(
-      { error: error.message },
+      { error: error.message, isOk: false },
       { status: error.statusCode },
     );
   }
 
   // Log the error for server-side debugging
   console.error("API Error:", error);
-  return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  return NextResponse.json(
+    { error: "Internal Server Error", isOk: false },
+    { status: 500 },
+  );
 };
 
 export { CustomError };
