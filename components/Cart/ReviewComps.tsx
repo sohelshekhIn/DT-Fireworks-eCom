@@ -1,7 +1,9 @@
 "use client";
 
 import { useShopContext } from "@/context/ShopContext";
-import { redirect } from "next/navigation";
+import appUrl from "@/utils/apiCallHandler";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 export const ContactDetails = () => {
   const {
     name,
@@ -14,8 +16,11 @@ export const ContactDetails = () => {
     state,
     cartItems,
   } = useShopContext();
-
-  if (cartItems.length === 0) return redirect("/cart");
+  const router = useRouter();
+  if (cartItems.length === 0) {
+    router.push("/cart");
+    return;
+  }
   return (
     <div className="mt-5 flex flex-col gap-3">
       <div className="flex items-center justify-between">
@@ -44,9 +49,99 @@ export const ContactDetails = () => {
 };
 
 export const CheckoutDetails = () => {
-  const { shippingCharge, gstAmount, orderTotal } = useShopContext();
+  const {
+    cartTotal,
+    shippingCharge,
+    gstAmount,
+    orderTotal,
+    name,
+    email,
+    phone,
+  } = useShopContext();
+
+  const router = useRouter();
+
+  const createOrderId = async () => {
+    const response = await fetch(appUrl("/api/order/create"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        totalOrderAmount: orderTotal,
+      }),
+    });
+
+    if (!response.ok) {
+      toast.error("Order creation failed.");
+    }
+    const data = await response.json();
+    return data.orderId;
+  };
+
+  const processPayment = async () => {
+    try {
+      const orderId = await createOrderId();
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: orderTotal * 100,
+        currency: "INR",
+        name: "DT Fireworks",
+        description: "Payment for your order",
+        image: "/favicon.ico",
+        order_id: orderId,
+        prefill: {
+          name: name,
+          email: email,
+          phone: phone,
+        },
+        handler: async (response: any) => {
+          const data = {
+            orderCreationId: orderId,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpayOrderId: response.razorpay_order_id,
+            razorpaySignature: response.razorpay_signature,
+          };
+
+          const verifyResponse = await fetch(appUrl("/api/order/verify"), {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (verifyResponse.ok) {
+            console.log("Payment successful.");
+
+            toast.success("Payment successful.");
+            router.push("/order/success?orderId=" + orderId);
+          } else {
+            console.log("Payment failed.");
+
+            toast.error("Payment failed.");
+          }
+        },
+      };
+      console.log("Initializing Razorpay");
+      const paymentObject = new (window as any).Razorpay(options);
+      paymentObject.on("payment.failed", function (response: any) {
+        // alert(response.error.description);
+        toast.error(response.error.description);
+      });
+      paymentObject.open();
+    } catch (error: any) {
+      toast.error("Payment failed." + error.message);
+    }
+  };
   return (
     <div className="mt-5 flex flex-col gap-3">
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-gray-500 dark:text-gray-400">Subtotal</p>
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          ₹ {cartTotal}
+        </p>
+      </div>
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-500 dark:text-gray-400">Delivery</p>
         <p className="text-sm text-gray-700 dark:text-gray-300">
@@ -67,7 +162,10 @@ export const CheckoutDetails = () => {
           ₹ {orderTotal}
         </p>
       </div>
-      <button className="mt-5 w-full rounded-lg bg-primary px-4 py-3 font-semibold text-white md:w-auto">
+      <button
+        onClick={processPayment}
+        className="mt-5 w-full rounded-lg bg-primary px-4 py-3 font-semibold text-white md:w-auto"
+      >
         Continue to Payment
       </button>
     </div>
