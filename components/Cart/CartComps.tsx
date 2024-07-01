@@ -266,7 +266,7 @@ const CartSummary = () => {
         </div>
       )}
 
-      {orderTotal > 0 && (
+      {cartTotal > 0 && (
         <>
           <div className="flex justify-between">
             <p className="text-gray-500">
