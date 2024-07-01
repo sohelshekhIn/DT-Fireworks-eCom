@@ -27,8 +27,6 @@ export async function POST(request: NextRequest) {
     const totalOrderAmount = await bodyData.totalOrderAmount;
 
     const cartSession = request.cookies.get("cart-session-token");
-    console.log(cartSession?.name);
-    console.log(cartSession?.value);
     if (!cartSession?.value) {
       throw new CustomError("Cart session not found.", 404);
     }
@@ -66,8 +64,6 @@ export async function POST(request: NextRequest) {
     if (order.status !== "created") {
       throw new CustomError("Order creation failed.", 500);
     }
-    console.log("Order Details: ", order);
-
     return NextResponse.json({ orderId: order.id }, { status: 200 });
   } catch (error: any) {
     return handleApiError(error);
