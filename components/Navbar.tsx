@@ -2,6 +2,7 @@ import { Category } from "@/types/category";
 import appUrl from "@/utils/apiCallHandler";
 import Link from "next/link";
 import { NavbarAuthStateButton } from "./Auth/AuthButtons";
+import { NavbarAuthProfile } from "./Auth/NavbarAuthProfile";
 const Navbar = async () => {
   const getCategories = async () => {
     const res = await fetch(appUrl("/api/categories/all"), {
@@ -58,7 +59,9 @@ const Navbar = async () => {
             </span>
           </Link>
 
-          <NavbarAuthStateButton />
+          {/* <NavbarAuthStateButton />
+           */}
+          <NavbarAuthProfile />
           <div className="md:hidden">
             <button
               type="button"

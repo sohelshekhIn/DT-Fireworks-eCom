@@ -1,4 +1,5 @@
 import { SignInWithGoogleButton } from "@/components/Auth/AuthButtons";
+import { UserLoginRedirectFlow } from "@/components/Auth/RedirectUrlComp";
 import SignInForm from "@/components/Auth/SignInForm";
 import Link from "next/link";
 
@@ -13,12 +14,7 @@ const SignInPage = () => {
             </h1>
             <p className="mt-2 text-sm text-gray-600 dark:text-neutral-400">
               Don&apos;t have an account yet?{" "}
-              <Link
-                className="font-medium text-primary decoration-2 hover:underline dark:text-primary"
-                href="/signup"
-              >
-                Sign up here
-              </Link>
+              <UserLoginRedirectFlow linkFor="signin" />
             </p>
           </div>
 
