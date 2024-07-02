@@ -151,6 +151,17 @@ export const ShopContextProvider = ({
     updateCartData(); // load cart data from server if cart session exists
   }, []);
 
+  const resetCart = () => {
+    setCartItems([]);
+    setCartTotal(0);
+    setCartCount(0);
+    setCartSavings(0);
+    setCoupanCode(null);
+    setCoupanDiscount(0);
+    setOrderTotal(0);
+    setGstAmount(0);
+  };
+
   const increaseQty = () => {
     setQty((prevQty) => {
       if (prevQty < 20) {
@@ -442,6 +453,7 @@ export const ShopContextProvider = ({
         setState,
         setPincode,
         handleReview,
+        resetCart,
       }}
     >
       {children}

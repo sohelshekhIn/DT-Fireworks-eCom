@@ -37,6 +37,7 @@ export interface ShopContextType {
   setPincode: React.Dispatch<React.SetStateAction<string>>;
   setState: React.Dispatch<React.SetStateAction<string>>;
   handleReview: () => boolean;
+  resetCart: () => void;
 }
 
 export interface LoadedCartData {
