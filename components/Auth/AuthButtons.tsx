@@ -32,7 +32,7 @@ export const LogOutButton = ({
   };
   return (
     <button
-      className="rounded-xl bg-gray-700 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800"
+      className="flex items-center gap-x-3.5 rounded-lg px-3 py-3 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
       onClick={handleLogout}
     >
       Logout
