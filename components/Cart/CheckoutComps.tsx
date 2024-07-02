@@ -85,7 +85,7 @@ export const CheckoutDeliveryForm = () => {
 
   const router = useRouter();
 
-  const handleReviewOnClick = () => {
+  const handleReviewFormSubmit = () => {
     const reviewStatus = handleReview();
     console.log(reviewStatus);
     if (reviewStatus) {
@@ -94,7 +94,10 @@ export const CheckoutDeliveryForm = () => {
   };
 
   return (
-    <div className="mt-5 flex flex-col gap-5 md:m-5">
+    <form
+      onSubmit={handleReviewFormSubmit}
+      className="mt-5 flex flex-col gap-5 md:m-5"
+    >
       <div className="flex flex-col gap-5 md:flex-row">
         <div className="w-full md:max-w-lg lg:max-w-lg">
           <label
@@ -183,12 +186,12 @@ export const CheckoutDeliveryForm = () => {
       </div>
       <div className="my-8 flex justify-center">
         <button
-          onClick={handleReviewOnClick}
+          type="submit"
           className="w-full rounded-lg bg-primary px-5 py-3 text-white hover:bg-primaryDark md:w-auto"
         >
           Review Cart
         </button>
       </div>
-    </div>
+    </form>
   );
 };
