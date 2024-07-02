@@ -3,7 +3,9 @@
 import { useShopContext } from "@/context/ShopContext";
 import appUrl from "@/utils/apiCallHandler";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import { AuthorizingPayment } from "../Order/AuthorizingPayment";
 export const ContactDetails = () => {
   const {
     name,
@@ -50,6 +52,7 @@ export const ContactDetails = () => {
 
 export const CheckoutDetails = () => {
   const {
+    resetCart,
     cartTotal,
     shippingCharge,
     gstAmount,
@@ -58,6 +61,9 @@ export const CheckoutDetails = () => {
     email,
     phone,
   } = useShopContext();
+  const [paymentStatus, setPaymentStatus] = useState<"pending" | "success">(
+    "pending",
+  );
 
   const router = useRouter();
 
@@ -73,15 +79,23 @@ export const CheckoutDetails = () => {
     });
 
     if (!response.ok) {
-      toast.error("Order creation failed.");
+      console.error("Order creation failed.");
     }
     const data = await response.json();
-    return data.orderId;
+    return data;
   };
 
   const processPayment = async () => {
     try {
-      const orderId = await createOrderId();
+      const generatedOrder: {
+        orderId: string;
+        receipt: string;
+      } = await createOrderId();
+      if (!generatedOrder) {
+        toast.error("Order creation failed.");
+        return;
+      }
+      const orderId = generatedOrder.orderId;
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: orderTotal * 100,
@@ -96,8 +110,9 @@ export const CheckoutDetails = () => {
           phone: phone,
         },
         handler: async (response: any) => {
+          setPaymentStatus("success");
           const data = {
-            orderCreationId: orderId,
+            orderReceiptId: generatedOrder.receipt,
             razorpayPaymentId: response.razorpay_payment_id,
             razorpayOrderId: response.razorpay_order_id,
             razorpaySignature: response.razorpay_signature,
@@ -113,12 +128,12 @@ export const CheckoutDetails = () => {
 
           if (verifyResponse.ok) {
             console.log("Payment successful.");
-
             toast.success("Payment successful.");
             router.push("/order/success?orderId=" + orderId);
+            resetCart();
           } else {
+            setPaymentStatus("pending");
             console.log("Payment failed.");
-
             toast.error("Payment failed.");
           }
         },
@@ -126,7 +141,6 @@ export const CheckoutDetails = () => {
       console.log("Initializing Razorpay");
       const paymentObject = new (window as any).Razorpay(options);
       paymentObject.on("payment.failed", function (response: any) {
-        // alert(response.error.description);
         toast.error(response.error.description);
       });
       paymentObject.open();
@@ -134,7 +148,7 @@ export const CheckoutDetails = () => {
       toast.error("Payment failed." + error.message);
     }
   };
-  return (
+  return paymentStatus === "pending" ? (
     <div className="mt-5 flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-500 dark:text-gray-400">Subtotal</p>
@@ -169,5 +183,7 @@ export const CheckoutDetails = () => {
         Continue to Payment
       </button>
     </div>
+  ) : (
+    <AuthorizingPayment />
   );
 };
