@@ -86,7 +86,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <form>
+    <form onSubmit={handleSignUp}>
       <div className="grid gap-y-4">
         <div>
           <label htmlFor="email" className="mb-2 block text-sm dark:text-white">
@@ -246,7 +246,6 @@ const SignUpForm = () => {
         </div>
         <div className="mt-5">
           <button
-            onClick={handleSignUp}
             type="submit"
             className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-primary px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700 disabled:pointer-events-none disabled:opacity-50"
           >
