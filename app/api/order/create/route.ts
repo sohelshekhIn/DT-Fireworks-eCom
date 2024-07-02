@@ -14,8 +14,12 @@ const razorpay = new Razorpay({
 const generateOrderId = () => {
   //   generate order id with OR-todays_data-4digit_random_number
   const today = new Date();
-  const date = today.getDate();
-  const month = today.getMonth() + 1;
+  const date: string =
+    today.getDate() < 10 ? `0${today.getDate()}` : `${today.getDate()}`;
+  let month: string =
+    today.getMonth() + 1 < 10
+      ? `0${today.getMonth() + 1}`
+      : `${today.getMonth() + 1}`;
   const year = today.getFullYear();
   const random = Math.floor(Math.random() * 10000);
   return `OR-${year}${month}${date}${random}`;
@@ -64,7 +68,10 @@ export async function POST(request: NextRequest) {
     if (order.status !== "created") {
       throw new CustomError("Order creation failed.", 500);
     }
-    return NextResponse.json({ orderId: order.id }, { status: 200 });
+    return NextResponse.json(
+      { orderId: order.id, receipt: order.receipt },
+      { status: 200 },
+    );
   } catch (error: any) {
     return handleApiError(error);
   }
