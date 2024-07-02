@@ -9,7 +9,6 @@ export const checkUserAuthStatus = async (
       tags: ["user-session"],
       revalidate: 60 * 30, // 30 minutes
     },
-    cache: "force-cache",
     headers: {
       Cookie: `session=${session?.value}`,
     },
