@@ -20,6 +20,16 @@ export async function GET(req: NextRequest) {
   let cartSessionToken: string | null =
     cookies().get("cart-session-token")?.value || null;
   try {
+    if (!cartSessionToken) {
+      return NextResponse.json(
+        {
+          data: {},
+        },
+        {
+          status: 404,
+        },
+      );
+    }
     const cartSession = getCartSessionRefId(cartSessionToken);
 
     const cartRef = doc(db, "cart-sessions", cartSession[0]);
