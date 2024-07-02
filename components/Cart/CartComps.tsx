@@ -6,7 +6,7 @@ import { CartProduct, Product } from "@/types/product";
 import appUrl from "@/utils/apiCallHandler";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { FormEvent, useRef } from "react";
 import { toast } from "react-toastify";
 
 const AddToCartBtn = ({ product }: { product: Product }) => {
@@ -146,14 +146,16 @@ const CoupanCodeComp = () => {
   const { setCoupanCode, cartTotal, coupanCode } = useShopContext();
   const coupanCodeInput = useRef<HTMLInputElement>(null);
 
-  const checkCoupanCode = async () => {
+  const checkCoupanCode = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const coupanCodeValue = coupanCodeInput.current?.value;
     if (cartTotal === 0) {
       toast.error("Cart is empty");
       return;
     }
-    if (!coupanCodeValue) {
+    if (!coupanCodeValue || coupanCodeValue === "") {
       toast.error("Please enter a coupan code");
+      return;
     }
 
     const res = await fetch(
@@ -213,7 +215,7 @@ const CoupanCodeComp = () => {
           </div>
         </>
       ) : (
-        <>
+        <form onSubmit={checkCoupanCode}>
           <input
             ref={coupanCodeInput}
             type="text"
@@ -222,13 +224,13 @@ const CoupanCodeComp = () => {
           />
           <div className="mt-5 w-full">
             <button
-              onClick={checkCoupanCode}
+              type="submit"
               className="w-full rounded-md bg-secondaryDark py-3 text-white hover:bg-secondaryDark/80"
             >
               Apply Coupan
             </button>
           </div>
-        </>
+        </form>
       )}
     </div>
   );
