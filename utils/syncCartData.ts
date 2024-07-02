@@ -17,7 +17,7 @@ export const saveData = async (data: any) => {
 export const loadData = async () => {
   const response = await fetch("/api/cart/sync");
   if (!response.ok) {
-    throw new Error("Error while fetching data");
+    return {};
   }
   return response.json();
 };
