@@ -10,7 +10,6 @@ import { LogOutButton } from "./AuthButtons";
 export const NavbarAuthProfile = () => {
   const { user } = useAuth();
   const path = usePathname();
-
   return (
     <div className="hs-dropdown relative m-1 inline-flex [--trigger:hover]">
       <button
@@ -34,7 +33,7 @@ export const NavbarAuthProfile = () => {
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
-      {user != null ? (
+      {user ? (
         <div
           className="hs-dropdown-menu duration mt-2 hidden min-w-60 rounded-lg bg-white p-2 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full hs-dropdown-open:opacity-100 dark:divide-neutral-700 dark:border dark:border-neutral-700 dark:bg-neutral-800"
           aria-labelledby="hs-dropdown-default"
@@ -48,15 +47,15 @@ export const NavbarAuthProfile = () => {
             </p>
           </div>
           <div className="mt-2 gap-2 py-2 first:pt-0 last:pb-0">
-            <Link
+            {/* <Link
               className="flex items-center gap-x-3.5 rounded-lg px-3 py-3 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
               href="/account/"
             >
               My Account
-            </Link>
+            </Link> */}
             <Link
               className="flex items-center gap-x-3.5 rounded-lg px-3 py-3 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700"
-              href="/aacount/my-orders"
+              href="/account/my-orders"
             >
               My Orders
             </Link>
