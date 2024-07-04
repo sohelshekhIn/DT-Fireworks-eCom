@@ -2,11 +2,14 @@
 
 import { useShopContext } from "@/context/ShopContext";
 import { redirect, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export const CheckoutContactForm = () => {
   const { cartItems, name, email, phone, setName, setEmail, setPhone } =
     useShopContext();
-  if (cartItems.length === 0) return redirect("/cart");
+  useEffect(() => {
+    if (cartItems.length === 0) return redirect("/cart");
+  }, [cartItems]);
   return (
     <div className="mt-5 flex flex-col gap-5 md:m-5">
       <div className="flex flex-col gap-5 md:flex-row">
@@ -85,7 +88,13 @@ export const CheckoutDeliveryForm = () => {
 
   const router = useRouter();
 
-  const handleReviewFormSubmit = () => {
+  const handleReviewFormSubmit = (
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+    console.log("Review Form Submitted");
     const reviewStatus = handleReview();
     console.log(reviewStatus);
     if (reviewStatus) {
