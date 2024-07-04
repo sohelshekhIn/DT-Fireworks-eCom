@@ -94,9 +94,7 @@ export const CheckoutDeliveryForm = () => {
       | React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
-    console.log("Review Form Submitted");
     const reviewStatus = handleReview();
-    console.log(reviewStatus);
     if (reviewStatus) {
       router.push("/cart/review");
     }
