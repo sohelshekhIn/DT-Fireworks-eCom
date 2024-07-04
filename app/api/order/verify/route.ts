@@ -7,6 +7,7 @@ import { db } from "@/lib/firebase-config";
 import { cookies } from "next/headers";
 
 const handleOrderCreation = async (
+  uid: string,
   orderReceiptId: string,
   razorpayPaymentId: string,
   razorpayOrderId: string,
@@ -28,6 +29,7 @@ const handleOrderCreation = async (
       ...cartSessionData,
       razorpayPaymentId,
       razorpayOrderId,
+      uid: uid,
       // createdAt date in IST timezone
       createdAt: new Date().toLocaleString("en-US", {
         timeZone: "Asia/Kolkata",
@@ -70,6 +72,7 @@ const generatedSignature = (
 export async function POST(request: NextRequest) {
   try {
     const {
+      uid,
       orderReceiptId,
       razorpayPaymentId,
       razorpayOrderId,
@@ -84,6 +87,7 @@ export async function POST(request: NextRequest) {
     const cartSessionToken =
       request.cookies.get("cart-session-token")?.value || "";
     await handleOrderCreation(
+      uid,
       orderReceiptId,
       razorpayPaymentId,
       razorpayOrderId,

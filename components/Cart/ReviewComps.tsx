@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { AuthorizingPayment } from "../Order/AuthorizingPayment";
+import { useAuth } from "@/context/AuthContext";
 export const ContactDetails = () => {
   const {
     name,
@@ -61,6 +62,7 @@ export const CheckoutDetails = () => {
     email,
     phone,
   } = useShopContext();
+  const { user } = useAuth();
   const [paymentStatus, setPaymentStatus] = useState<"pending" | "success">(
     "pending",
   );
@@ -86,6 +88,8 @@ export const CheckoutDetails = () => {
   };
 
   const processPayment = async () => {
+    console.log("Processing payment");
+
     try {
       const generatedOrder: {
         orderId: string;
@@ -112,6 +116,7 @@ export const CheckoutDetails = () => {
         handler: async (response: any) => {
           setPaymentStatus("success");
           const data = {
+            uid: user?.uid,
             orderReceiptId: generatedOrder.receipt,
             razorpayPaymentId: response.razorpay_payment_id,
             razorpayOrderId: response.razorpay_order_id,
