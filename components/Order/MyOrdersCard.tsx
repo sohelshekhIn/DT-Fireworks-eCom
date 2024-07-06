@@ -14,7 +14,6 @@ export const MyOrdersPlaceholder = () => {
     const data: MyOrdersOverviewData = await fetch(
       appUrl("/api/order/my-orders"),
     ).then((res) => res.json());
-    console.log(data);
     setData(data);
     if (data.orders.length === 0) {
       return <NoOrdersFound />;
@@ -26,6 +25,8 @@ export const MyOrdersPlaceholder = () => {
   }, []);
   return (
     <div className="flex flex-col gap-5">
+      {/*  */}
+      {data.orders.length === 0 && <LoadingOrderData />}
       {data.orders.map((order: OrderOverview) => (
         <OrderCard
           key={order.orderId}
@@ -34,6 +35,21 @@ export const MyOrdersPlaceholder = () => {
           orderTotal={order.orderTotal}
         />
       ))}
+    </div>
+  );
+};
+
+const LoadingOrderData = () => {
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center rounded-lg bg-white p-6 shadow-md dark:bg-neutral-800">
+        <p className="text-xl font-semibold text-gray-800 dark:text-neutral-300">
+          Loading orders
+        </p>
+        <p className="mt-2 text-sm text-gray-500 dark:text-neutral-400">
+          Please wait while we fetch your orders.
+        </p>
+      </div>
     </div>
   );
 };
