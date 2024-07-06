@@ -2,22 +2,15 @@ import { customInitApp } from "@/lib/firebase-admin-config";
 import { db } from "@/lib/firebase-config";
 import { OrderOverview } from "@/types/order";
 import { CustomError, handleApiError } from "@/utils/apiErrorHandler";
+import { formatUserFriendlyDate } from "@/utils/dateFormatter";
 import { auth } from "firebase-admin";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 customInitApp();
 
-const formatUserFriendlyDate = (date: string) => {
-  let tempDate = new Date(date);
-  const month = tempDate.toLocaleString("default", { month: "long" });
-  return `${tempDate.getDay()} ${month} ${tempDate.getFullYear()}`;
-};
-
 export const GET = async (request: NextRequest) => {
   try {
     const session = request.cookies.get("session");
-    console.log(session);
-    console.log(session?.value);
     if (!session) {
       throw new CustomError("Unauthorized", 401);
     }
