@@ -5,7 +5,7 @@ import Script from "next/script";
 const CartReviewPage = () => {
   return (
     <div className="mx-auto w-full py-10 pb-36 md:w-1/2 md:max-w-[85vw] lg:w-10/12">
-      <div className="mx-auto min-w-80 max-w-4xl bg-white p-4">
+      <div className="mx-auto min-w-80 max-w-4xl bg-white p-4 dark:bg-neutral-800">
         <div className="p-4 sm:p-7">
           <div className="text-center">
             <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
