@@ -17,13 +17,7 @@ export const ContactDetails = () => {
     city,
     pincode,
     state,
-    cartItems,
   } = useShopContext();
-  const router = useRouter();
-  if (cartItems.length === 0) {
-    router.push("/cart");
-    return;
-  }
   return (
     <div className="mt-5 flex flex-col gap-3">
       <div className="flex items-center justify-between">
@@ -66,6 +60,7 @@ export const CheckoutDetails = () => {
   const [paymentStatus, setPaymentStatus] = useState<"pending" | "success">(
     "pending",
   );
+  const [submitting, setSubmitting] = useState(false);
 
   const router = useRouter();
 
@@ -88,8 +83,9 @@ export const CheckoutDetails = () => {
   };
 
   const processPayment = async () => {
+    if (submitting) return;
+    setSubmitting(true);
     console.log("Processing payment");
-
     try {
       const generatedOrder: {
         orderId: string;
@@ -114,6 +110,7 @@ export const CheckoutDetails = () => {
           phone: phone,
         },
         handler: async (response: any) => {
+          setSubmitting(false);
           setPaymentStatus("success");
           const data = {
             uid: user?.uid,
@@ -147,10 +144,12 @@ export const CheckoutDetails = () => {
       const paymentObject = new (window as any).Razorpay(options);
       paymentObject.on("payment.failed", function (response: any) {
         toast.error(response.error.description);
+        setSubmitting(false);
       });
       paymentObject.open();
     } catch (error: any) {
       toast.error("Payment failed." + error.message);
+      setSubmitting(false);
     }
   };
   return paymentStatus === "pending" ? (
@@ -183,9 +182,10 @@ export const CheckoutDetails = () => {
       </div>
       <button
         onClick={processPayment}
-        className="mt-5 w-full rounded-lg bg-primary px-4 py-3 font-semibold text-white md:w-auto"
+        disabled={submitting}
+        className="mt-5 w-full rounded-lg bg-primary px-4 py-3 font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-800 disabled:hover:bg-gray-300 disabled:hover:text-gray-800 md:w-auto"
       >
-        Continue to Payment
+        {submitting ? "Processing..." : "Continue to Payment"}
       </button>
     </div>
   ) : (
