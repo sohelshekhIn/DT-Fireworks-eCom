@@ -8,3 +8,7 @@ export const formatUserFriendlyTime = (date: string) => {
   let tempDate = new Date(date);
   return tempDate.toLocaleTimeString();
 };
+
+export const formatUserFriendlyPhone = (phone: string) => {
+  return phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+};
