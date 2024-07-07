@@ -2,7 +2,7 @@ import { customInitApp } from "@/lib/firebase-admin-config";
 import { db } from "@/lib/firebase-config";
 import { OrderOverview } from "@/types/order";
 import { CustomError, handleApiError } from "@/utils/apiErrorHandler";
-import { formatUserFriendlyDate } from "@/utils/dateFormatter";
+import { formatUserFriendlyDate } from "@/utils/dataFormatter";
 import { auth } from "firebase-admin";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
