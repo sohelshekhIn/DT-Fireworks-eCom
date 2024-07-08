@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useSearchParams, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export const UserLoginRedirectFlow = ({
+const UserLoginRedirectLink = ({
   linkFor,
 }: {
   linkFor: "signup" | "signin";
@@ -18,7 +18,7 @@ export const UserLoginRedirectFlow = ({
           ? "?redirect=" + searchParams.get("redirect")
           : ""),
     );
-  }, [path]);
+  }, [path, linkFor, searchParams]);
   return (
     <Link
       className="font-medium text-primary decoration-2 hover:underline dark:text-primary"
@@ -26,5 +26,17 @@ export const UserLoginRedirectFlow = ({
     >
       {linkFor === "signin" ? "Sign up here" : "Sign in here"}
     </Link>
+  );
+};
+
+export const UserLoginRedirectFlow = ({
+  linkFor,
+}: {
+  linkFor: "signup" | "signin";
+}) => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <UserLoginRedirectLink linkFor="signin" />
+    </Suspense>
   );
 };
