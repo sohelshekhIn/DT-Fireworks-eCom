@@ -43,6 +43,54 @@ export const MyOrderLoaderSkeleton = () => {
             <div className="h-8 flex-1 animate-pulse rounded-full bg-gray-300"></div>
           </div>
         </div>
+        <div className="mb-4">
+          <div className="mb-2 h-6 w-24 rounded bg-gray-300"></div>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <div className="h-12 w-12 rounded bg-gray-300"></div>
+              <div className="flex-1">
+                <div className="mb-2 h-4 w-32 rounded bg-gray-300"></div>
+                <div className="h-4 w-20 rounded bg-gray-300"></div>
+              </div>
+              <div className="h-6 w-12 rounded bg-gray-300"></div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="h-12 w-12 rounded bg-gray-300"></div>
+              <div className="flex-1">
+                <div className="mb-2 h-4 w-32 rounded bg-gray-300"></div>
+                <div className="h-4 w-20 rounded bg-gray-300"></div>
+              </div>
+              <div className="h-6 w-12 rounded bg-gray-300"></div>
+            </div>
+          </div>
+        </div>
+        {/* Summary section */}
+        <div className="space-y-2">
+          <div className="flex justify-between">
+            <div className="h-4 w-24 rounded bg-gray-300"></div>
+            <div className="h-4 w-16 rounded bg-gray-300"></div>
+          </div>
+          <div className="flex justify-between">
+            <div className="h-4 w-24 rounded bg-gray-300"></div>
+            <div className="h-4 w-16 rounded bg-gray-300"></div>
+          </div>
+          <div className="flex justify-between">
+            <div className="h-4 w-24 rounded bg-gray-300"></div>
+            <div className="h-4 w-16 rounded bg-gray-300"></div>
+          </div>
+          <div className="flex justify-between">
+            <div className="h-4 w-24 rounded bg-gray-300"></div>
+            <div className="h-4 w-16 rounded bg-gray-300"></div>
+          </div>
+          <div className="flex justify-between">
+            <div className="h-4 w-24 rounded bg-gray-300"></div>
+            <div className="h-4 w-16 rounded bg-gray-300"></div>
+          </div>
+          <div className="flex justify-between font-bold">
+            <div className="h-4 w-24 rounded bg-gray-300"></div>
+            <div className="h-4 w-20 rounded bg-gray-300"></div>
+          </div>
+        </div>
       </div>
     </div>
   );
