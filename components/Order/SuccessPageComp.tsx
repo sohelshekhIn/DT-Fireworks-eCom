@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 export const RedirectToHomePage = () => {
   const [timer, setTimer] = useState(10);
   const { push } = useRouter();
+  const redirect = () => {
+    push("/");
+  };
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer((prev) => {
         if (prev === 0) {
-          push("/");
+          redirect();
           return prev;
         }
         return prev - 1;
