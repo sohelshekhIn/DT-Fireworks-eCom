@@ -7,7 +7,7 @@ import { auth } from "firebase-admin";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 customInitApp();
-
+export const dynamic = "force-dynamic";
 export const GET = async (request: NextRequest) => {
   try {
     const session = request.cookies.get("session");
@@ -27,7 +27,8 @@ export const GET = async (request: NextRequest) => {
     if (querySnapshot.empty) {
       return NextResponse.json({ orders: [] }, { status: 200 });
     }
-
+    console.log(querySnapshot.docs[0].data().createdAt);
+    console.log(formatUserFriendlyDate(querySnapshot.docs[0].data().createdAt));
     const orders: OrderOverview[] = querySnapshot.docs.map((doc) => ({
       orderId: doc.id,
       orderDate: formatUserFriendlyDate(doc.data().createdAt),

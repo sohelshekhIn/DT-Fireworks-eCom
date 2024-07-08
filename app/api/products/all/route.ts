@@ -6,6 +6,7 @@ import { getDocs, query, collection, where, getDoc } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 customInitApp();
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
@@ -17,7 +18,7 @@ export async function GET(req: NextRequest) {
       const productQuery = query(
         collection(db, "products"),
         where("isVisible", "==", true),
-        where("categories", "array-contains-any", [categoryId])
+        where("categories", "array-contains-any", [categoryId]),
       );
       await getDocs(productQuery)
         .then((querySnapshot) => {
@@ -44,7 +45,7 @@ export async function GET(req: NextRequest) {
       {
         data: products,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     return handleApiError(error);

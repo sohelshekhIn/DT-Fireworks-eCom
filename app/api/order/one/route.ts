@@ -7,7 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 customInitApp();
-
+export const dynamic = "force-dynamic";
 export const GET = async (req: NextRequest) => {
   // get orderid from body
   try {

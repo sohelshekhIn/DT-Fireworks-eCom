@@ -6,7 +6,7 @@ import { getDoc, doc } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 
 customInitApp();
-
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.nextUrl);
