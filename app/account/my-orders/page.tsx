@@ -1,5 +1,5 @@
 import { Breadcrumb } from "@/components/Breadcrumb";
-import { MyOrdersPlaceholder } from "@/components/Order/MyOrdersCard";
+import { MyOrdersCardPlaceholder } from "@/components/Order/MyOrdersCard";
 
 const MyOrdersPage = async () => {
   return (
@@ -15,7 +15,7 @@ const MyOrdersPage = async () => {
       <Breadcrumb
         crumbs={[{ name: "My Orders", href: "/account/my-orders" }]}
       />
-      <MyOrdersPlaceholder />
+      <MyOrdersCardPlaceholder />
     </section>
   );
 };
@@ -29,7 +29,7 @@ const NoOrdersFound = () => {
             No orders found
           </p>
           <p className="mt-2 text-sm text-gray-500 dark:text-neutral-400">
-            You haven't placed any orders yet.
+            You haven&apos;t placed any orders yet.
           </p>
         </div>
       </div>

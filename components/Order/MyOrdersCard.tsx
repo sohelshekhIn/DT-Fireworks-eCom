@@ -3,21 +3,29 @@ import { OrderOverview } from "@/types/order";
 import appUrl from "@/utils/apiCallHandler";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { MyOrdersCardSkeleton } from "../SkeletonLoaders/OrderLoaders";
 
 type MyOrdersOverviewData = {
   orders: OrderOverview[];
 };
 
-export const MyOrdersPlaceholder = () => {
+export const MyOrdersCardPlaceholder = () => {
   const [data, setData] = useState<MyOrdersOverviewData>({ orders: [] });
+  const [loading, setLoading] = useState(true);
   const fetchMyOrders = async () => {
     const data: MyOrdersOverviewData = await fetch(
       appUrl("/api/order/my-orders"),
+      {
+        next: {
+          revalidate: 60 * 60, // 1 hour
+          tags: ["my-orders", "my-orders-page"],
+        },
+      },
     ).then((res) => res.json());
-    setData(data);
     if (data.orders.length === 0) {
       return <NoOrdersFound />;
     }
+    setData(data);
   };
 
   useEffect(() => {
@@ -25,8 +33,7 @@ export const MyOrdersPlaceholder = () => {
   }, []);
   return (
     <div className="flex flex-col gap-5">
-      {/*  */}
-      {data.orders.length === 0 && <LoadingOrderData />}
+      {data.orders.length === 0 && <MyOrdersCardSkeleton />}
       {data.orders.map((order: OrderOverview) => (
         <OrderCard
           key={order.orderId}
@@ -35,21 +42,6 @@ export const MyOrdersPlaceholder = () => {
           orderTotal={order.orderTotal}
         />
       ))}
-    </div>
-  );
-};
-
-const LoadingOrderData = () => {
-  return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center justify-center rounded-lg bg-white p-6 shadow-md dark:bg-neutral-800">
-        <p className="text-xl font-semibold text-gray-800 dark:text-neutral-300">
-          Loading orders
-        </p>
-        <p className="mt-2 text-sm text-gray-500 dark:text-neutral-400">
-          Please wait while we fetch your orders.
-        </p>
-      </div>
     </div>
   );
 };
@@ -90,7 +82,7 @@ const NoOrdersFound = () => {
             No orders found
           </p>
           <p className="mt-2 text-sm text-gray-500 dark:text-neutral-400">
-            You haven't placed any orders yet.
+            You haven&apos;t placed any orders yet.
           </p>
         </div>
       </div>
