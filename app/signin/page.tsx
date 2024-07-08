@@ -2,6 +2,7 @@ import { SignInWithGoogleButton } from "@/components/Auth/AuthButtons";
 import { UserLoginRedirectFlow } from "@/components/Auth/RedirectUrlComp";
 import SignInForm from "@/components/Auth/SignInForm";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const SignInPage = () => {
   return (
@@ -12,20 +13,24 @@ const SignInPage = () => {
             <h1 className="block text-2xl font-bold text-gray-800 dark:text-white">
               Sign in
             </h1>
-            <p className="mt-2 text-sm text-gray-600 dark:text-neutral-400">
-              Don&apos;t have an account yet?{" "}
-              <UserLoginRedirectFlow linkFor="signin" />
-            </p>
+            <Suspense fallback={<div>Loading...</div>}>
+              <p className="mt-2 text-sm text-gray-600 dark:text-neutral-400">
+                Don&apos;t have an account yet?{" "}
+                <UserLoginRedirectFlow linkFor="signin" />
+              </p>
+            </Suspense>
           </div>
 
           <div className="mt-5">
-            <SignInWithGoogleButton />
-
+            <Suspense fallback={<div>Loading...</div>}>
+              <SignInWithGoogleButton />
+            </Suspense>
             <div className="flex items-center py-3 text-xs uppercase text-gray-400 before:me-6 before:flex-1 before:border-t before:border-gray-200 after:ms-6 after:flex-1 after:border-t after:border-gray-200 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
               Or
             </div>
-
-            <SignInForm />
+            <Suspense fallback={<div>Loading...</div>}>
+              <SignInForm />
+            </Suspense>
           </div>
         </div>
       </div>
