@@ -5,7 +5,6 @@ export const DeliveryStatusStepper = ({
 }: {
   status: Order["delivery"]["deliveryStatus"];
 }) => {
-  console.log(status);
   const steps = [
     { title: "Pending", description: "Your order is pending" },
     { title: "Prepared", description: "Your order is prepared" },
