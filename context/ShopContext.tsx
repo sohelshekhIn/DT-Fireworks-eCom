@@ -377,6 +377,7 @@ export const ShopContextProvider = ({
     saveData({
       orderTotal: cartTotal - coupanDiscount + gstAmount + shippingCharge,
       gstAmount: tmpgstAmount,
+      shippingCharge,
     });
   }, [cartTotal, coupanDiscount]);
 

@@ -16,11 +16,13 @@ export interface Order {
   city: string;
   state: string;
   pincode: string;
+  shippingCharge: number;
   orderStatus: "pending" | "confirmed" | "prepared" | "shipped" | "delivered";
   cartItems: CartProduct[];
   cartCount: number;
   cartTotal: number;
   gstAmount: number;
+  orderTotal: number;
   delivery: {
     deliveryDate: string;
     deliveryStatus: "pending" | "prepared" | "shipped" | "delivered";
