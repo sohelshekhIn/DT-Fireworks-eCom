@@ -11,7 +11,7 @@ export async function POST() {
   try {
     const authorization = headers().get("Authorization");
     if (!authorization) {
-      return new CustomError("Unauthorized", 401);
+      new CustomError("Unauthorized", 401);
     }
     if (authorization?.startsWith("Bearer ")) {
       const idToken = authorization.split("Bearer ")[1];
@@ -36,7 +36,7 @@ export async function POST() {
         cookies().set(options);
       }
     } else {
-      return new CustomError("Unauthorized", 401);
+      new CustomError("Unauthorized", 401);
     }
 
     return NextResponse.json(
@@ -46,7 +46,7 @@ export async function POST() {
           isLogged: true,
         },
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: any) {
     return handleApiError(error);
@@ -58,7 +58,14 @@ export async function GET() {
 
   //Validate if the cookie exist in the request
   if (!session) {
-    return NextResponse.json({ isLogged: false }, { status: 401 });
+    return NextResponse.json(
+      {
+        data: {
+          isLogged: false,
+        },
+      },
+      { status: 401 },
+    );
   }
 
   try {
@@ -66,10 +73,24 @@ export async function GET() {
     const decodedClaims = await auth().verifySessionCookie(session, true);
 
     if (!decodedClaims) {
-      return NextResponse.json({ isLogged: false }, { status: 401 });
+      return NextResponse.json(
+        {
+          data: {
+            isLogged: false,
+          },
+        },
+        { status: 401 },
+      );
     }
   } catch (error) {
-    return NextResponse.json({ isLogged: false }, { status: 401 });
+    return NextResponse.json(
+      {
+        data: {
+          isLogged: false,
+        },
+      },
+      { status: 401 },
+    );
   }
 
   return NextResponse.json(
@@ -78,6 +99,6 @@ export async function GET() {
         isLogged: true,
       },
     },
-    { status: 200 }
+    { status: 200 },
   );
 }
