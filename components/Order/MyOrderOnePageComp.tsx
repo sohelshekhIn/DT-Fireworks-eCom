@@ -41,7 +41,7 @@ export const MyOrderPlaceholder = ({ orderId }: { orderId: string }) => {
   }, []);
 
   return (
-    <div className="flex h-96 flex-col items-center justify-center">
+    <div className="flex h-auto flex-col items-center justify-center">
       {loading ? (
         <MyOrderLoaderSkeleton />
       ) : (
@@ -54,9 +54,9 @@ export const MyOrderPlaceholder = ({ orderId }: { orderId: string }) => {
 const OrderDetails = ({ order }: { order: Order }) => {
   return (
     order && (
-      <div className="w-full">
+      <div className="h-full w-full py-10">
         {/* display all information for orders */}
-        <div className="mt-10 flex flex-col gap-10">
+        <div className="flex flex-col gap-10">
           <div className="flex flex-col items-center md:flex-row md:justify-between">
             <p>
               Order <b>{order.id}</b>
@@ -99,26 +99,84 @@ const OrderDetails = ({ order }: { order: Order }) => {
             <h3 className="text-left text-lg font-bold">Delivery Status</h3>
             <DeliveryStatusStepper status={order.delivery.deliveryStatus} />
           </div>
-          {/* <div className="flex flex-col items-center w-full mt-10 lg:w-1/2 lg:mt-0">
-            <h3 className="text-lg font-bold">Shipping Information</h3>
-            <div className="flex flex-col items-center mt-4">
-              <p className="text-sm text-gray-600 dark:text-neutral-400">
-                Name: {order.shippingInfo.name}
-              </p>
-              <p className="text-sm text-gray-600 dark:text-neutral-400">
-                Address: {order.shippingInfo.address}
-              </p>
-              <p className="text-sm text-gray-600 dark:text-neutral-400">
-                City: {order.shippingInfo.city}
-              </p>
-              <p className="text-sm text-gray-600 dark:text-neutral-400">
-                State: {order.shippingInfo.state}
-              </p>
-              <p className="text-sm text-gray-600 dark:text-neutral-400">
-                Zip: {order.shippingInfo.zip}
+          {/* showing cart items */}
+          <div className="mt-5 bg-white">
+            <h3 className="text-lg font-bold">Items</h3>
+            <div className="mt-4">
+              {order.cartItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={item.media.images[0]}
+                      alt={item.name}
+                      className="h-10 w-10 rounded-lg object-cover"
+                    />
+                    <div>
+                      <p>{item.name}</p>
+                      <p className="text-sm text-gray-500">
+                        {item.quantity} x {item.price}
+                      </p>
+                    </div>
+                  </div>
+                  <p>
+                    <span>&#8377;</span>
+                    {item.price * item.quantity}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-5 flex flex-col gap-3 border-t pt-4">
+            {/* financial details, totals, gst, and all */}
+            <div className="flex items-center justify-between">
+              <p>Subtotal</p>
+              <p>
+                <span>&#8377;</span>
+                {order.cartTotal}
               </p>
             </div>
-          </div> */}
+            {/* if coupanDiscount exists then show */}
+            {order.coupanDiscount > 0 && (
+              <div className="flex items-center justify-between">
+                <p>Coupon Discount</p>
+                <p>
+                  <span>&#8377;</span>
+                  {order.coupanDiscount}
+                </p>
+              </div>
+            )}
+            <div className="flex items-center justify-between">
+              <p>Shipping</p>
+              <p>
+                <span>&#8377;</span>
+                {order.shippingCharge}
+              </p>
+            </div>
+            <div className="flex items-center justify-between">
+              <p>GST</p>
+              <p>
+                <span>&#8377;</span>
+                {order.gstAmount}
+              </p>
+            </div>
+            <div className="flex items-center justify-between">
+              <p>Cart Savings</p>
+              <p>
+                <span>&#8377;</span>
+                {order.cartSavings}
+              </p>
+            </div>
+            <div className="flex items-center justify-between">
+              <p>Total</p>
+              <strong>
+                <span>&#8377;</span>
+                {order.orderTotal}
+              </strong>
+            </div>
+          </div>
         </div>
       </div>
     )
