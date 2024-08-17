@@ -11,6 +11,7 @@ import {
 } from "@/utils/dataFormatter";
 import { DeliveryStatusStepper } from "./MyOrderPageComp";
 import { MyOrderLoaderSkeleton } from "../SkeletonLoaders/OrderLoaders";
+import Image from "next/image";
 
 export const MyOrderPlaceholder = ({ orderId }: { orderId: string }) => {
   const [order, setOrder] = useState<Order>();
@@ -109,7 +110,8 @@ const OrderDetails = ({ order }: { order: Order }) => {
                   className="flex items-center justify-between"
                 >
                   <div className="flex items-center gap-2">
-                    <img
+                    <Image
+                      width={40}
                       src={item.media.images[0]}
                       alt={item.name}
                       className="h-10 w-10 rounded-lg object-cover"
