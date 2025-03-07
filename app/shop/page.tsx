@@ -1,3 +1,5 @@
+export const revalidate = 3600; // Revalidate every hour
+
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { NotFoundSapien } from "@/public/images";
 import { Category } from "@/types/category";
@@ -7,15 +9,30 @@ import Link from "next/link";
 
 const ShopPage = async () => {
   const getActiveCategories = async () => {
-    const res = await fetch(appUrl("/api/categories/all"), {
-      next: {
-        tags: ["categories"],
-        revalidate:
-          60 * parseInt(process.env.NEXT_PUBLIC_API_REVALIDATE || "60"),
-      },
-    });
-    const data = await res.json();
-    return data;
+    try {
+      const res = await fetch(appUrl("/api/categories/all"), {
+        next: {
+          tags: ["categories"],
+          revalidate:
+            60 * parseInt(process.env.NEXT_PUBLIC_API_REVALIDATE || "60"),
+        },
+      });
+
+      if (!res.ok) {
+        console.error(
+          "Failed to fetch categories:",
+          res.status,
+          res.statusText,
+        );
+        return { data: null };
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      return { data: null };
+    }
   };
 
   var categories: Category[] | null = null;
