@@ -16,30 +16,34 @@ import Image from "next/image";
 export const MyOrderPlaceholder = ({ orderId }: { orderId: string }) => {
   const [order, setOrder] = useState<Order>();
   const [loading, setLoading] = useState(true);
-  const fetchOrder = async () => {
-    const orderData = await fetch(appUrl(`/api/order/one?orderId=${orderId}`), {
-      next: {
-        revalidate: 60 * 60, // 1 hour
-        tags: ["my-orders", "order-details", "order-details-page"],
-      },
-    });
-
-    if (orderData.status === 404) {
-      setLoading(false);
-      return <OrderNotFound />;
-    }
-    const {
-      data: order,
-    }: {
-      data: Order;
-    } = await orderData.json();
-    setLoading(false);
-    setOrder(order);
-  };
 
   useEffect(() => {
+    const fetchOrder = async () => {
+      const orderData = await fetch(
+        appUrl(`/api/order/one?orderId=${orderId}`),
+        {
+          next: {
+            revalidate: 60 * 60, // 1 hour
+            tags: ["my-orders", "order-details", "order-details-page"],
+          },
+        },
+      );
+
+      if (orderData.status === 404) {
+        setLoading(false);
+        return <OrderNotFound />;
+      }
+      const {
+        data: order,
+      }: {
+        data: Order;
+      } = await orderData.json();
+      setLoading(false);
+      setOrder(order);
+    };
+
     fetchOrder();
-  }, []);
+  }, [orderId]);
 
   return (
     <div className="flex h-auto flex-col items-center justify-center">

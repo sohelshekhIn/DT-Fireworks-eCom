@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 export const RedirectToHomePage = () => {
   const [timer, setTimer] = useState(10);
   const { push } = useRouter();
-  const redirect = () => {
-    push("/");
-  };
+
   useEffect(() => {
+    const redirect = () => {
+      push("/");
+    };
+
     const interval = setInterval(() => {
       setTimer((prev) => {
         if (prev === 0) {
@@ -19,6 +21,6 @@ export const RedirectToHomePage = () => {
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [push]);
   return <p>Redirecting back to home page in {timer} seconds</p>;
 };

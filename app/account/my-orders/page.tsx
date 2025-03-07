@@ -20,4 +20,21 @@ const MyOrdersPage = async () => {
   );
 };
 
+const NoOrdersFound = () => {
+  return (
+    <div className="">
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center rounded-lg bg-white p-6 shadow-md dark:bg-neutral-800">
+          <p className="text-xl font-semibold text-gray-800 dark:text-neutral-300">
+            No orders found
+          </p>
+          <p className="mt-2 text-sm text-gray-500 dark:text-neutral-400">
+            You haven&apos;t placed any orders yet.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default MyOrdersPage;

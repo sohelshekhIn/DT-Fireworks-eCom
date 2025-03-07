@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { MyOrderPlaceholder } from "@/components/Order/MyOrderOnePageComp";
 
