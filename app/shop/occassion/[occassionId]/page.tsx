@@ -121,6 +121,8 @@ const OccasionPage = async ({
   );
 };
 
+export default OccasionPage;
+
 const OccassionHeader = ({ occassion }: { occassion: Occassion }) => {
   return (
     <div className="w-full overflow-hidden rounded-t-xl">
