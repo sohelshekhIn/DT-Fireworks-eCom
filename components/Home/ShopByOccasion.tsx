@@ -1,3 +1,4 @@
+// "use client";
 import { Occassion } from "@/types/category";
 import appUrl from "@/utils/apiCallHandler";
 import Image from "next/image";
@@ -23,31 +24,31 @@ const ShopByOccasion = async () => {
     occassions = data.data;
   }
   return (
-    <section className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div className="max-w-2xl text-center mx-auto mb-10 lg:mb-14">
+    <section className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
         <h2 className="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
           Shop by Occasion
         </h2>
       </div>
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid gap-6 lg:grid-cols-3">
         {occassions.map((occassion: Occassion) => (
           <Link
             key={`occassion-cateogories-homepage -${occassion.id}`}
             className="group relative block rounded-xl"
             href={`/shop/occassion/${occassion.id}`}
           >
-            <div className="flex-shrink-0 relative rounded-xl overflow-hidden w-full h-[350px] before:absolute before:inset-x-0 before:z-[1] before:size-full before:bg-gradient-to-t before:from-gray-900">
+            <div className="relative h-[350px] w-full flex-shrink-0 overflow-hidden rounded-xl before:absolute before:inset-x-0 before:z-[1] before:size-full before:bg-gradient-to-t before:from-gray-900">
               <Image
                 width="500"
                 height="300"
-                className="size-full absolute top-0 start-0 object-cover"
+                className="absolute start-0 top-0 size-full object-cover"
                 src={occassion.thumb_image}
                 alt={`Image describing ${occassion.name} occassion for fireworks`}
               />
             </div>
-            <div className="absolute bottom-0 inset-x-0 z-10">
-              <div className="flex flex-col h-full p-4 sm:p-6">
-                <h3 className="text-3xl sm:text-4xl font-semibold text-white group-hover:text-secondaryDark">
+            <div className="absolute inset-x-0 bottom-0 z-10">
+              <div className="flex h-full flex-col p-4 sm:p-6">
+                <h3 className="text-3xl font-semibold text-white group-hover:text-secondaryDark sm:text-4xl">
                   {occassion.name}
                 </h3>
               </div>

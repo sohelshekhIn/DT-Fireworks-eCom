@@ -29,8 +29,8 @@ const ShopPage = async () => {
 
   return (
     categories && (
-      <section className="w-[85vw] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-        <div className="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
+      <section className="mx-auto w-[85vw] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
           <h2 className="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
             Shop
           </h2>
@@ -39,7 +39,7 @@ const ShopPage = async () => {
           </p>
         </div>
         <Breadcrumb crumbs={[{ name: "Shop", href: "/shop" }]} />
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-4">
           {categories.map((category: Category) => (
             <Link
               key={`shop-category-list-${category.id}`}
@@ -48,18 +48,18 @@ const ShopPage = async () => {
                 category.id
               }`}
             >
-              <div className="flex-shrink-0 relative rounded-xl overflow-hidden w-full h-[250px] before:absolute before:inset-x-0 before:z-[1] before:size-full before:bg-gradient-to-t before:from-gray-900">
+              <div className="relative h-[250px] w-full flex-shrink-0 overflow-hidden rounded-xl before:absolute before:inset-x-0 before:z-[1] before:size-full before:bg-gradient-to-t before:from-gray-900">
                 <Image
                   width="300"
                   height="200"
-                  className="size-full absolute top-0 start-0 object-cover"
+                  className="absolute start-0 top-0 size-full object-cover"
                   src={category.thumb_image}
                   alt={`Image describing ${category.name} category for fireworks`}
                 />
               </div>
-              <div className="absolute bottom-0 inset-x-0 z-10">
-                <div className="flex flex-col h-full p-4 sm:p-6">
-                  <h3 className="text-xl sm:text-2xl font-semibold text-white group-hover:text-secondaryDark">
+              <div className="absolute inset-x-0 bottom-0 z-10">
+                <div className="flex h-full flex-col p-4 sm:p-6">
+                  <h3 className="text-xl font-semibold text-white group-hover:text-secondaryDark sm:text-2xl">
                     {category.name}
                   </h3>
                 </div>
@@ -76,8 +76,8 @@ export default ShopPage;
 
 const NoCategoriesFound = () => {
   return (
-    <section className="w-[85vw] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div className="max-w-2xl min-h-dvh mx-auto text-center mb-10 lg:mb-14">
+    <section className="mx-auto w-[85vw] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <div className="mx-auto mb-10 min-h-dvh max-w-2xl text-center lg:mb-14">
         <Image
           width={500}
           height={500}
@@ -93,7 +93,7 @@ const NoCategoriesFound = () => {
         </p>
         <Link
           href="/shop"
-          className="mt-10 text-primary dark:text-primaryDark font-semibold underline"
+          className="mt-10 font-semibold text-primary underline dark:text-primaryDark"
         >
           Go Back to Shop
         </Link>

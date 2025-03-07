@@ -55,3 +55,4 @@ const CartReviewPage = () => {
 };
 
 export default CartReviewPage;
+export const dynamic = "force-dynamic";

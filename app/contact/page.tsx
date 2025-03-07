@@ -2,9 +2,9 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 
 const ContactPage = () => {
   return (
-    <div className="max-w-7xl px-4 lg:px-8 py-12 lg:py-24 mx-auto">
-      <div className="mb-6 sm:mb-10 max-w-2xl text-center mx-auto">
-        <h2 className="font-medium text-black text-2xl sm:text-4xl dark:text-white">
+    <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8 lg:py-24">
+      <div className="mx-auto mb-6 max-w-2xl text-center sm:mb-10">
+        <h2 className="text-2xl font-medium text-black sm:text-4xl dark:text-white">
           Contacts
         </h2>
       </div>
@@ -16,10 +16,10 @@ const ContactPage = () => {
           },
         ]}
       />
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-center gap-6 md:gap-8 lg:gap-12">
-        <div className="aspect-w-16 aspect-h-6 lg:aspect-h-16 overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800">
+      <div className="grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2 lg:items-center lg:gap-12">
+        <div className="aspect-w-16 aspect-h-6 lg:aspect-h-16 overflow-hidden rounded-2xl bg-gray-100 dark:bg-neutral-800">
           <iframe
-            className="w-full h-[50vh] lg:h-[70vh] border-0"
+            className="h-[50vh] w-full border-0 lg:h-[70vh]"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.852317207524!2d72.85816871170235!3d22.696540979317678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e5b0e7ca91cb7%3A0x4ca530eec709c930!2sDHANJIBHAI%20%26%20TRIKAMLAL!5e0!3m2!1sen!2sca!4v1714089000087!5m2!1sen!2sca"
             allowFullScreen={false}
             loading="lazy"
@@ -33,10 +33,10 @@ const ContactPage = () => {
               Our address
             </h3>
             <div className="flex flex-wrap space-y-8">
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12">
+              <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 md:gap-8 lg:gap-12">
                 <div className="flex gap-4">
                   <svg
-                    className="flex-shrink-0 size-5 text-gray-500 dark:text-neutral-500"
+                    className="size-5 flex-shrink-0 text-gray-500 dark:text-neutral-500"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -55,7 +55,7 @@ const ContactPage = () => {
                     <p className="text-sm text-gray-600 dark:text-neutral-400">
                       Nadiad Office
                     </p>
-                    <address className="mt-1 text-black not-italic dark:text-white">
+                    <address className="mt-1 not-italic text-black dark:text-white">
                       Opp. Nadiad People&apos;s Bank, <br /> Near Rukmani Tower,
                       Daban Bhagol,
                       <br />
@@ -64,10 +64,10 @@ const ContactPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12">
+              <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 md:gap-8 lg:gap-12">
                 <div className="flex gap-4">
                   <svg
-                    className="flex-shrink-0 size-5 text-gray-500 dark:text-neutral-500"
+                    className="size-5 flex-shrink-0 text-gray-500 dark:text-neutral-500"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -86,7 +86,7 @@ const ContactPage = () => {
                     <p className="text-sm text-gray-600 dark:text-neutral-400">
                       Nadiad Warehouse
                     </p>
-                    <address className="mt-1 text-black not-italic dark:text-white">
+                    <address className="mt-1 not-italic text-black dark:text-white">
                       Opp. Poonima Decoraions,
                       <br />
                       Near Puskar Apartment, Chhatriwala Society
@@ -96,10 +96,10 @@ const ContactPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12">
+              <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 md:gap-8 lg:gap-12">
                 <div className="flex gap-4">
                   <svg
-                    className="flex-shrink-0 size-5 text-gray-500 dark:text-neutral-500"
+                    className="size-5 flex-shrink-0 text-gray-500 dark:text-neutral-500"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -118,7 +118,7 @@ const ContactPage = () => {
                     <p className="text-sm text-gray-600 dark:text-neutral-400">
                       Bamroli Warehouse
                     </p>
-                    <address className="mt-1 text-black not-italic dark:text-white">
+                    <address className="mt-1 not-italic text-black dark:text-white">
                       765/1 SHREE PURA, <br /> Bamroli - Vaso Nadiad Rd,
                       <br />
                       Bamroli, Gujarat 387230
@@ -133,10 +133,10 @@ const ContactPage = () => {
               Our contacts
             </h3>
 
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12">
+            <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 md:gap-8 lg:gap-12">
               <div className="flex gap-4">
                 <svg
-                  className="flex-shrink-0 size-5 text-gray-500 dark:text-neutral-500"
+                  className="size-5 flex-shrink-0 text-gray-500 dark:text-neutral-500"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"
@@ -157,7 +157,7 @@ const ContactPage = () => {
                   </p>
                   <p>
                     <a
-                      className="inline-block font-medium text-black under-design hover:before:bg-black focus:outline-none focus:before:bg-black dark:text-white dark:hover:before:bg-white dark:focus:before:bg-white"
+                      className="under-design inline-block font-medium text-black hover:before:bg-black focus:outline-none focus:before:bg-black dark:text-white dark:hover:before:bg-white dark:focus:before:bg-white"
                       href="mailto:example@site.so"
                     >
                       contact@dtfireworks.in
@@ -168,7 +168,7 @@ const ContactPage = () => {
 
               <div className="flex gap-4">
                 <svg
-                  className="flex-shrink-0 size-5 text-gray-500 dark:text-neutral-500"
+                  className="size-5 flex-shrink-0 text-gray-500 dark:text-neutral-500"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"
@@ -188,7 +188,7 @@ const ContactPage = () => {
                   </p>
                   <p>
                     <a
-                      className="inline-block font-medium text-black under-design hover:before:bg-black focus:outline-none focus:before:bg-black dark:text-white dark:hover:before:bg-white dark:focus:before:bg-white"
+                      className="under-design inline-block font-medium text-black hover:before:bg-black focus:outline-none focus:before:bg-black dark:text-white dark:hover:before:bg-white dark:focus:before:bg-white"
                       href="tel:+919898558536"
                     >
                       +91 98985 58536

@@ -9,7 +9,9 @@ import { redirect } from "next/navigation";
 
 const CheckoutPage = async () => {
   const session = cookies().get("session");
-  const isLoggedIn = await checkUserAuthStatus(session);
+  const isLoggedIn = !session?.value
+    ? false
+    : await checkUserAuthStatus(session);
 
   if (!isLoggedIn) {
     redirect("/signin?redirect=/cart/checkout");

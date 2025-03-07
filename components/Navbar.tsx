@@ -1,8 +1,9 @@
+// "use client";
 import { Category } from "@/types/category";
 import appUrl from "@/utils/apiCallHandler";
 import Link from "next/link";
-import { NavbarAuthStateButton } from "./Auth/AuthButtons";
 import { NavbarAuthProfile } from "./Auth/NavbarAuthProfile";
+// import { useEffect, useState } from "react";
 const Navbar = async () => {
   const getCategories = async () => {
     const res = await fetch(appUrl("/api/categories/all"), {
@@ -19,6 +20,17 @@ const Navbar = async () => {
     return data;
   };
 
+  // const [categories, setCategories] = useState<Category[]>([]);
+
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     const data = await getCategories();
+  //     if (data.data || data.data.length !== 0) {
+  //       setCategories(data.data);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
   var categories: Category[] | null = null;
   const data = await getCategories();
   if (data.data || data.data.length !== 0) {
