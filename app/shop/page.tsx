@@ -1,5 +1,3 @@
-export const revalidate = 3600; // Revalidate every hour
-
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { NotFoundSapien } from "@/public/images";
 import { Category } from "@/types/category";
@@ -90,6 +88,7 @@ const ShopPage = async () => {
 };
 
 export default ShopPage;
+export const dynamic = "force-dynamic";
 
 const NoCategoriesFound = () => {
   return (
