@@ -1,97 +1,105 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Product } from "@/types/product";
+import appUrl from "@/utils/apiCallHandler";
 
 const FeaturedProducts = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFeaturedProducts = async () => {
+      try {
+        const res = await fetch(appUrl("/api/products/all?category=featured"));
+        if (res.ok) {
+          const data = await res.json();
+          setProducts(data.data?.slice(0, 4) || []);
+        }
+      } catch (error) {
+        console.error("Error fetching featured products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedProducts();
+  }, []);
+
+  if (loading) {
+    return <FeaturedProductsSkeleton />;
+  }
+
+  if (products.length === 0) {
+    return null; // Don't show the section if no featured products
+  }
+
+  // Determine grid columns and container classes based on number of products
+  const containerClasses =
+    products.length === 1
+      ? "max-w-md mx-auto" // Single product - centered with max width
+      : "w-full"; // Multiple products - full width
+
+  const gridCols =
+    products.length === 1
+      ? "" // Single product - no grid
+      : products.length === 2
+        ? "grid sm:grid-cols-2"
+        : "grid sm:grid-cols-2 lg:grid-cols-3";
+
   return (
-    <div className="w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div className="max-w-2xl text-center mx-auto mb-10 lg:mb-14">
-        <h2 className="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
+    <section className="mx-auto w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
+        <h2 className="text-2xl font-bold md:text-4xl md:leading-tight">
           Featured Products
         </h2>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 lg:mb-14">
-        <Link
-          className="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800"
-          href="#"
-        >
-          <div className="aspect-w-16 aspect-h-9">
-            <Image
-              width="400"
-              height="300"
-              className="w-full object-cover rounded-t-xl p-10"
-              src="https://th.bing.com/th/id/R.edd31c9777079274f8d29edbc74c09e3?rik=01ykVLnIphhbEw&riu=http%3a%2f%2fwww.boomtownfireworks.com%2fassets%2fitem%2flarge%2fP1004.jpg&ehk=lVJG7IjqBYZfcMQ3yqsGvwrh6ryUJAGP0jXVT%2b%2fYQHQ%3d&risl=&pid=ImgRaw&r=0"
-              alt="Image Description"
-            />
-          </div>
-          <div className="p-4 md:p-5">
-            <p className="mt-2 text-xs uppercase text-gray-600 dark:text-neutral-400">
-              Skyshot
-            </p>
-            <h3 className="mt-2 text-lg font-medium text-gray-800 group-hover:text-primaryDark dark:text-neutral-300 dark:group-hover:text-white">
-              Celebration Firecracker 1 1/2
-            </h3>
-          </div>
-        </Link>
-        <Link
-          className="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800"
-          href="#"
-        >
-          <div className="aspect-w-16 aspect-h-9">
-            <Image
-              width="400"
-              height="300"
-              className="w-full object-cover rounded-t-xl p-10"
-              src="https://th.bing.com/th/id/R.edd31c9777079274f8d29edbc74c09e3?rik=01ykVLnIphhbEw&riu=http%3a%2f%2fwww.boomtownfireworks.com%2fassets%2fitem%2flarge%2fP1004.jpg&ehk=lVJG7IjqBYZfcMQ3yqsGvwrh6ryUJAGP0jXVT%2b%2fYQHQ%3d&risl=&pid=ImgRaw&r=0"
-              alt="Image Description"
-            />
-          </div>
-          <div className="p-4 md:p-5">
-            <p className="mt-2 text-xs uppercase text-gray-600 dark:text-neutral-400">
-              Skyshot
-            </p>
-            <h3 className="mt-2 text-lg font-medium text-gray-800 group-hover:text-primaryDark dark:text-neutral-300 dark:group-hover:text-white">
-              Celebration Firecracker 1 1/2
-            </h3>
-          </div>
-        </Link>
-        <Link
-          className="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800"
-          href="#"
-        >
-          <div className="aspect-w-16 aspect-h-9">
-            <Image
-              width="400"
-              height="300"
-              className="w-full object-cover rounded-t-xl p-10"
-              src="https://th.bing.com/th/id/R.edd31c9777079274f8d29edbc74c09e3?rik=01ykVLnIphhbEw&riu=http%3a%2f%2fwww.boomtownfireworks.com%2fassets%2fitem%2flarge%2fP1004.jpg&ehk=lVJG7IjqBYZfcMQ3yqsGvwrh6ryUJAGP0jXVT%2b%2fYQHQ%3d&risl=&pid=ImgRaw&r=0"
-              alt="Image Description"
-            />
-          </div>
-          <div className="p-4 md:p-5">
-            <p className="mt-2 text-xs uppercase text-gray-600 dark:text-neutral-400">
-              Skyshot
-            </p>
-            <h3 className="mt-2 text-lg font-medium text-gray-800 group-hover:text-primaryDark dark:text-neutral-300 dark:group-hover:text-white">
-              Celebration Firecracker 1 1/2
-            </h3>
-          </div>
-        </Link>
+      <div className={`${containerClasses} mb-10 lg:mb-14`}>
+        <div className={`gap-6 ${gridCols}`}>
+          {products.map((product) => (
+            <Link
+              key={product.id}
+              className="group flex flex-col rounded-xl border bg-white shadow-sm transition hover:shadow-md"
+              href={`/shop/product/${product.id}`}
+            >
+              <div className="aspect-w-16 aspect-h-9">
+                <Image
+                  width={400}
+                  height={300}
+                  className="w-full rounded-t-xl object-cover p-10"
+                  src={product.media.images[0]}
+                  alt={`Image of ${product.name}`}
+                />
+              </div>
+              <div className="p-4 md:p-5">
+                <p className="mt-2 text-xs uppercase text-gray-600">
+                  {product.categories && product.categories.length > 0
+                    ? product.categories[0]
+                    : "Featured"}
+                </p>
+                <h3 className="mt-2 text-lg font-medium text-gray-800 group-hover:text-primaryDark">
+                  {product.name}
+                </h3>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div className="text-center">
-        <div className="inline-block bg-white border shadow-sm rounded-full dark:bg-neutral-900 dark:border-neutral-800">
-          <div className="py-3 px-4 flex items-center gap-x-2">
-            <p className="text-gray-600 dark:text-neutral-400">
-              Want to see more?
-            </p>
+        <div className="inline-block rounded-full border bg-white shadow-sm">
+          <div className="flex items-center gap-x-2 px-4 py-3">
+            <p className="text-gray-600">Want to see more?</p>
             <Link
-              className="inline-flex items-center gap-x-1.5 text-primaryDark decoration-2 hover:underline font-medium dark:text-primary"
-              href="../docs/index.html"
+              className="inline-flex items-center gap-x-1.5 font-medium text-primaryDark decoration-2 hover:underline"
+              href="/shop"
             >
               Visit our store
               <svg
-                className="flex-shrink-0 size-4"
+                className="size-4 flex-shrink-0"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
@@ -108,8 +116,32 @@ const FeaturedProducts = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export default FeaturedProducts;
+
+const FeaturedProductsSkeleton = () => {
+  return (
+    <div className="mx-auto w-full px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
+        <div className="mx-auto h-8 w-48 animate-pulse rounded-lg bg-gray-200"></div>
+      </div>
+
+      <div className="mb-10 grid gap-6 sm:grid-cols-2 lg:mb-14 lg:grid-cols-3">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="flex flex-col rounded-xl border bg-white">
+            <div className="aspect-w-16 aspect-h-9">
+              <div className="h-full w-full animate-pulse rounded-t-xl bg-gray-200"></div>
+            </div>
+            <div className="space-y-3 p-4 md:p-5">
+              <div className="h-4 w-24 animate-pulse rounded bg-gray-200"></div>
+              <div className="h-6 w-full animate-pulse rounded bg-gray-200"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
