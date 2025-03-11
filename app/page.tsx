@@ -10,9 +10,9 @@ import Testimonials from "@/components/Home/Testimonials";
 export default function Home() {
   return (
     <div className="space-y-8">
-      {/* <HeroSlider />
-       */}
-      <HeroSection />
+      <HeroSlider />
+
+      {/* <HeroSection /> */}
       <FeaturedProducts />
       <BannerSection />
       <ShopByOccasion />
