@@ -21,7 +21,9 @@ const generateOrderId = () => {
       ? `0${today.getMonth() + 1}`
       : `${today.getMonth() + 1}`;
   const year = today.getFullYear();
-  const random = Math.floor(Math.random() * 10000);
+  const random = Math.floor(Math.random() * 10000)
+    .toString()
+    .padStart(4, "0");
   return `OR-${year}${month}${date}${random}`;
 };
 
