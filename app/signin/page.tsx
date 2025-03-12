@@ -1,9 +1,8 @@
 import { SignInWithGoogleButton } from "@/components/Auth/AuthButtons";
 import { UserLoginRedirectFlow } from "@/components/Auth/RedirectUrlComp";
 import SignInForm from "@/components/Auth/SignInForm";
-import Link from "next/link";
 import { Suspense } from "react";
-
+export const dynamic = "force-dynamic";
 const SignInPage = () => {
   return (
     <div className="mx-auto max-w-[85vw] py-10 pb-36 md:w-1/2 md:pt-28 lg:w-5/12">

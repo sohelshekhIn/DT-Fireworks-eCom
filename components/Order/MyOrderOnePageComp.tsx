@@ -11,34 +11,39 @@ import {
 } from "@/utils/dataFormatter";
 import { DeliveryStatusStepper } from "./MyOrderPageComp";
 import { MyOrderLoaderSkeleton } from "../SkeletonLoaders/OrderLoaders";
+import Image from "next/image";
 
 export const MyOrderPlaceholder = ({ orderId }: { orderId: string }) => {
   const [order, setOrder] = useState<Order>();
   const [loading, setLoading] = useState(true);
-  const fetchOrder = async () => {
-    const orderData = await fetch(appUrl(`/api/order/one?orderId=${orderId}`), {
-      next: {
-        revalidate: 60 * 60, // 1 hour
-        tags: ["my-orders", "order-details", "order-details-page"],
-      },
-    });
-
-    if (orderData.status === 404) {
-      setLoading(false);
-      return <OrderNotFound />;
-    }
-    const {
-      data: order,
-    }: {
-      data: Order;
-    } = await orderData.json();
-    setLoading(false);
-    setOrder(order);
-  };
 
   useEffect(() => {
+    const fetchOrder = async () => {
+      const orderData = await fetch(
+        appUrl(`/api/order/one?orderId=${orderId}`),
+        {
+          next: {
+            revalidate: 60 * 60, // 1 hour
+            tags: ["my-orders", "order-details", "order-details-page"],
+          },
+        },
+      );
+
+      if (orderData.status === 404) {
+        setLoading(false);
+        return <OrderNotFound />;
+      }
+      const {
+        data: order,
+      }: {
+        data: Order;
+      } = await orderData.json();
+      setLoading(false);
+      setOrder(order);
+    };
+
     fetchOrder();
-  }, []);
+  }, [orderId]);
 
   return (
     <div className="flex h-auto flex-col items-center justify-center">
@@ -109,7 +114,8 @@ const OrderDetails = ({ order }: { order: Order }) => {
                   className="flex items-center justify-between"
                 >
                   <div className="flex items-center gap-2">
-                    <img
+                    <Image
+                      width={40}
                       src={item.media.images[0]}
                       alt={item.name}
                       className="h-10 w-10 rounded-lg object-cover"

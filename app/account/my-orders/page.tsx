@@ -1,6 +1,6 @@
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { MyOrdersCardPlaceholder } from "@/components/Order/MyOrdersCard";
-
+export const dynamic = "force-dynamic";
 const MyOrdersPage = async () => {
   return (
     <section className="mx-auto w-[85vw] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">

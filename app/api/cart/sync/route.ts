@@ -16,9 +16,10 @@ const getCartSessionRefId = (cartSessionToken: string | null) => {
   return [cartSessionId, cartSessionToken];
 };
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   let cartSessionToken: string | null =
     cookies().get("cart-session-token")?.value || null;
+
   try {
     if (!cartSessionToken) {
       return NextResponse.json(
@@ -26,7 +27,7 @@ export async function GET(req: NextRequest) {
           data: {},
         },
         {
-          status: 404,
+          status: 202,
         },
       );
     }

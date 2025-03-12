@@ -3,67 +3,78 @@
 import { useShopContext } from "@/context/ShopContext";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export const CheckoutContactForm = () => {
   const { cartItems, name, email, phone, setName, setEmail, setPhone } =
     useShopContext();
+  const { user } = useAuth();
+
   useEffect(() => {
     if (cartItems.length === 0) return redirect("/cart");
-  }, [cartItems]);
+    // Set the email from authenticated user
+    if (user?.email) {
+      setEmail(user.email);
+    }
+  }, [cartItems, user, setEmail]);
+
   return (
     <div className="mt-5 flex flex-col gap-5 md:m-5">
       <div className="flex flex-col gap-5 md:flex-row">
         <div className="w-full md:max-w-lg lg:max-w-lg">
           <label
-            htmlFor="input-label"
-            className="mb-2 block text-sm font-medium dark:text-white"
+            htmlFor="name-input"
+            className="mb-2 block text-sm font-medium"
           >
             Name
           </label>
           <input
             type="text"
-            id="input-label"
+            id="name-input"
             onChange={(e) => setName(e.target.value)}
             value={name}
-            className="block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:border-primary focus:ring-primary disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+            className="block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:border-primary focus:ring-primary disabled:pointer-events-none disabled:opacity-50"
             placeholder="Full Name"
+            required
           />
         </div>
         <div className="w-full md:max-w-lg lg:max-w-md">
           <label
-            htmlFor="input-label"
-            className="mb-2 block text-sm font-medium dark:text-white"
+            htmlFor="email-input"
+            className="mb-2 block text-sm font-medium"
           >
             Email
           </label>
           <input
             type="email"
-            onChange={(e) => setEmail(e.target.value)}
+            id="email-input"
             value={email}
-            id="input-label"
-            className="block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:border-primary focus:ring-primary disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+            className="block w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-500"
             placeholder="Enter your email"
+            disabled
+            readOnly
           />
         </div>
       </div>
       <div className="flex flex-col gap-5 md:flex-row">
         <div className="w-full md:max-w-lg lg:max-w-md">
           <label
-            htmlFor="input-label"
-            className="mb-2 block text-sm font-medium dark:text-white"
+            htmlFor="phone-input"
+            className="mb-2 block text-sm font-medium"
           >
             Phone Number
           </label>
           <input
             type="tel"
+            id="phone-input"
             onChange={(e) => setPhone(e.target.value)}
             value={phone}
-            pattern="[0-9]{5}[0-9]{5}" //
-            id="input-label"
+            pattern="[0-9]{5} [0-9]{5}"
             maxLength={10}
             minLength={10}
-            className="block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:border-primary focus:ring-primary disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+            className="block w-full rounded-lg border border-gray-200 px-4 py-3 text-sm focus:border-primary focus:ring-primary disabled:pointer-events-none disabled:opacity-50"
             placeholder="Enter your phone number"
+            required
           />
         </div>
       </div>

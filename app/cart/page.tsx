@@ -1,5 +1,3 @@
-"use client";
-
 import { Breadcrumb } from "@/components/Breadcrumb";
 import {
   CartProductCard,
@@ -30,3 +28,4 @@ const CartPage = () => {
 };
 
 export default CartPage;
+export const dynamic = "force-dynamic";

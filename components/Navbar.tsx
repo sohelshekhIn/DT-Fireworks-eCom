@@ -1,29 +1,36 @@
+"use client";
+
 import { Category } from "@/types/category";
 import appUrl from "@/utils/apiCallHandler";
 import Link from "next/link";
-import { NavbarAuthStateButton } from "./Auth/AuthButtons";
 import { NavbarAuthProfile } from "./Auth/NavbarAuthProfile";
-const Navbar = async () => {
-  const getCategories = async () => {
-    const res = await fetch(appUrl("/api/categories/all"), {
-      next: {
-        tags: ["categories", "navbar"],
-      },
-    });
+import { useEffect, useState } from "react";
 
-    const status = res.status;
-    if (status === 404) {
-      return { data: null };
-    }
-    const data = await res.json();
-    return data;
-  };
+const Navbar = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  var categories: Category[] | null = null;
-  const data = await getCategories();
-  if (data.data || data.data.length !== 0) {
-    categories = data.data;
-  }
+  useEffect(() => {
+    const getCategories = async () => {
+      const res = await fetch(appUrl("/api/categories/all"), {
+        next: {
+          tags: ["categories", "navbar"],
+        },
+      });
+      const status = res.status;
+      if (status === 404) {
+        setCategories([]);
+        return;
+      }
+      const data = await res.json();
+      if (data.data) {
+        setCategories(data.data);
+      }
+      setLoading(false);
+    };
+
+    getCategories();
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 mb-5 flex w-full flex-wrap bg-white py-7 md:flex-nowrap md:justify-start dark:bg-black">
@@ -149,8 +156,10 @@ const Navbar = async () => {
               </button>
 
               <div className="hs-dropdown-menu top-full z-10 hidden gap-3 rounded-lg bg-white p-2 opacity-0 transition-[opacity,margin] duration-[0.1ms] before:absolute before:-top-5 before:start-0 before:h-5 before:w-full hs-dropdown-open:opacity-100 sm:w-48 sm:border sm:shadow-md sm:duration-[150ms] dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 sm:dark:border">
-                {categories && categories.length > 0 ? (
-                  categories.map((category) => (
+                {loading ? (
+                  <FallBackCategories />
+                ) : (
+                  categories.map((category: Category) => (
                     <Link
                       key={"navbar-sublink-category-" + category.id}
                       className="flex items-center gap-x-3.5 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-secondaryDark dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300"
@@ -159,8 +168,6 @@ const Navbar = async () => {
                       {category.name}
                     </Link>
                   ))
-                ) : (
-                  <FallBackCategories />
                 )}
               </div>
             </div>

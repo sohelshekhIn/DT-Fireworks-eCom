@@ -149,6 +149,8 @@ export const CheckoutDetails = () => {
       });
       paymentObject.open();
     } catch (error: any) {
+      console.log(error);
+
       toast.error("Payment failed." + error.message);
       setSubmitting(false);
     }

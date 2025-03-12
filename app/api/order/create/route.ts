@@ -7,7 +7,7 @@ import { LoadedCartData } from "@/types/shop";
 import { generateCartHash } from "@/utils/sessionHashHandler";
 
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
@@ -21,7 +21,9 @@ const generateOrderId = () => {
       ? `0${today.getMonth() + 1}`
       : `${today.getMonth() + 1}`;
   const year = today.getFullYear();
-  const random = Math.floor(Math.random() * 10000);
+  const random = Math.floor(Math.random() * 10000)
+    .toString()
+    .padStart(4, "0");
   return `OR-${year}${month}${date}${random}`;
 };
 
