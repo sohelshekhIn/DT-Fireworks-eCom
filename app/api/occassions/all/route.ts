@@ -19,7 +19,7 @@ export async function GET() {
     const categoryQuery = query(
       collection(db, "categories"),
       where("isVisible", "==", true),
-      where("isOccassion", "==", true),
+      where("isOccasion", "==", true),
     );
 
     await getDocs(categoryQuery)

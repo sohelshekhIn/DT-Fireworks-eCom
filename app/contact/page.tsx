@@ -4,7 +4,7 @@ const ContactPage = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8 lg:py-24">
       <div className="mx-auto mb-6 max-w-2xl text-center sm:mb-10">
-        <h2 className="text-2xl font-medium text-black sm:text-4xl dark:text-white">
+        <h2 className="text-2xl font-medium text-black dark:text-white sm:text-4xl">
           Contacts
         </h2>
       </div>
@@ -87,7 +87,7 @@ const ContactPage = () => {
                       Nadiad Warehouse
                     </p>
                     <address className="mt-1 not-italic text-black dark:text-white">
-                      Opp. Poonima Decoraions,
+                      Opp. Poornima Decorations,
                       <br />
                       Near Puskar Apartment, Chhatriwala Society
                       <br />
@@ -158,7 +158,7 @@ const ContactPage = () => {
                   <p>
                     <a
                       className="under-design inline-block font-medium text-black hover:before:bg-black focus:outline-none focus:before:bg-black dark:text-white dark:hover:before:bg-white dark:focus:before:bg-white"
-                      href="mailto:example@site.so"
+                      href="mailto:contact@dtfireworks.in"
                     >
                       contact@dtfireworks.in
                     </a>

@@ -1,21 +1,21 @@
 "use client";
 
-import { Occassion } from "@/types/category";
+import { Occasion } from "@/types/category";
 import appUrl from "@/utils/apiCallHandler";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { OccassionFetchError } from "../Shop/ErrorComps";
+import { OccasionFetchError } from "../Shop/ErrorComps";
 
 const ShopByOccasion = () => {
-  const [occassions, setOccassions] = useState<Occassion[]>([]);
+  const [occasions, setOccasions] = useState<Occasion[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const fetchOccassions = async () => {
+    const fetchOccasions = async () => {
       try {
-        const res = await fetch(appUrl("/api/occassions/all"), {
+        const res = await fetch(appUrl("/api/occasions/all"), {
           next: {
             tags: ["categories"],
           },
@@ -28,7 +28,7 @@ const ShopByOccasion = () => {
 
         const data = await res.json();
         if (data.data) {
-          setOccassions(data.data);
+          setOccasions(data.data);
         }
       } catch (error) {
         console.error("Error fetching occasions:", error);
@@ -38,29 +38,29 @@ const ShopByOccasion = () => {
       }
     };
 
-    fetchOccassions();
+    fetchOccasions();
   }, []);
 
   if (loading) {
     return <OccasionsSkeleton />;
   }
 
-  if (error || occassions.length === 0) {
-    return <OccassionFetchError />;
+  if (error || occasions.length === 0) {
+    return <OccasionFetchError />;
   }
 
   return (
     <section className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
-        <h2 className="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
+        <h2 className="text-2xl font-bold dark:text-white md:text-4xl md:leading-tight">
           Shop by Occasion
         </h2>
       </div>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {occassions.map((occasion) => (
+        {occasions.map((occasion) => (
           <Link
             key={occasion.id}
-            href={`/shop/occassion/${occasion.id}`}
+            href={`/shop/occasion/${occasion.id}`}
             className="group relative block overflow-hidden rounded-xl"
           >
             <div className="relative h-[350px]">

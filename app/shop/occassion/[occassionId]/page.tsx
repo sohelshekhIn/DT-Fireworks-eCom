@@ -3,10 +3,10 @@
 import { Breadcrumb } from "@/components/Breadcrumb";
 import {
   NoProductsFound,
-  OccassionNotFound,
+  OccasionNotFound,
 } from "@/components/Shop/ErrorComps";
 import ProductCard from "@/components/Shop/ProductCard";
-import { Occassion } from "@/types/category";
+import { Occasion } from "@/types/category";
 import { Product } from "@/types/product";
 import appUrl from "@/utils/apiCallHandler";
 import Image from "next/image";
@@ -15,14 +15,14 @@ import { useEffect, useState } from "react";
 
 const OccasionPage = () => {
   const params = useParams();
-  const [occasion, setOccasion] = useState<Occassion | null>(null);
+  const [occasion, setOccasion] = useState<Occasion | null>(null);
   const [products, setProducts] = useState<Product[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!params.occassionId) {
+      if (!params.occasionId) {
         setError(true);
         setLoading(false);
         return;
@@ -30,8 +30,8 @@ const OccasionPage = () => {
 
       try {
         const [occasionRes, productsRes] = await Promise.all([
-          fetch(appUrl(`/api/occassions/one?occassion=${params.occassionId}`)),
-          fetch(appUrl(`/api/products/all?category=${params.occassionId}`)),
+          fetch(appUrl(`/api/occasions/one?occasion=${params.occasionId}`)),
+          fetch(appUrl(`/api/products/all?category=${params.occasionId}`)),
         ]);
 
         if (!occasionRes.ok) {
@@ -51,7 +51,11 @@ const OccasionPage = () => {
           const productsData = await productsRes.json();
           if (productsData.data) {
             setProducts(productsData.data);
+          } else {
+            setError(true);
           }
+        } else {
+          setError(true);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -62,14 +66,14 @@ const OccasionPage = () => {
     };
 
     fetchData();
-  }, [params.occassionId]);
+  }, [params.occasionId]);
 
   if (loading) {
     return <OccasionSkeleton />;
   }
 
   if (error || !occasion) {
-    return <OccassionNotFound />;
+    return <OccasionNotFound />;
   }
 
   if (!products || products.length === 0) {
@@ -84,7 +88,7 @@ const OccasionPage = () => {
             },
             {
               name: occasion.name,
-              href: `/shop/occassion/${params.occassionId}`,
+              href: `/shop/occasion/${params.occasionId}`,
             },
           ]}
         />
@@ -104,7 +108,7 @@ const OccasionPage = () => {
           },
           {
             name: occasion.name,
-            href: `/shop/occassion/${params.occassionId}`,
+            href: `/shop/occasion/${params.occasionId}`,
           },
         ]}
       />
@@ -137,7 +141,7 @@ const OccasionSkeleton = () => {
   );
 };
 
-const OccasionHeader = ({ occasion }: { occasion: Occassion }) => {
+const OccasionHeader = ({ occasion }: { occasion: Occasion }) => {
   return (
     <div className="w-full overflow-hidden rounded-t-xl">
       <div className="relative">
@@ -150,7 +154,7 @@ const OccasionHeader = ({ occasion }: { occasion: Occassion }) => {
         />
         <div className="absolute inset-0 z-[2] h-full w-full bg-gradient-to-t from-black via-black/80 to-transparent"></div>
         <div className="absolute top-20 z-[3] flex h-full w-full flex-col items-center justify-center p-5 text-secondaryDark">
-          <h2 className="w-full text-center text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
+          <h2 className="w-full text-center text-2xl font-bold dark:text-white md:text-4xl md:leading-tight">
             {occasion.name}
           </h2>
           <p className="mt-1 w-full text-center text-white/70">

@@ -40,12 +40,11 @@ const SignUpForm = () => {
       return;
     }
 
-    // check if password is at least 8 characters and contains a number and a special character
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?:.*[~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?])[A-Za-z\d\s~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?]{8,}$/;
+    // check if password is at least 8 characters and contains a number
+    const passwordRegex = /^(?=.*\d)(?=.*[A-Za-z]).{8,}$/;
     if (!passwordRegex.test(password)) {
       toast.error(
-        "Password must be minimum 8 characters, contain a number, and a special character",
+        "Password must be minimum 8 characters and contains a number",
       );
       return;
     }
@@ -254,6 +253,17 @@ const SignUpForm = () => {
         </div>
       </div>
     </form>
+  );
+};
+
+export const SignUpFormSkeleton = () => {
+  return (
+    <div className="space-y-4">
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800" />
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800" />
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800" />
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-200 dark:bg-neutral-700" />
+    </div>
   );
 };
 

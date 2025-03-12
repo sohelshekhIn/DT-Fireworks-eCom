@@ -36,7 +36,7 @@ export const UserLoginRedirectFlow = ({
 }) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <UserLoginRedirectLink linkFor="signin" />
+      <UserLoginRedirectLink linkFor={linkFor} />
     </Suspense>
   );
 };

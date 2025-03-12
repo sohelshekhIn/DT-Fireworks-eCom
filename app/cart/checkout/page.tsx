@@ -48,14 +48,14 @@ const CheckoutPage = () => {
         />
         <div className="mt-10">
           <div>
-            <h1 className="text-lg font-semibold">Contact Details</h1>
+            <h2 className="text-lg font-semibold">Contact Details</h2>
             <p className="text-xs text-gray-500">Used for Delivery purpose</p>
           </div>
           <CheckoutContactForm />
         </div>
         <div className="mt-10">
           <div>
-            <h1 className="text-lg font-semibold">Delivery Details</h1>
+            <h2 className="text-lg font-semibold">Delivery Details</h2>
             <p className="text-xs text-gray-500">
               Address to deliver the products
             </p>
