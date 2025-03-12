@@ -87,7 +87,7 @@ const ContactPage = () => {
                       Nadiad Warehouse
                     </p>
                     <address className="mt-1 not-italic text-black dark:text-white">
-                      Opp. Poonima Decoraions,
+                      Opp. Poornima Decorations,
                       <br />
                       Near Puskar Apartment, Chhatriwala Society
                       <br />
