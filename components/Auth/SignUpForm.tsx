@@ -256,4 +256,15 @@ const SignUpForm = () => {
   );
 };
 
+export const SignUpFormSkeleton = () => {
+  return (
+    <div className="space-y-4">
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800" />
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800" />
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800" />
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-200 dark:bg-neutral-700" />
+    </div>
+  );
+};
+
 export default SignUpForm;

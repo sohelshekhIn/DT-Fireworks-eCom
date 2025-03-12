@@ -205,4 +205,14 @@ const SignInForm = () => {
   );
 };
 
+export const SignInFormSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-200 dark:bg-neutral-700"></div>
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-200 dark:bg-neutral-700"></div>
+      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-200 dark:bg-neutral-700"></div>
+    </div>
+  );
+};
+
 export default SignInForm;

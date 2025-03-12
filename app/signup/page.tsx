@@ -1,6 +1,9 @@
-import { SignInWithGoogleButton } from "@/components/Auth/AuthButtons";
+import {
+  SignInWithGoogleButton,
+  SignInWithGoogleButtonSkeleton,
+} from "@/components/Auth/AuthButtons";
 import { UserLoginRedirectFlow } from "@/components/Auth/RedirectUrlComp";
-import SignUpForm from "@/components/Auth/SignUpForm";
+import SignUpForm, { SignUpFormSkeleton } from "@/components/Auth/SignUpForm";
 import { Suspense } from "react";
 
 const SignUpPage = () => {
@@ -25,14 +28,7 @@ const SignUpPage = () => {
           </div>
 
           <div className="mt-5">
-            <Suspense
-              fallback={
-                <div className="flex w-full animate-pulse justify-center rounded-lg border border-gray-300 bg-gray-100 p-3">
-                  <div className="mr-3 h-5 w-5 rounded-full bg-gray-300"></div>
-                  <div className="h-5 w-32 rounded bg-gray-300"></div>
-                </div>
-              }
-            >
+            <Suspense fallback={<SignInWithGoogleButtonSkeleton />}>
               <SignInWithGoogleButton />
             </Suspense>
             <div className="flex items-center py-3 text-xs uppercase text-gray-400 before:me-6 before:flex-1 before:border-t before:border-gray-200 after:ms-6 after:flex-1 after:border-t after:border-gray-200 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
@@ -44,17 +40,6 @@ const SignUpPage = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-const SignUpFormSkeleton = () => {
-  return (
-    <div className="space-y-4">
-      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800" />
-      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800" />
-      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800" />
-      <div className="h-10 w-full animate-pulse rounded-lg bg-gray-200 dark:bg-neutral-700" />
     </div>
   );
 };
