@@ -40,12 +40,12 @@ const SignUpForm = () => {
       return;
     }
 
-    // check if password is at least 8 characters and contains a number and a special character
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?:.*[~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?])[A-Za-z\d\s~!@#$%^&*()_+\-=\[\]{};':"|\\.,<>\/?]{8,}$/;
+    // check if password is at least 8 characters and contains a number
+    const passwordRegex = /^(?=.*\d)(?=.*[A-Za-z]).{8,}$/;
     if (!passwordRegex.test(password)) {
+      console.log(password);
       toast.error(
-        "Password must be minimum 8 characters, contain a number, and a special character",
+        "Password must be minimum 8 characters and contains a number",
       );
       return;
     }
