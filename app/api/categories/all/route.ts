@@ -13,7 +13,7 @@ export async function GET() {
     let categories: Category[] = [];
     const categoryQuery = query(
       collection(db, "categories"),
-      where("isVisible", "==", true)
+      where("isVisible", "==", true),
     );
     await getDocs(categoryQuery)
       .then((querySnapshot) => {
@@ -22,7 +22,7 @@ export async function GET() {
             id: doc.id,
             name: doc.data().name,
             thumb_image: doc.data().thumb_image,
-            isOccassion: doc.data().isOccassion,
+            isOccasion: doc.data().isOccasion,
           });
         });
       })

@@ -125,3 +125,12 @@ export const SignInWithGoogleButton = () => {
     </Suspense>
   );
 };
+
+export const SignInWithGoogleButtonSkeleton = () => {
+  return (
+    <div className="flex w-full animate-pulse justify-center rounded-lg border border-gray-300 bg-gray-100 p-3">
+      <div className="mr-3 h-5 w-5 rounded-full bg-gray-300"></div>
+      <div className="h-5 w-32 rounded bg-gray-300"></div>
+    </div>
+  );
+};
