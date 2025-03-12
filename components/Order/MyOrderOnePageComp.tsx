@@ -3,7 +3,6 @@
 import { Order } from "@/types/order";
 import appUrl from "@/utils/apiCallHandler";
 import Link from "next/link";
-import { Breadcrumb } from "../Breadcrumb";
 import { useEffect, useState } from "react";
 import {
   formatUserFriendlyDate,
@@ -14,44 +13,78 @@ import { MyOrderLoaderSkeleton } from "../SkeletonLoaders/OrderLoaders";
 import Image from "next/image";
 
 export const MyOrderPlaceholder = ({ orderId }: { orderId: string }) => {
-  const [order, setOrder] = useState<Order>();
+  const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchOrder = async () => {
-      const orderData = await fetch(
-        appUrl(`/api/order/one?orderId=${orderId}`),
-        {
-          next: {
-            revalidate: 60 * 60, // 1 hour
-            tags: ["my-orders", "order-details", "order-details-page"],
+      try {
+        const orderData = await fetch(
+          appUrl(`/api/order/one?orderId=${orderId}`),
+          {
+            next: {
+              revalidate: 60 * 60, // 1 hour
+              tags: ["my-orders", "order-details", "order-details-page"],
+            },
           },
-        },
-      );
+        );
 
-      if (orderData.status === 404) {
+        if (orderData.status === 404) {
+          setError("order_not_found");
+          setLoading(false);
+          return;
+        }
+
+        if (!orderData.ok) {
+          setError("fetch_error");
+          setLoading(false);
+          return;
+        }
+
+        const {
+          data: order,
+        }: {
+          data: Order;
+        } = await orderData.json();
+
+        if (!order) {
+          setError("no_order");
+          setLoading(false);
+          return;
+        }
+
+        setOrder(order);
         setLoading(false);
-        return <OrderNotFound />;
+      } catch (error) {
+        console.error("Error fetching order:", error);
+        setError("fetch_error");
+        setLoading(false);
       }
-      const {
-        data: order,
-      }: {
-        data: Order;
-      } = await orderData.json();
-      setLoading(false);
-      setOrder(order);
     };
 
     fetchOrder();
   }, [orderId]);
 
+  if (loading) {
+    return (
+      <div className="flex h-auto flex-col items-center justify-center">
+        <MyOrderLoaderSkeleton />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <OrderErrorState error={error} />;
+  }
+
+  if (!order) {
+    return <OrderErrorState error="no_order" />;
+  }
+
   return (
     <div className="flex h-auto flex-col items-center justify-center">
-      {loading ? (
-        <MyOrderLoaderSkeleton />
-      ) : (
-        order && <OrderDetails order={order} />
-      )}
+      <OrderDetails order={order} />
     </div>
   );
 };
@@ -107,7 +140,7 @@ const OrderDetails = ({ order }: { order: Order }) => {
           {/* showing cart items */}
           <div className="mt-5 bg-white">
             <h3 className="text-lg font-bold">Items</h3>
-            <div className="mt-4">
+            <div className="mt-4 flex flex-col gap-4">
               {order.cartItems.map((item) => (
                 <div
                   key={item.id}
@@ -116,6 +149,7 @@ const OrderDetails = ({ order }: { order: Order }) => {
                   <div className="flex items-center gap-2">
                     <Image
                       width={40}
+                      height={40}
                       src={item.media.images[0]}
                       alt={item.name}
                       className="h-10 w-10 rounded-lg object-cover"
@@ -189,20 +223,48 @@ const OrderDetails = ({ order }: { order: Order }) => {
   );
 };
 
-const OrderNotFound = () => {
-  return (
-    <div className="flex h-96 flex-col items-center justify-center">
-      <h1 className="text-3xl font-bold">Order Not Found</h1>
-      <p className="text-gray-500">
-        We couldn&apos;t find the order you are looking for.
-      </p>
+const OrderErrorState = ({ error }: { error: string }) => {
+  const errorMessages = {
+    order_not_found: {
+      title: "Order Not Found",
+      message: "We couldn't find the order you are looking for.",
+    },
+    fetch_error: {
+      title: "Something went wrong",
+      message:
+        "There was an error fetching your order. Please try again later.",
+    },
+    no_order: {
+      title: "No Orders Yet",
+      message:
+        "You haven't placed any orders yet. Start shopping to place your first order!",
+    },
+  };
 
-      <Link
-        href="/account/my-orders"
-        className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-white"
-      >
-        Go to My Orders
-      </Link>
+  const currentError =
+    errorMessages[error as keyof typeof errorMessages] ||
+    errorMessages.fetch_error;
+
+  return (
+    <div className="flex min-h-[400px] flex-col items-center justify-center rounded-lg bg-white p-8 text-center shadow-sm">
+      <h1 className="mb-2 text-2xl font-bold text-gray-900">
+        {currentError.title}
+      </h1>
+      <p className="mb-6 text-gray-600">{currentError.message}</p>
+      <div className="flex gap-4">
+        <Link
+          href="/shop"
+          className="rounded-lg bg-primary px-6 py-2 text-sm font-semibold text-white transition hover:bg-primaryDark"
+        >
+          Browse Products
+        </Link>
+        <Link
+          href="/account/my-orders"
+          className="rounded-lg border border-gray-300 bg-white px-6 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+        >
+          View All Orders
+        </Link>
+      </div>
     </div>
   );
 };
