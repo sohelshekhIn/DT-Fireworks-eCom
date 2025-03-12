@@ -57,7 +57,7 @@ const ShopPage = () => {
   return (
     <section className="mx-auto w-[85vw] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
-        <h2 className="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
+        <h2 className="text-2xl font-bold dark:text-white md:text-4xl md:leading-tight">
           Shop
         </h2>
         <p className="mt-1 text-gray-600 dark:text-neutral-400">
@@ -70,7 +70,7 @@ const ShopPage = () => {
           <Link
             key={`shop-category-list-${category.id}`}
             className="group relative block rounded-xl"
-            href={`/shop/${category.isOccassion ? "occassion" : "category"}/${
+            href={`/shop/${category.isOccasion ? "occasion" : "category"}/${
               category.id
             }`}
           >
@@ -103,7 +103,7 @@ const ShopSkeleton = () => {
   return (
     <section className="mx-auto w-[85vw] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
       <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
-        <div className="h-8 w-32 animate-pulse rounded-lg bg-gray-200 md:h-10 md:w-40 dark:bg-gray-700"></div>
+        <div className="h-8 w-32 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700 md:h-10 md:w-40"></div>
         <div className="mt-4 h-4 w-64 animate-pulse rounded-lg bg-gray-200 dark:bg-gray-700"></div>
       </div>
       <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-4">
@@ -128,7 +128,7 @@ const NoCategoriesFound = () => {
           src={NotFoundSapien}
           alt="No Categories Found"
         />
-        <h2 className="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">
+        <h2 className="text-2xl font-bold dark:text-white md:text-4xl md:leading-tight">
           No Categories Found
         </h2>
         <p className="mt-1 text-gray-600 dark:text-neutral-400">

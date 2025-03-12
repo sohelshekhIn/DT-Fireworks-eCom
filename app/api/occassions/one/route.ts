@@ -1,6 +1,6 @@
 import { customInitApp } from "@/lib/firebase-admin-config";
 import { db } from "@/lib/firebase-config";
-import { Occassion } from "@/types/category";
+import { Occasion } from "@/types/category";
 import { CustomError, handleApiError } from "@/utils/apiErrorHandler";
 import { getDoc, doc } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
@@ -10,30 +10,30 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.nextUrl);
-    const occassionId = url.searchParams.get("occassion");
-    var occassion: Object = {};
+    const occasionId = url.searchParams.get("occasion");
+    var occasion: Object = {};
     var responseCode = 500;
-    if (occassionId) {
-      const occassionRef = doc(db, "categories", occassionId);
+    if (occasionId) {
+      const occasionRef = doc(db, "categories", occasionId);
 
-      await getDoc(occassionRef)
+      await getDoc(occasionRef)
         .then((doc) => {
           if (doc.exists()) {
-            occassion = doc.data() as Occassion;
+            occasion = doc.data() as Occasion;
             responseCode = 200;
           } else {
-            throw new CustomError("Occassion not found.", 404);
+            throw new CustomError("Occasion not found.", 404);
           }
         })
         .catch((error) => {
           throw new CustomError(error.message, error.code);
         });
     } else {
-      throw new CustomError("Invalid request: OccassionId not found.", 400);
+      throw new CustomError("Invalid request: OccasionId not found.", 400);
     }
     return NextResponse.json(
       {
-        data: occassion,
+        data: occasion,
       },
       { status: responseCode },
     );

@@ -2,11 +2,11 @@ type Category = {
   id: string;
   name: string;
   thumb_image: string;
-  isOccassion?: boolean;
+  isOccasion?: boolean;
   isVisible?: boolean;
 };
 
-type Occassion = {
+type Occasion = {
   id: string;
   name: string;
   thumb_image: string;
@@ -14,4 +14,4 @@ type Occassion = {
   header_image: string;
 };
 
-export type { Category, Occassion };
+export type { Category, Occasion };
