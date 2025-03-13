@@ -1,6 +1,6 @@
 import { customInitApp } from "@/lib/firebase-admin-config";
 import { db } from "@/lib/firebase-config";
-import { CoupanCode } from "@/types/coupan";
+import { CouponCode } from "@/types/coupon";
 import { CustomError, handleApiError } from "@/utils/apiErrorHandler";
 import { getDoc, doc } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
@@ -10,30 +10,30 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.nextUrl);
-    const code = url.searchParams.get("coupanCode");
-    var coupanCode: CoupanCode | null = null;
+    const code = url.searchParams.get("couponCode");
+    var couponCode: CouponCode | null = null;
     var responseCode = 500;
     if (code) {
-      const coupansRef = doc(db, "coupans", code);
-      await getDoc(coupansRef)
+      const couponsRef = doc(db, "coupons", code);
+      await getDoc(couponsRef)
         .then((doc) => {
           if (doc.exists()) {
-            coupanCode = doc.data() as CoupanCode;
-            coupanCode.code = doc.id;
+            couponCode = doc.data() as CouponCode;
+            couponCode.code = doc.id;
             responseCode = 200;
           } else {
-            throw new CustomError("Coupan not found.", 404);
+            throw new CustomError("Coupon not found.", 404);
           }
         })
         .catch((error) => {
           throw new CustomError(error.message, error.statusCode);
         });
     } else {
-      throw new CustomError("Invalid request: coupan code missing.", 400);
+      throw new CustomError("Invalid request: coupon code missing.", 400);
     }
     return NextResponse.json(
       {
-        data: coupanCode,
+        data: couponCode,
       },
       { status: responseCode },
     );
