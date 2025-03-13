@@ -1,6 +1,6 @@
 "use client";
 
-import { CoupanCode } from "@/types/coupan";
+import { CouponCode } from "@/types/coupon";
 import { CartProduct, Product } from "@/types/product";
 import {
   LoadedCartData,
@@ -22,10 +22,10 @@ export const ShopContextProvider = ({
   const [cartTotal, setCartTotal] = useState<number>(0); // total of only products
   const [cartCount, setCartCount] = useState<number>(0);
   const [cartSavings, setCartSavings] = useState<number>(0);
-  const [coupanCode, setCoupanCode] = useState<CoupanCode | null>(null);
-  const [orderTotal, setOrderTotal] = useState<number>(0); // total after coupan, tax, shipping etc
+  const [couponCode, setCouponCode] = useState<CouponCode | null>(null);
+  const [orderTotal, setOrderTotal] = useState<number>(0); // total after coupon, tax, shipping etc
   const [qty, setQty] = useState<number>(1);
-  const [coupanDiscount, setCoupanDiscount] = useState<number>(0);
+  const [couponDiscount, setCouponDiscount] = useState<number>(0);
   const [gstAmount, setGstAmount] = useState<number>(0); // GST amount
   const gstRate = 18; // 18% GST (HSN: 3604 - 10, SAC: 996-1-1)
   const shippingCharge = 50; // ₹50 shipping charge
@@ -36,8 +36,8 @@ export const ShopContextProvider = ({
       cartTotal: false,
       cartCount: false,
       cartSavings: false,
-      coupanDiscount: false,
-      coupanCode: false,
+      couponDiscount: false,
+      couponCode: false,
       orderTotal: false,
       gstAmount: false,
       name: false,
@@ -85,13 +85,13 @@ export const ShopContextProvider = ({
         gstAmount: true,
       });
     }
-    if (loadedData.data.coupanCode) {
-      setCoupanCode(loadedData.data.coupanCode);
-      setCoupanDiscount(loadedData.data.coupanDiscount || 0);
+    if (loadedData.data.couponCode) {
+      setCouponCode(loadedData.data.couponCode);
+      setCouponDiscount(loadedData.data.couponDiscount || 0);
       setLoadedFromServer({
         ...dataLoadedFromServer,
-        coupanCode: true,
-        coupanDiscount: true,
+        couponCode: true,
+        couponDiscount: true,
       });
     }
     if (loadedData.data.name) {
@@ -156,8 +156,8 @@ export const ShopContextProvider = ({
     setCartTotal(0);
     setCartCount(0);
     setCartSavings(0);
-    setCoupanCode(null);
-    setCoupanDiscount(0);
+    setCouponCode(null);
+    setCouponDiscount(0);
     setOrderTotal(0);
     setGstAmount(0);
   };
@@ -299,52 +299,52 @@ export const ShopContextProvider = ({
   }, [cartItems]);
 
   useEffect(() => {
-    if (!coupanCode && cartTotal != 0) {
-      // if coupan is removed
-      setCartSavings((prev) => prev - coupanDiscount);
-      setCoupanDiscount(0);
+    if (!couponCode && cartTotal != 0) {
+      // if coupon is removed
+      setCartSavings((prev) => prev - couponDiscount);
+      setCouponDiscount(0);
       saveData({
         cartSavings: 0,
-        coupanDiscount: null,
+        couponDiscount: null,
       });
       return;
     }
 
     // check if useEffect has been triggered by server data
-    if (dataLoadedFromServer.coupanCode) {
+    if (dataLoadedFromServer.couponCode) {
       // set dataLoadedFromServer to false for partial data
       setLoadedFromServer({
         ...dataLoadedFromServer,
-        coupanCode: false,
+        couponCode: false,
       });
       return;
     }
 
-    if (!coupanCode) return; // if no coupan code
-    if (cartTotal < coupanCode.minOrderValue) {
-      setCoupanCode(null);
-      setCoupanDiscount(0);
+    if (!couponCode) return; // if no coupon code
+    if (cartTotal < couponCode.minOrderValue) {
+      setCouponCode(null);
+      setCouponDiscount(0);
       saveData({
-        coupanCode: null,
-        coupanDiscount: 0,
+        couponCode: null,
+        couponDiscount: 0,
       });
       toast.error(
-        `Coupan code is valid for orders above ₹${coupanCode.minOrderValue} only`,
+        `Coupon code is valid for orders above ₹${couponCode.minOrderValue} only`,
       );
     }
-    let discountAmount = coupanCode.discount;
-    if (coupanCode.isPercentage) {
-      discountAmount = (cartTotal * coupanCode.discount) / 100;
+    let discountAmount = couponCode.discount;
+    if (couponCode.isPercentage) {
+      discountAmount = (cartTotal * couponCode.discount) / 100;
     }
-    if (discountAmount > coupanCode.maxDiscount) {
-      discountAmount = coupanCode.maxDiscount;
+    if (discountAmount > couponCode.maxDiscount) {
+      discountAmount = couponCode.maxDiscount;
     }
 
-    setCoupanDiscount(discountAmount);
+    setCouponDiscount(discountAmount);
     saveData({
-      coupanDiscount: discountAmount,
+      couponDiscount: discountAmount,
     });
-  }, [cartItems, coupanCode]);
+  }, [cartItems, couponCode]);
 
   useEffect(() => {
     if (cartTotal === 0) {
@@ -352,11 +352,11 @@ export const ShopContextProvider = ({
     }
 
     // check if useEffect has been triggered by server data
-    // if (dataLoadedFromServer.coupanDiscount) {
+    // if (dataLoadedFromServer.couponDiscount) {
     //   // set dataLoadedFromServer to false for partial data
     //   setLoadedFromServer({
     //     ...dataLoadedFromServer,
-    //     coupanDiscount: false,
+    //     couponDiscount: false,
     //     cartSavings: false,
     //     orderTotal: false,
     //     gstAmount: false,
@@ -366,31 +366,31 @@ export const ShopContextProvider = ({
 
     // round up to 2 decimal places
     const tmpgstAmount = Math.round(
-      (cartTotal - coupanDiscount) * (gstRate / 100),
+      (cartTotal - couponDiscount) * (gstRate / 100),
     );
     saveData({
-      cartSavings: cartSavings + coupanDiscount,
+      cartSavings: cartSavings + couponDiscount,
     });
-    setCartSavings((prev) => prev + coupanDiscount);
-    setOrderTotal(cartTotal - coupanDiscount + gstAmount + shippingCharge);
+    setCartSavings((prev) => prev + couponDiscount);
+    setOrderTotal(cartTotal - couponDiscount + gstAmount + shippingCharge);
     setGstAmount(tmpgstAmount);
     saveData({
-      orderTotal: cartTotal - coupanDiscount + gstAmount + shippingCharge,
+      orderTotal: cartTotal - couponDiscount + gstAmount + shippingCharge,
       gstAmount: tmpgstAmount,
       shippingCharge,
     });
-  }, [cartTotal, coupanDiscount]);
+  }, [cartTotal, couponDiscount]);
 
   // useEffect(() => {
-  //   // also handle case when coupan is removed
+  //   // also handle case when coupon is removed
   //   if (cartTotal === 0) {
   //     return;
   //   }
   //   saveData({
-  //     cartSavings: cartSavings + coupanDiscount,
+  //     cartSavings: cartSavings + couponDiscount,
   //   });
-  //   setCartSavings((prev) => prev + coupanDiscount);
-  // }, [coupanDiscount]);
+  //   setCartSavings((prev) => prev + couponDiscount);
+  // }, [couponDiscount]);
 
   const handleReview = () => {
     if (cartItems.length === 0) {
@@ -429,10 +429,10 @@ export const ShopContextProvider = ({
         cartItems,
         updateProductQty,
         removeProductFromCart,
-        coupanCode,
-        setCoupanCode,
+        couponCode,
+        setCouponCode,
         cartTotal,
-        coupanDiscount,
+        couponDiscount,
         cartSavings,
         orderTotal,
         gstAmount,

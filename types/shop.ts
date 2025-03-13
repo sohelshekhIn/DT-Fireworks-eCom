@@ -1,5 +1,5 @@
 import { CartProduct, Product } from "@/types/product";
-import { CoupanCode } from "@/types/coupan";
+import { CouponCode } from "@/types/coupon";
 
 export interface ShopContextType {
   qty: number;
@@ -12,10 +12,10 @@ export interface ShopContextType {
     operation: "increase" | "decrease",
   ) => void;
   removeProductFromCart: (id: CartProduct["id"]) => void;
-  coupanCode: CoupanCode | null;
-  setCoupanCode: React.Dispatch<React.SetStateAction<CoupanCode | null>>;
+  couponCode: CouponCode | null;
+  setCouponCode: React.Dispatch<React.SetStateAction<CouponCode | null>>;
   cartTotal: number;
-  coupanDiscount: number;
+  couponDiscount: number;
   cartSavings: number;
   orderTotal: number;
   shippingCharge: number;
@@ -45,8 +45,8 @@ export interface LoadedCartData {
   cartTotal?: number;
   cartCount?: number;
   cartSavings?: number;
-  coupanDiscount?: number;
-  coupanCode?: CoupanCode | null;
+  couponDiscount?: number;
+  couponCode?: CouponCode | null;
   orderTotal?: number;
   gstAmount?: number;
   name?: string;
