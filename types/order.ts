@@ -10,7 +10,7 @@ export interface Order {
   razorpayOrderId: string;
   razorpayPaymentId: string;
   cartSavings: number;
-  coupanDiscount: number;
+  couponDiscount: number;
   addressLine1: string;
   addressLine2: string;
   city: string;

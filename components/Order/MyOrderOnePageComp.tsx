@@ -178,13 +178,13 @@ const OrderDetails = ({ order }: { order: Order }) => {
                 {order.cartTotal}
               </p>
             </div>
-            {/* if coupanDiscount exists then show */}
-            {order.coupanDiscount > 0 && (
+            {/* if couponDiscount exists then show */}
+            {order.couponDiscount > 0 && (
               <div className="flex items-center justify-between">
                 <p>Coupon Discount</p>
                 <p>
                   <span>&#8377;</span>
-                  {order.coupanDiscount}
+                  {order.couponDiscount}
                 </p>
               </div>
             )}

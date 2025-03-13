@@ -1,117 +1,157 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const EffectsImagesSection = () => {
   return (
-    <div className="max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div className="grid sm:grid-cols-12 gap-6">
-        <div className="sm:self-end col-span-12 sm:col-span-7 md:col-span-8 lg:col-span-5 lg:col-start-3">
-          <a
-            className="group relative block rounded-xl overflow-hidden"
-            href="#"
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+      <div className="mb-10 text-center">
+        <h2 className="mb-3 text-3xl font-bold text-gray-900 sm:text-4xl">
+          Discover Our Effects Collection
+        </h2>
+        <p className="text-lg text-gray-600">
+          From stunning aerial displays to ground-level spectacles
+        </p>
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-12">
+        {/* Large Feature Image - Aerial Fireworks */}
+        <div className="col-span-12 sm:col-span-7 md:col-span-8 lg:col-span-5 lg:col-start-3">
+          <Link
+            className="group relative block overflow-hidden rounded-xl"
+            href="/shop?category=aerial"
           >
-            <div className="aspect-w-12 aspect-h-7 sm:aspect-none rounded-xl overflow-hidden">
+            <div className="aspect-w-16 aspect-h-9 sm:aspect-none overflow-hidden rounded-xl">
               <Image
-                width={400}
-                height={400}
-                className="group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl w-full object-cover"
-                src="https://images.unsplash.com/photo-1606868306217-dbf5046868d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3481&q=80"
-                alt="Image Description"
+                width={800}
+                height={600}
+                className="w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                src="/images/products/aerial-display.jpg"
+                alt="Spectacular aerial fireworks display"
               />
             </div>
-            <div className="absolute bottom-0 start-0 end-0 p-2 sm:p-4">
-              <div className="text-sm font-bold text-gray-800 rounded-lg bg-white p-4 md:text-xl dark:bg-neutral-800 dark:text-neutral-200">
-                Workplace personalities
+            <div className="absolute bottom-0 end-0 start-0 p-2 sm:p-4">
+              <div className="rounded-lg bg-white/90 p-4 backdrop-blur-sm dark:bg-neutral-900/90">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white md:text-2xl">
+                  Aerial Spectaculars
+                </h3>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  Professional-grade aerial shells and cakes
+                </p>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
 
-        <div className="sm:self-end col-span-12 sm:col-span-5 md:col-span-4 lg:col-span-3">
-          <a
-            className="group relative block rounded-xl overflow-hidden"
-            href="#"
+        {/* Stage Effects */}
+        <div className="col-span-12 sm:col-span-5 md:col-span-4 lg:col-span-3">
+          <Link
+            className="group relative block overflow-hidden rounded-xl"
+            href="/shop?category=stage"
           >
-            <div className="aspect-w-12 aspect-h-7 sm:aspect-none rounded-xl overflow-hidden">
+            <div className="aspect-w-16 aspect-h-9 sm:aspect-none overflow-hidden rounded-xl">
               <Image
-                width={400}
+                width={600}
                 height={400}
-                className="group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl w-full object-cover"
-                src="https://images.unsplash.com/photo-1605629921711-2f6b00c6bbf4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
-                alt="Image Description"
+                className="w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                src="/images/products/stage-effects.jpg"
+                alt="Professional stage effects and pyrotechnics"
               />
             </div>
-            <div className="absolute bottom-0 start-0 end-0 p-2 sm:p-4">
-              <div className="text-sm font-bold text-gray-800 rounded-lg bg-white p-4 md:text-xl dark:bg-neutral-800 dark:text-neutral-200">
-                Women in engineering
+            <div className="absolute bottom-0 end-0 start-0 p-2 sm:p-4">
+              <div className="rounded-lg bg-white/90 p-4 backdrop-blur-sm dark:bg-neutral-900/90">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white md:text-xl">
+                  Stage Effects
+                </h3>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  Indoor & outdoor stage pyrotechnics
+                </p>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
 
+        {/* Ground Effects */}
         <div className="col-span-12 md:col-span-4">
-          <a
-            className="group relative block rounded-xl overflow-hidden"
-            href="#"
+          <Link
+            className="group relative block overflow-hidden rounded-xl"
+            href="/shop?category=ground"
           >
-            <div className="aspect-w-12 aspect-h-7 sm:aspect-none rounded-xl overflow-hidden">
+            <div className="aspect-w-16 aspect-h-9 sm:aspect-none overflow-hidden rounded-xl">
               <Image
-                width={400}
+                width={600}
                 height={400}
-                className="group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl w-full object-cover"
-                src="https://images.unsplash.com/photo-1606836576983-8b458e75221d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                alt="Image Description"
+                className="w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                src="/images/products/ground-effects.jpg"
+                alt="Ground-based firework effects"
               />
             </div>
-            <div className="absolute bottom-0 start-0 end-0 p-2 sm:p-4">
-              <div className="text-sm font-bold text-gray-800 rounded-lg bg-white p-4 md:text-xl dark:bg-neutral-800 dark:text-neutral-200">
-                Pride 2021
+            <div className="absolute bottom-0 end-0 start-0 p-2 sm:p-4">
+              <div className="rounded-lg bg-white/90 p-4 backdrop-blur-sm dark:bg-neutral-900/90">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white md:text-xl">
+                  Ground Effects
+                </h3>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  Fountains & ground-level displays
+                </p>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
 
+        {/* Special Effects */}
         <div className="col-span-12 sm:col-span-6 md:col-span-4">
-          <a
-            className="group relative block rounded-xl overflow-hidden"
-            href="#"
+          <Link
+            className="group relative block overflow-hidden rounded-xl"
+            href="/shop?category=special"
           >
-            <div className="aspect-w-12 aspect-h-7 sm:aspect-none rounded-xl overflow-hidden">
+            <div className="aspect-w-16 aspect-h-9 sm:aspect-none overflow-hidden rounded-xl">
               <Image
-                width={400}
+                width={600}
                 height={400}
-                className="group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl w-full object-cover"
-                src="https://images.unsplash.com/photo-1598929438701-ef29ab0bb61a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1035&q=80"
-                alt="Image Description"
+                className="w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                src="/images/products/special-effects.jpg"
+                alt="Special effects and smoke machines"
               />
             </div>
-            <div className="absolute bottom-0 start-0 end-0 p-2 sm:p-4">
-              <div className="text-sm font-bold text-gray-800 rounded-lg bg-white p-4 md:text-xl dark:bg-neutral-800 dark:text-neutral-200">
-                Data at Preline
+            <div className="absolute bottom-0 end-0 start-0 p-2 sm:p-4">
+              <div className="rounded-lg bg-white/90 p-4 backdrop-blur-sm dark:bg-neutral-900/90">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white md:text-xl">
+                  Special Effects
+                </h3>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  Smoke, fog & atmospheric effects
+                </p>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
 
+        {/* Display Packages */}
         <div className="col-span-12 sm:col-span-6 md:col-span-4">
-          <a
-            className="group relative block rounded-xl overflow-hidden"
-            href="#"
+          <Link
+            className="group relative block overflow-hidden rounded-xl"
+            href="/shop?category=packages"
           >
-            <div className="aspect-w-12 aspect-h-7 sm:aspect-none rounded-xl overflow-hidden">
+            <div className="aspect-w-16 aspect-h-9 sm:aspect-none overflow-hidden rounded-xl">
               <Image
-                width={400}
+                width={600}
                 height={400}
-                className="group-hover:scale-105 transition-transform duration-500 ease-in-out rounded-xl w-full object-cover"
-                src="https://images.unsplash.com/photo-1467043153537-a4fba2cd39ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1019&q=80"
-                alt="Image Description"
+                className="w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                src="/images/products/display-packages.jpg"
+                alt="Professional firework display packages"
               />
             </div>
-            <div className="absolute bottom-0 start-0 end-0 p-2 sm:p-4">
-              <div className="text-sm font-bold text-gray-800 rounded-lg bg-white p-4 md:text-xl dark:bg-neutral-800 dark:text-neutral-200">
-                Empowered management
+            <div className="absolute bottom-0 end-0 start-0 p-2 sm:p-4">
+              <div className="rounded-lg bg-white/90 p-4 backdrop-blur-sm dark:bg-neutral-900/90">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white md:text-xl">
+                  Display Packages
+                </h3>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  Complete show solutions
+                </p>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

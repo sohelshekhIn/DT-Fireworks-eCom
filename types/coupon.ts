@@ -1,4 +1,4 @@
-type CoupanCode = {
+type CouponCode = {
   code: string;
   name: string;
   discount: number;
@@ -7,4 +7,4 @@ type CoupanCode = {
   maxDiscount: number;
 };
 
-export { type CoupanCode };
+export { type CouponCode };

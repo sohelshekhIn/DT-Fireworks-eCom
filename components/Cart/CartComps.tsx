@@ -1,7 +1,7 @@
 "use client";
 
 import { useShopContext } from "@/context/ShopContext";
-import { CoupanCode } from "@/types/coupan";
+import { CouponCode } from "@/types/coupon";
 import { CartProduct, Product } from "@/types/product";
 import appUrl from "@/utils/apiCallHandler";
 import Image from "next/image";
@@ -142,84 +142,84 @@ const CartProductCard = () => {
   );
 };
 
-const CoupanCodeComp = () => {
-  const { setCoupanCode, cartTotal, coupanCode } = useShopContext();
-  const coupanCodeInput = useRef<HTMLInputElement>(null);
+const CouponCodeComp = () => {
+  const { setCouponCode, cartTotal, couponCode } = useShopContext();
+  const couponCodeInput = useRef<HTMLInputElement>(null);
 
-  const checkCoupanCode = async (e: FormEvent<HTMLFormElement>) => {
+  const checkCouponCode = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const coupanCodeValue = coupanCodeInput.current?.value;
+    const couponCodeValue = couponCodeInput.current?.value;
     if (cartTotal === 0) {
       toast.error("Cart is empty");
       return;
     }
-    if (!coupanCodeValue || coupanCodeValue === "") {
-      toast.error("Please enter a coupan code");
+    if (!couponCodeValue || couponCodeValue === "") {
+      toast.error("Please enter a coupon code");
       return;
     }
 
     const res = await fetch(
-      appUrl("/api/coupans/one?coupanCode=" + coupanCodeValue),
+      appUrl("/api/coupons/one?couponCode=" + couponCodeValue),
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
         next: {
-          tags: ["coupans"],
+          tags: ["coupons"],
           revalidate: 60 * 60 * 10, // 10 hours
         },
       },
     );
 
     if (res.status !== 200) {
-      toast.error("Invalid coupan code");
+      toast.error("Invalid coupon code");
       return;
     }
-    const { data }: { data: CoupanCode } = await res.json();
+    const { data }: { data: CouponCode } = await res.json();
 
-    if (coupanCodeValue === data.code) {
+    if (couponCodeValue === data.code) {
       if (cartTotal < data.minOrderValue) {
         toast.error("Offer is valid for orders above " + 500 + " only");
         return;
       }
-      setCoupanCode(data);
-      toast.success("Coupan code applied successfully");
+      setCouponCode(data);
+      toast.success("Coupon code applied successfully");
     } else {
-      toast.error("Invalid coupan code");
+      toast.error("Invalid coupon code");
     }
   };
 
-  const removeCoupanCode = () => {
-    setCoupanCode(null);
+  const removeCouponCode = () => {
+    setCouponCode(null);
   };
 
   return (
     <div className="mb-5 rounded-md bg-white p-8 shadow-sm dark:bg-neutral-900 dark:shadow-neutral-700/70">
-      <h2 className="mb-5 text-xl font-bold">Coupan Code</h2>
-      {coupanCode ? (
+      <h2 className="mb-5 text-xl font-bold">Coupon Code</h2>
+      {couponCode ? (
         <>
           <div className="flex justify-between">
-            <p className="text-gray-500">Coupan Code</p>
+            <p className="text-gray-500">Coupon Code</p>
             <p className="text-gray-800 dark:text-neutral-200">
-              {coupanCode.code}
+              {couponCode.code}
             </p>
           </div>
           <div className="mt-5 w-full">
             <button
-              onClick={removeCoupanCode}
+              onClick={removeCouponCode}
               className="w-full rounded-md bg-secondaryDark py-3 text-center text-white"
             >
-              Remove Coupan
+              Remove Coupon
             </button>
           </div>
         </>
       ) : (
-        <form onSubmit={checkCoupanCode}>
+        <form onSubmit={checkCouponCode}>
           <input
-            ref={coupanCodeInput}
+            ref={couponCodeInput}
             type="text"
-            placeholder="Enter your coupan code"
+            placeholder="Enter your coupon code"
             className="w-full rounded-md border border-gray-200 p-3 dark:border-neutral-700/70 dark:bg-neutral-900 dark:text-neutral-400 dark:placeholder-neutral-500"
           />
           <div className="mt-5 w-full">
@@ -227,7 +227,7 @@ const CoupanCodeComp = () => {
               type="submit"
               className="w-full rounded-md bg-secondaryDark py-3 text-white hover:bg-secondaryDark/80"
             >
-              Apply Coupan
+              Apply Coupon
             </button>
           </div>
         </form>
@@ -245,7 +245,7 @@ const CartProductPrice = ({ id }: { id: string }) => {
 const CartSummary = () => {
   const {
     cartTotal,
-    coupanDiscount,
+    couponDiscount,
     cartSavings,
     orderTotal,
     shippingCharge,
@@ -259,11 +259,11 @@ const CartSummary = () => {
         <p className="text-gray-500">Subtotal</p>
         <p className="text-gray-800 dark:text-neutral-200">₹ {cartTotal}</p>
       </div>
-      {coupanDiscount > 0 && (
+      {couponDiscount > 0 && (
         <div className="flex justify-between">
-          <p className="text-gray-500">Coupan Discount</p>
+          <p className="text-gray-500">Coupon Discount</p>
           <p className="text-gray-800 dark:text-neutral-200">
-            - ₹ {coupanDiscount}
+            - ₹ {couponDiscount}
           </p>
         </div>
       )}
@@ -308,6 +308,6 @@ export {
   AddToCartBtn,
   CartQuantitySelector,
   CartProductCard,
-  CoupanCodeComp,
+  CouponCodeComp,
   CartSummary,
 };

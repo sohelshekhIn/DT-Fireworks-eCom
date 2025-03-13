@@ -2,7 +2,7 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import {
   CartProductCard,
   CartSummary,
-  CoupanCodeComp,
+  CouponCodeComp,
 } from "@/components/Cart/CartComps";
 
 const CartPage = () => {
@@ -19,7 +19,7 @@ const CartPage = () => {
           <CartProductCard />
         </div>
         <div className="w-full lg:w-1/3">
-          <CoupanCodeComp />
+          <CouponCodeComp />
           <CartSummary />
         </div>
       </div>
