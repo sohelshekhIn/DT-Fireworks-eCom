@@ -16,7 +16,7 @@ const OurCore = () => {
             height={200}
             className="mx-auto rounded-full sm:size-48 lg:size-60"
             src="https://ui-avatars.com/api/?name=Chandrakath+Chhatriwala"
-            alt="Image Description"
+            alt="Chandrakath Chhatriwala"
           />
           <div className="mt-2 sm:mt-4">
             <h3 className="text-sm font-medium text-gray-800 dark:text-neutral-200 sm:text-base lg:text-lg">
@@ -34,7 +34,7 @@ const OurCore = () => {
             height={200}
             className="mx-auto rounded-full sm:size-48 lg:size-60"
             src="https://ui-avatars.com/api/?name=Chirag+Chhatriwala"
-            alt="Image Description"
+            alt="Chirag Chhatriwala"
           />
           <div className="mt-2 sm:mt-4">
             <h3 className="text-sm font-medium text-gray-800 dark:text-neutral-200 sm:text-base lg:text-lg">
@@ -52,7 +52,7 @@ const OurCore = () => {
             height={200}
             className="mx-auto rounded-full sm:size-48 lg:size-60"
             src="https://ui-avatars.com/api/?name=Nikunj+Chhatriwala"
-            alt="Image Description"
+            alt="Nikunj Chhatriwala"
           />
           <div className="mt-2 sm:mt-4">
             <h3 className="text-sm font-medium text-gray-800 dark:text-neutral-200 sm:text-base lg:text-lg">

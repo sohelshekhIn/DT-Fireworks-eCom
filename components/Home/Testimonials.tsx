@@ -98,8 +98,6 @@ const Testimonials = () => {
   );
 };
 
-// export default Testimonials;
-
 const Slide = ({
   text,
   author,
@@ -150,7 +148,5 @@ const Slide = ({
     </div>
   );
 };
-
-// doing testimonials and need to set images for grid
 
 export default Testimonials;
