@@ -17,7 +17,7 @@ export interface Order {
   state: string;
   pincode: string;
   shippingCharge: number;
-  orderStatus: "pending" | "confirmed" | "prepared" | "shipped" | "delivered";
+  orderStatus: ORDER_STATUS;
   cartItems: CartProduct[];
   cartCount: number;
   cartTotal: number;
@@ -25,9 +25,24 @@ export interface Order {
   orderTotal: number;
   delivery: {
     deliveryDate: string;
-    deliveryStatus: "pending" | "prepared" | "shipped" | "delivered";
+    deliveryStatus: DELIVERY_STATUS;
     isDelivered: boolean;
   };
+}
+
+export enum ORDER_STATUS {
+  PENDING = "PENDING",
+  CONFIRMED = "CONFIRMED",
+  PREPARED = "PREPARED",
+  SHIPPED = "SHIPPED",
+  DELIVERED = "DELIVERED",
+}
+
+export enum DELIVERY_STATUS {
+  PENDING = "PENDING",
+  PREPARED = "PREPARED",
+  SHIPPED = "SHIPPED",
+  DELIVERED = "DELIVERED",
 }
 
 export interface OrderOverview {
