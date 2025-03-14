@@ -23,11 +23,13 @@ export interface Order {
   cartTotal: number;
   gstAmount: number;
   orderTotal: number;
-  delivery: {
-    deliveryDate: string;
-    deliveryStatus: DELIVERY_STATUS;
-    isDelivered: boolean;
-  };
+  delivery: DeliveryInfo;
+}
+
+export interface DeliveryInfo {
+  deliveryDate: string;
+  deliveryStatus: DELIVERY_STATUS;
+  isDelivered: boolean;
 }
 
 export enum ORDER_STATUS {
